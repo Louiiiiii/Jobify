@@ -7,6 +7,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="../style/bulma.css">
     <link rel="stylesheet" href="../style/login.css">
+    <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
     <div class="card">
