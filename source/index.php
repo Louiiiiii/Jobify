@@ -5,15 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        body {
-            font-size: 300px;
-            color: blueviolet;
-            background-color: black;
-        }
-    </style>
+    <link rel="stylesheet" href="style/main.css">
 </head>
 <body>
     Nothing to see here
+    <button class="button">Test</button>
 </body>
 </html>
