@@ -1,0 +1,44 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 500px;
+        width: 450px;
+
+        .title {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 25px 0;
+            background-color: hsl(171deg, 100%, 41%);
+            color: white;
+            border-radius: 4px;
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding-top: 25px;
+
+            .field {
+                margin-bottom: 0.75rem;
+            }
+
+            .is-primary {
+                width: 100%;
+            }
+
+            .signup {
+                text-align: center;
+            }
+        }
+    }
+}
