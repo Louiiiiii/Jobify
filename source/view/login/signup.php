@@ -1,13 +1,12 @@
 <?php
+    include("../../shared/getClasses.php");
+
     if (isset($_POST["email"])) {
-        echo "Email is set";
-    } else {
-        echo "Email is not set";
-    }
+        $email = $_POST["email"];
+    } 
 
-    include("./source/shared/classes/Applicant.php");
 
-    Applicant::insertuser("j.p@g.com", "abcd1234")
+    User::insertuser("j.p@g.com", "abcd1234")
 
 ?>
 
