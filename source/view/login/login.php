@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../style/bulma.css">
-    <link rel="stylesheet" href="../style/login_signup.css">
+    <link rel="stylesheet" href="../../style/bulma.css">
+    <link rel="stylesheet" href="../../style/login_signup.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
@@ -41,8 +41,9 @@
                 </div>
             </div>
             <div class="card-content__signup">
-                <div class="signup">Not a member? 
-                    <a>Signup now</a>
+                <div class="signup">
+                    Not a member? 
+                    <a href="signup.php">Signup now</a>
                 </div>
             </div>
         </div>
