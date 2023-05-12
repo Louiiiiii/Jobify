@@ -66,7 +66,7 @@
             <div class="card-content__signup">
                 <div class="signup">
                     Already have an Account? 
-                    <a>Log in</a>
+                    <a href="login.php">Log in</a>
                 </div>
             </div>
         </div>

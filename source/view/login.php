@@ -42,7 +42,7 @@
             </div>
             <div class="card-content__signup">
                 <div class="signup">Not a member? 
-                    <a>Signup now</a>
+                    <a href="signup.php">Signup now</a>
                 </div>
             </div>
         </div>
