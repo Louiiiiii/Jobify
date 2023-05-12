@@ -1,6 +1,6 @@
 <?php
 require_once "DB.php";
-class User
+class Applicant
 {
     public $user_id;
     public $password_id;
