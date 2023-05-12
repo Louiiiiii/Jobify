@@ -13,62 +13,64 @@
     <div class="card">
         <p class="title is-2">Registration</p>
         <div class="card-content">
-            <div class="card-content__login">
-                <div class="field">
-                    <p class="control has-icons-left has-icons-right">
-                        <input class="input" type="email" placeholder="Email">
+            <form action="./signup.php" method="post">
+                <div class="card-content__login">
+                    <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input" type="email" placeholder="Email">
+                                <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                                <span class="icon is-small is-right">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left">
+                            <input class="input" type="password" placeholder="Password">
                             <span class="icon is-small is-left">
-                            <i class="fas fa-envelope"></i>
-                        </span>
-                            <span class="icon is-small is-right">
-                            <i class="fas fa-check"></i>
-                        </span>
-                    </p>
-                </div>
-                <div class="field">
-                    <p class="control has-icons-left">
-                        <input class="input" type="password" placeholder="Password">
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-lock"></i>
-                        </span>
-                    </p>
-                </div>
-                <div class="field">
-                    <p class="control has-icons-left">
-                        <input class="input" type="password" placeholder="Repeat Password">
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-lock"></i>
-                        </span>
-                    </p>
-                </div>
-                <div class="field">
-                    <div class="dropdown ">
-                        <div class="dropdown-trigger">
-                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                                <span class="selected-item select-role">Select Role</span>
-                                <span class="icon is-small">
-                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                </span>
-                            </button>
-                        </div>
-                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                            <div class="dropdown-content">
-                                <a class="dropdown-item is-active">Applicant</a>
-                                <a class="dropdown-item">Company</a>
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left">
+                            <input class="input" type="password" placeholder="Repeat Password">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <div class="dropdown">
+                            <div class="dropdown-trigger">
+                                <button type="button" class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span class="selected-item select-role">Select Role</span>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                    <a class="dropdown-item is-active">Applicant</a>
+                                    <a class="dropdown-item">Company</a>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="field">
+                        <button type="submit" class="button is-primary">Register</button>
+                    </div>
                 </div>
-                <div class="field">
-                    <button class="button is-primary">Register</button>
+                <div class="card-content__signup">
+                    <div class="signup">
+                        Already have an Account? 
+                        <a href="login.php">Log in</a>
+                    </div>
                 </div>
-            </div>
-            <div class="card-content__signup">
-                <div class="signup">
-                    Already have an Account? 
-                    <a href="login.php">Log in</a>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </body>
