@@ -12,10 +12,13 @@ dropdownItems.forEach(dropdownItem => {
     dropdownItem.addEventListener('click', function(event) {
         event.stopPropagation();
         dropdownItem.classList.toggle('is-active');
-        activeDropdownItem.classList.toggle('is-active');
 
+        activeDropdownItem.classList.toggle('is-active');
         activeDropdownItem = document.querySelector('.dropdown-item.is-active');
+
         selectedItem.innerHTML = activeDropdownItem.innerHTML;
-        selectedItem.classList.remove('select-role')
+        selectedItem.classList.remove('select-role');
+
+        dropdown.classList.toggle('is-active');
     });
 });
