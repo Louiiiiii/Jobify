@@ -23,42 +23,17 @@ class User
         return($stmt->execute()); //True wenn erfolgreich False wenn fehlgeschlagen
     }
 
-    /*    public static function getAllFreunde($user_id)
-        {
-            $db = new DB();
-            $stmt = $db->pdo->prepare("SELECT * FROM Freund where user_id = ?");
-            $stmt->bindParam(1,$user_id, PDO::PARAM_INT);
-            $stmt->execute();
-            $cnt = 0;
-            $freunde = array();
-            while($row = $stmt->fetch())
-            {
-                $freunde[$cnt] = new Freund($row['user_id'],$row['freund_id']);
-                $cnt = $cnt+1;
-            }
-            unset($row);
-            return $freunde;
+    public static function validateCredentials($email,$password)
+    {
+        $hashedpw = hash('sha512',$password);
+        $user = new User($email,$hashedpw);
+        $stmt = $user->db->pdo->prepare("select count (*) from user where email = ? and passwordhash = ?");
+        $stmt->bindParam(1, $user->email, PDO::PARAM_STR);
+        $stmt->bindParam(2, $user->password, PDO::PARAM_STR);
+        $stmt->execute();
+        if($stmt->fetch() >= 1){
+            return true;
         }
-
-        public function delFreund()
-        {
-            $stmt = $this->db->pdo->prepare("Delete from Freund where user_id = ? and freund_id = ?");
-            $stmt->bindParam(1,$this->user_id , PDO::PARAM_INT);
-            $stmt->bindParam(2,$this->freund_id , PDO::PARAM_INT);
-            $stmt->execute();
-        }
-
-        public function checkFreund()
-        {
-            $stmt = $this->db->pdo->prepare("select * from Freund where user_id = ? and freund_id = ?");
-            $stmt->bindParam(1, $this->user_id, PDO::PARAM_INT);
-            $stmt->bindParam(2, $this->freund_id, PDO::PARAM_INT);
-            $stmt->execute();
-            while($row = $stmt->fetch())
-            {
-                return true;
-            }
-            return false;
-        }
-    */
+        return false;
+    }
 }
