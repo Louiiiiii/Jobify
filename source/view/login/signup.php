@@ -6,7 +6,7 @@
     } 
 
 
-    User::insertuser("j.p@g.com", "abcd1234")
+    //User::insertuser("j.p@g.com", "abcd1234")
 
 ?>
 
