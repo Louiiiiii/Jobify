@@ -2,20 +2,27 @@
 require_once "DB.php";
 class Applicant
 {
-    public $user_id;
+    public $email;
     public $password_id;
     public $db;
 
-    public function __construct($user, $password)
+    /*public function __construct($email, $password)
     {
-        $this->user_id = $user;
+        $this->email = $email;
         $this->password_id = $password;
+        $this->db = new DB();
+    }*/
+
+    public function __construct()
+    {
+        $this->email = null;
+        $this->password_id = null;
         $this->db = new DB();
     }
 
     public static function insertuser($email, $password)
     {
-        $user = new User;
+        $user = new Applicant();
         $hashedpw = hash('sha512',$password);
         $stmt = $user->db->pdo->prepare("INSERT INTO jobify.user (email, passwordhash) VALUES ($email,$hashedpw)");
         // $stmt->bindParam(1, $email, PDO::PARAM_STR);

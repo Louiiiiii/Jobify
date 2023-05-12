@@ -1,3 +1,15 @@
+<?php
+    if (isset($_POST["email"])) {
+        echo "Email is set";
+    } else {
+        echo "Email is not set";
+    }
+
+    include("./source/shared/classes/Applicant.php");
+
+    Applicant::insertuser("j.p@g.com", "abcd1234")
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +32,7 @@
                         <div class="field">
                             <p class="control has-icons-left has-icons-right">
 
-                                <input class="input" type="email" placeholder="Email">
+                                <input name="email" class="input" type="email" placeholder="Email" required>
 
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-envelope"></i>
@@ -34,7 +46,7 @@
                         <div class="field">
                             <p class="control has-icons-left">
                                 
-                                <input id="password" class="input" type="password" placeholder="Password">
+                                <input id="password" name="password" class="input" type="password" placeholder="Password" required>
 
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-lock"></i>
@@ -45,7 +57,7 @@
                         <div class="field">
                             <p class="control has-icons-left">
 
-                                <input id="repeatpassword" class="input" type="password" placeholder="Repeat Password" oninput="checkpw()">
+                                <input id="repeatpassword" name="repeatpassword" class="input" type="password" placeholder="Repeat Password" oninput="checkpw()" required>
                                 
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-lock"></i>
