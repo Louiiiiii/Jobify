@@ -36,4 +36,17 @@ class User
         }
         return false;
     }
+
+    public static function doesemailexist($email)
+    {
+        $pw = null;
+        $user = new User($email, $pw);
+        $stmt = $user->db->pdo->prepare("select count(*) AS 'count' from user where email = ?");
+        $stmt->bindParam(1, $user->email, PDO::PARAM_STR);
+        $stmt->execute();
+        if($stmt->fetch()[0] >= 1){
+            return true;
+        }
+        return false;
+    }
 }
