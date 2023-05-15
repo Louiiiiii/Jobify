@@ -2,6 +2,8 @@ let dropdown = document.querySelector('.dropdown');
 let dropdownItems = document.querySelectorAll('.dropdown-item');
 let activeDropdownItem = document.querySelector('.dropdown-item.is-active');
 let selectedItem = document.querySelector('.selected-item');
+let applicant = document.querySelector('.dropdown-name__applicant');
+let company = document.querySelector('.dropdown-name__company');
 
 dropdown.addEventListener('click', function(event) {
     event.stopPropagation();
@@ -20,5 +22,14 @@ dropdownItems.forEach(dropdownItem => {
         selectedItem.classList.remove('select-role');
 
         dropdown.classList.toggle('is-active');
+
+        if (applicant.hasAttribute("selected")) {
+            company.setAttribute("selected", "");
+            applicant.removeAttribute("selected");
+        }
+        else {
+            applicant.setAttribute("selected", "");
+            company.removeAttribute("selected", "");
+        }
     });
 });

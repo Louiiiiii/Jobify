@@ -83,6 +83,11 @@
                                         <a class="dropdown-item">Company</a>
                                     </div>
                                 </div>
+
+                                <select class="dropdown-name" name="role" hidden>
+                                    <option class="dropdown-name__applicant" value="Applicant">Applicant</option>
+                                    <option class="dropdown-name__company" value="Company">Company</option>
+                                </select>
                             </div>
                         </div>
 
