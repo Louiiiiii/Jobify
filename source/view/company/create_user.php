@@ -14,7 +14,7 @@
         <p class="title is-2">Create User</p>
         <div class="card-content">
             <div class="card-content__body">
-                <form style="height: 100%">
+                <form class="form">
                     <div class="row">
                         <div class="field">
                             <label class="label">Company</label>
