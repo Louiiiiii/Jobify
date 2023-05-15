@@ -30,6 +30,7 @@ body {
 
             .card-content__body {
                 width: 100%;
+                height: 100%;
 
                 .row {
                     display: flex;
@@ -67,6 +68,12 @@ body {
 
                 .row:last-child {
                     justify-content: flex-end;
+                    align-items: flex-end;
+                    height: calc(100% - calc(40px * 6) - 24px);
+
+                    &.company-submit {
+                        height: calc(100% - calc(40px * 6) - 24px - 88px);
+                    }
                 }
             }
         }

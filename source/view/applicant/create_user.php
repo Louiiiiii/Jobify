@@ -11,21 +11,29 @@
 </head>
 <body>
     <div class="card">
-        <p class="title is-2">Create User</p>
+        <p class="title is-2">Applicant</p>
         <div class="card-content">
             <div class="card-content__body">
                 <form style="height: 100%">
                     <div class="row">
                         <div class="field">
-                            <label class="label">Company</label>
+                            <label class="label">Firstname</label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="Company Name">
+                                <input class="input" type="text" placeholder="Firstname">
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">Slogan</label>
+                            <label class="label">Lastname</label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="Slogan">
+                                <input class="input" type="text" placeholder="Lastname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="field">
+                            <label class="label">Birthday</label>
+                            <div class="control">
+                                <input class="input" type="date">
                             </div>
                         </div>
                     </div>
@@ -71,14 +79,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="field">
-                            <label class="label">Description</label>
-                            <textarea class="textarea" placeholder="Description of the Company"></textarea>
-                        </div>
-                    </div>
-                    <diV class="row company-row">
-                        <button class="button is-link">Submit</button>
+                    <diV class="row">
+                        <button class="button is-link is-light">Next</button>
                     </diV>
                 </form>
             </div>
