@@ -27,11 +27,11 @@ class User
     {
         $hashedpw = hash('sha512',$password);
         $user = new User($email,$hashedpw);
-        $stmt = $user->db->pdo->prepare("select count (*) from user where email = ? and passwordhash = ?");
+        $stmt = $user->db->pdo->prepare("select count(*) from user where email = ? and passwordhash = ?");
         $stmt->bindParam(1, $user->email, PDO::PARAM_STR);
         $stmt->bindParam(2, $user->password, PDO::PARAM_STR);
         $stmt->execute();
-        if($stmt->fetch() >= 1){
+        if($stmt->fetch()[0] >= 1){
             return true;
         }
         return false;
