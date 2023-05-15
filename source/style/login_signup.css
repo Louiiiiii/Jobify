@@ -36,33 +36,10 @@ body {
                 width: 100%;
             }
 
-            .dropdown {
+            .select {
                 width: 100%;
-                
-                .dropdown-trigger {
-                    width: 100%;
 
-                    .button {
-                        width: 100%;
-
-                        .selected-item {
-                            width: 50%;
-                            display: flex;
-                            justify-content: flex-start;
-                        }
-
-                        .select-role {
-                            color: rgba(54, 54, 54, 0.3);
-                        }
-
-                        .icon {
-                            width: 50%;
-                            justify-content: flex-end;
-                        }
-                    }
-                }
-
-                .dropdown-menu {
+                & select {
                     width: 100%;
                 }
             }
