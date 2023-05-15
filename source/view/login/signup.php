@@ -66,27 +66,11 @@
                         </div>
 
                         <div class="field">
-                            <div class="dropdown">
-                                <div class="dropdown-trigger">
-                                    <button type="button" class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                                        <span class="selected-item select-role">
-                                            Select Role
-                                        </span>
-                                        <span class="icon is-small">
-                                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </button>
-                                </div>
-                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                    <div class="dropdown-content">
-                                        <a class="dropdown-item is-active">Applicant</a>
-                                        <a class="dropdown-item">Company</a>
-                                    </div>
-                                </div>
-
-                                <select class="dropdown-name" name="role" hidden>
-                                    <option class="dropdown-name__applicant" value="Applicant">Applicant</option>
-                                    <option class="dropdown-name__company" value="Company">Company</option>
+                            <div class="select">
+                                <select name="role" required>
+                                    <option disabled value="" selected hidden>Select Role</option>
+                                    <option value="Applicant">Applicant</option>
+                                    <option value="Company">Company</option>
                                 </select>
                             </div>
                         </div>
