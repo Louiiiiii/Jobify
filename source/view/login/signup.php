@@ -27,12 +27,9 @@
             <div class="card-content">
                 <form action="./signup.php" method="post">
                     <div class="card-content__login">
-
                         <div class="field">
                             <p class="control has-icons-left has-icons-right">
-
                                 <input name="email" class="input" type="email" placeholder="Email" required>
-
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-envelope"></i>
                                 </span>
@@ -41,30 +38,23 @@
                                 </span>
                             </p>
                         </div>
-
                         <div class="field">
                             <p class="control has-icons-left">
-                                
                                 <input id="password" name="password" class="input" type="password" placeholder="Password" required>
-
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-lock"></i>
                                 </span>
                             </p>
                         </div>
-
                         <div class="field">
                             <p class="control has-icons-left">
-
-                                <input id="repeatpassword" name="repeatpassword" class="input" type="password" placeholder="Repeat Password" oninput="checkpw()" required>
-                                
+                                <input id="repeatpassword" name="repeatpassword" class="input" type="password" placeholder="Repeat Password" oninput="checkpw()" required> 
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-lock"></i>
                                 </span>
                             </p>
                             <p class="checkpasswordtext" id="checkpasswordtext"></p>
                         </div>
-
                         <div class="field">
                             <div class="select">
                                 <select name="role" required>
@@ -74,11 +64,9 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="field">
                             <button type="submit" class="button is-primary">Register</button>
                         </div>
-
                     </div>
                     <div class="card-content__signup">
                         <div class="signup">
