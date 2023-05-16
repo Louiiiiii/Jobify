@@ -8,7 +8,7 @@ body {
         display: flex;
         align-items: center;
         flex-direction: column;
-        height: 80%;
+        height: auto;
         width: 700px;
 
         .title {
@@ -73,15 +73,12 @@ body {
                 .row:last-child {
                     justify-content: flex-end;
                     align-items: flex-end;
-                    height: calc(100% - calc(40px * 6) - 24px);
+                    margin-top: 30px;
 
-                    &.company-row {
+                    &.company-submit {
                         height: calc(100% - calc(40px * 6) - 24px - 88px);
                     }
 
-                    &.applicant-row {
-                        height: calc(100% - calc(40px * 5) - 24px);
-                    }
                 }
             }
         }
