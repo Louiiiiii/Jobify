@@ -1,6 +1,7 @@
 <?php
 class User extends DB
 {
+    private $user_id;
     public $email;
     public $password;
 
