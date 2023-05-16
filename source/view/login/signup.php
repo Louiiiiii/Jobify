@@ -3,10 +3,28 @@
 
     if (isset($_POST["email"])) {
         $email = $_POST["email"];
+        $pw = $_POST["password"];
+        $role = $_POST["role"];
+
+        if (User::doesemailexist($email) == true) {
+            echo "<script>alert('E-Mail already exists, please try to login.');</script>";
+        } else {
+            User::insertuser($email, $pw);
+
+            if ($role == "Company") {
+                echo '<script>window.location.replace("/source/view/company/create_user.php");</script>';
+                exit;
+            } else if ($role == "Applicant") {
+                echo '<script>window.location.replace("/source/view/applicant/create_user/basics.php");</script>';
+                exit;
+            }
+        }
+
+        unset($_POST["email"]);
+        unset($_POST["password"]);
+        unset($_POST["role"]);
     } 
 
-
-    //User::insertuser("j.p@g.com", "abcd1234")
 
 ?>
 
