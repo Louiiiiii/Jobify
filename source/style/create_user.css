@@ -75,11 +75,19 @@ body {
                     align-items: flex-end;
                     height: calc(100% - calc(40px * 6) - 24px);
 
-                    &.company-submit {
+                    &.company-row {
                         height: calc(100% - calc(40px * 6) - 24px - 88px);
+                    }
+
+                    &.applicant-row {
+                        height: calc(100% - calc(40px * 5) - 24px);
                     }
                 }
             }
         }
     }
+}
+
+input[type="text"]::-webkit-calendar-picker-indicator {
+    display: none !important;
 }
