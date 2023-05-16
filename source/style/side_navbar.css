@@ -1,0 +1,78 @@
+/* The side navigation menu */
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: lightgrey;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    border-right: 1px solid black;
+}
+
+/* Sidebar links */
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+/* Active/current link */
+.sidebar a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
+}
+
+#sidebarSearch {
+    border-radius: 0.5em;
+}
+
+.bd-sidebar-search .bd-key {
+    position: absolute;
+    right: 6px;
+    top: 4px;
+}
+
+.bd-key {
+    align-items: center;
+    background: rgba(0,0,0,.1);
+    border-radius: 0.25em;
+    color: rgba(0,0,0,.5);
+    display: none;
+    font-family: monospace;
+    font-size: .625rem;
+    height: 2em;
+    justify-content: center;
+    min-width: 2em;
+    padding: 0 0.25em;
+    pointer-events: none;
+    text-align: center;
+    z-index: 2;
+}
+
+span {
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+*, ::after, ::before {
+    box-sizing: inherit;
+}
+
+.menu {
+    padding: 1rem;
+}
