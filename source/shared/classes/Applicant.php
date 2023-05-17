@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/shared/classes/User.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/User.php";
 
 class Applicant extends User
 {

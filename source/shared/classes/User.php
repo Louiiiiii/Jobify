@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/shared/classes/DB.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/DB.php";
 
 class User extends DB
 {
