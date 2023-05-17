@@ -1,4 +1,7 @@
 <?php
+
+require_once $_SERVER['DOCUMENT_ROOT'] . "/shared/classes/DB.php";
+
 class User extends DB
 {
     protected $user_id;

@@ -1,5 +1,6 @@
 <?php
-    include("../../shared/getClasses.php");
+    
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/shared/getClasses.php";
 
     if (isset($_POST["email"])) {
         $email = $_POST["email"];
@@ -12,10 +13,10 @@
             User::insertuser($email, $pw);
 
             if ($role == "Company") {
-                echo '<script>window.location.replace("/source/view/company/create_user.php");</script>';
+                echo '<script>window.location.replace("source/view/company/create_user_company.php");</script>';
                 exit;
             } else if ($role == "Applicant") {
-                echo '<script>window.location.replace("/source/view/applicant/create_user/basics.php");</script>';
+                echo '<script>window.location.replace("source/view/applicant/create_user_applicant.php");</script>';
                 exit;
             }
         }

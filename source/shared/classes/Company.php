@@ -1,5 +1,7 @@
 <?php
 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/shared/classes/User.php";
+
 class Company extends User
 {
     /*user_id?*/

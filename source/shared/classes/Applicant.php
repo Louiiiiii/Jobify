@@ -1,4 +1,7 @@
 <?php
+
+require_once $_SERVER['DOCUMENT_ROOT'] . "/shared/classes/User.php";
+
 class Applicant extends User
 {
     public $applicant_id;
