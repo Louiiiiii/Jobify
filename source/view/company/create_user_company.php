@@ -87,7 +87,4 @@
 </body>
 </html>
 
-<script>
-    const cardMargin = (window.innerHeight*0.9).toString() + ' 0'
-    document.querySelector('body').style.margin = cardMargin;
-</script>
+<script src="../../scripts/cardMargin.js"/>
