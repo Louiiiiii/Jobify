@@ -26,15 +26,10 @@ class Address extends DB
 	 public function addToDB()
 	 {
 		 $country_id = self::addCountry($this->country);
-		 echo 'country_id = '.$country_id;
 		 $city_id = self::addCity($this->city);
-		 echo 'city_id = '.$city_id;
 		 $state_id = self::addState($this->state,$country_id);
-		 echo 'state_id = '.$state_id;
 		 $postalcode_id = self::addPostalCode($this->postalcode, $state_id);
-		 echo 'postalcode_id = '.$postalcode_id;
 		 $city_postalcode_id = self::addCity_PostalCode($city_id, $postalcode_id);
-		 echo 'city_postalcode = '.$city_postalcode_id;
 		 $this->address_id = self::addAddress($this->street,$this->number,$city_postalcode_id,$this->additionalInfo);
 	 }
 
