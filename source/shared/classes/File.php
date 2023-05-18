@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/User.php";
 
+// TODO: set right path
 $path = 'C:/testpath';
 class File extends User
 {
