@@ -57,7 +57,7 @@ class File extends User
 		$filetype_id = self::getFiletypeId($filetype);
 		if($filetype_id == null) {
 			$db = new DB();
-			$stmt = $db->pdo->prepare('insert into filetype (filetype) values (?)');
+			$stmt = $db->pdo->prepare('insert into filetype (type) values (?)');
 			$stmt->bindParam(1, $filetype);
 			$stmt->execute();
 			$filetype_id = self::getFiletypeId($filetype);
