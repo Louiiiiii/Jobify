@@ -86,5 +86,3 @@
     </div>
 </body>
 </html>
-
-<script src="../../scripts/cardMargin.js"/>

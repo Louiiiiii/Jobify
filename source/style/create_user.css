@@ -88,3 +88,26 @@ body {
 input[type="text"]::-webkit-calendar-picker-indicator {
     display: none !important;
 }
+
+@media (max-width: 800px) {
+    body {
+        height: 100%;
+
+        .card {
+            .card-content {
+                .card-content__body {
+
+                    .row {
+                        flex-direction: column;
+                        margin: 0;
+
+                        .field {
+                            justify-content: unset;
+                            margin-bottom: 0.75rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
