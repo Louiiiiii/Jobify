@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/User.php";
 
+// TODO: set right path
 $path = 'C:/testpath';
 class File extends User
 {
@@ -56,7 +57,7 @@ class File extends User
 		$filetype_id = self::getFiletypeId($filetype);
 		if($filetype_id == null) {
 			$db = new DB();
-			$stmt = $db->pdo->prepare('insert into filetype (filetype) values (?)');
+			$stmt = $db->pdo->prepare('insert into filetype (type) values (?)');
 			$stmt->bindParam(1, $filetype);
 			$stmt->execute();
 			$filetype_id = self::getFiletypeId($filetype);
