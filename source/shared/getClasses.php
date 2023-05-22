@@ -4,4 +4,5 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/DB.php";
     require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/Company.php";
     require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/Job.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/Address.php";
 ?>

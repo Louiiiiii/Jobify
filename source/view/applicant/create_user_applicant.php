@@ -19,13 +19,13 @@
                         <div class="field">
                             <label class="label">Firstname</label>
                             <div class="control">
-                                <input name="firstname" class="input" type="text" placeholder="Firstname">
+                                <input name="firstname" class="input" type="text" placeholder="Firstname" required>
                             </div>
                         </div>
                         <div class="field">
                             <label class="label">Lastname</label>
                             <div class="control">
-                                <input name="lastname" class="input" type="text" placeholder="Lastname">
+                                <input name="lastname" class="input" type="text" placeholder="Lastname" required>
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                         <div class="field">
                             <label class="label">Birthday</label>
                             <div class="control">
-                                <input name="birthday" class="input" type="date">
+                                <input name="birthday" class="input" type="date" required>
                             </div>
                         </div>
                     </div>
@@ -41,13 +41,13 @@
                         <div class="field">
                             <label class="label">Country</label>
                             <div class="control">
-                                <input name="country" class="input" type="text" placeholder="Country">
+                                <input name="country" class="input" type="text" placeholder="Country" required>
                             </div>
                         </div>
                         <div class="field">
                             <label class="label">State</label>
                             <div class="control">
-                                <input name="state" class="input" type="text" placeholder="State">
+                                <input name="state" class="input" type="text" placeholder="State" required>
                             </div>
                         </div>
                     </div>
@@ -55,13 +55,13 @@
                         <div class="field">
                             <label class="label">Postal Code</label>
                             <div class="control">
-                                <input name="postalcode" class="input" type="text" placeholder="Postal Code">
+                                <input name="postalcode" class="input" type="text" placeholder="Postal Code" required>
                             </div>
                         </div>
                         <div class="field">
                             <label class="label">City</label>
                             <div class="control">
-                                <input name="city" class="input" type="text" placeholder="City">
+                                <input name="city" class="input" type="text" placeholder="City" required>
                             </div>
                         </div>
                     </div>
@@ -69,13 +69,13 @@
                         <div class="field">
                             <label class="label">Street</label>
                             <div class="control">
-                                <input name="street" class="input" type="text" placeholder="Street">
+                                <input name="street" class="input" type="text" placeholder="Street" required>
                             </div>
                         </div>
                         <div class="field">
                             <label class="label">Street Num.</label>
                             <div class="control">
-                                <input name="streetnumber" class="input" type="text" placeholder="Street Number">
+                                <input name="streetnumber" class="input" type="text" placeholder="Street Number" required>
                             </div>
                         </div>
                     </div>
@@ -83,23 +83,9 @@
                         <div class="field">
                             <label class="label">Highest Degree</label>
                             <div class="select">
-                                <select name="degree">
+                                <select name="degree" required>
                                     <option value="highest">Highest Degree</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Educational Institution</label>
-                            <div class="control">
-                                <input name="institution" class="input" type="text" placeholder="Educational Institution">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="field">
-                            <label class="label">Graduation</label>
-                            <div class="control">
-                                <input name="graduation" class="input" type="month">
                             </div>
                         </div>
                     </div>
@@ -107,18 +93,9 @@
                         <div class="field">
                             <label class="label">Industry</label>
                             <div class="select">
-                                <select name="industry">
+                                <select name="industry" required>
                                     <option value="industry">Industry</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Last/Current Job</label>
-                            <div class="select">
-                                <input name="job" class="input" type="text" list="Jobs" placeholder="Other">
-                                <datalist id="Jobs">
-                                    <option>Job</option>
-                                </datalist>
                             </div>
                         </div>
                     </div>
@@ -140,5 +117,3 @@
     </div>
 </body>
 </html>
-
-<script src="../../scripts/cardMargin.js"></script>
