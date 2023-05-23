@@ -18,10 +18,18 @@ class User extends DB
     public static function insertuser($email, $password)
     {
         $user = new User($email,$password);
-        $stmt = $user->pdo->prepare("INSERT INTO user (email, passwordhash) VALUES (?,?)");
-        $stmt->bindParam(1, $user->email, PDO::PARAM_STR);
-        $stmt->bindParam(2, $user->passwordhash, PDO::PARAM_STR);
-        $stmt->execute();
+
+        $user_id = self::getUser_id();
+
+        if($user_id == null) {
+            $stmt = $user->pdo->prepare("INSERT INTO user (email, passwordhash) VALUES (?,?)");
+            $stmt->bindParam(1, $user->email, PDO::PARAM_STR);
+            $stmt->bindParam(2, $user->passwordhash, PDO::PARAM_STR);
+            $stmt->execute();
+            $user_id = self::getUser_id();
+        }
+        return $user_id;
+
     }
 
 	protected function getUser_id()
