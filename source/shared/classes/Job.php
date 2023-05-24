@@ -11,7 +11,7 @@ class Job extends DB
     public $company_id;
 
 
-    public function __construct($title, $description=null, $salary=null, $isvolunteerwork, $company_id)
+    public function __construct($title, $isvolunteerwork, $company_id,$description=null, $salary=null)
     {
         $this->title = $title;
         $this->description = $description;

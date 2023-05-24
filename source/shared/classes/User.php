@@ -8,7 +8,7 @@ class User extends DB
     public $email;
     public $passwordhash;
 
-    public function __construct($email, $password)
+    public function __construct($email, $password = null)
     {
         $this->email = $email;
         $this->passwordhash = hash('sha512',$password);
