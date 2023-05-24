@@ -15,7 +15,7 @@ class Applicant extends User
 
     public $user_id;
 
-    public function __construct($firstname, $lastname, $birthdate,$description, $allow_headhunting,$user_id, $street_id,$education)
+    public function __construct($firstname, $lastname, $birthdate,$description, $allow_headhunting,$user_id, $street_id,$education, $email = null, $passwordnothashed = null)
     {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -25,7 +25,7 @@ class Applicant extends User
         $this->street_id = $street_id;
         $this->education = $education;
         $this->user_id = $user_id;
-        parent::__construct(null,null);
+        parent::__construct($email, $passwordnothashed, $user_id);
     }
 
 
