@@ -11,13 +11,13 @@ class Company extends User
     public $description;
     public $address_id;
 
-    public function __construct($name, $address_id, $slogan=null, $description=null)
+    public function __construct($name, $address_id, $slogan=null, $description=null, $user_id = null, $email = null, $passwordnothashed = null)
     {
         $this->name = $name;
         $this->address_id = $address_id;
         $this->slogan = $slogan;
         $this->description = $description;
-        parent::__construct(null, null);
+        parent::__construct($email, $passwordnothashed, $user_id);
     }
 
     public function insertCompany()
