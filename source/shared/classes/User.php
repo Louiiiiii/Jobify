@@ -19,14 +19,14 @@ class User extends DB
     {
         $user = new User($email,$password);
 
-        $user_id = self::getUser_id();
+        $user_id = $user->getUser_id();
 
         if($user_id == null) {
             $stmt = $user->pdo->prepare("INSERT INTO user (email, passwordhash) VALUES (?,?)");
             $stmt->bindParam(1, $user->email, PDO::PARAM_STR);
             $stmt->bindParam(2, $user->passwordhash, PDO::PARAM_STR);
             $stmt->execute();
-            $user_id = self::getUser_id();
+            $user_id = $user->getUser_id();
         }
         return $user_id;
 
