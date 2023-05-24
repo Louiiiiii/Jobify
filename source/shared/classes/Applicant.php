@@ -28,6 +28,17 @@ class Applicant extends User
         parent::__construct(null,null);
     }
 
+
+    public function getApplicantByUserId() {
+        $stmt = $this->pdo->prepare('select * from applicant where user_id = ?');
+        $stmt->bindParam(1,$this->user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        $applicant = new Applicant($result['firstname'],$result['lastname'],$result['birthdate'],$result['description'],$result['allow_headhunting'],$result['user_id'],$result['street_id'],$result['education_id']);
+        $applicant->getApplicant_id();
+        return $applicant;
+    }
+
     public function addEducation($education){
         $education_id = $this->getEducation_id($education);
         if ($education_id == null)
@@ -134,6 +145,32 @@ class Applicant extends User
         $stmt->execute();
         $result = $stmt->fetch();
         if($result){
+            return $result[0];
+        }
+        return null;
+    }
+
+    public function applyForJob($job_id, $text = '',$applicationstatus_id = 1){
+        $application_id = $this->getApplication_id($job_id);
+        if ($application_id == null){
+            $stmt = $this->pdo->prepare('insert into application (text, applicationstatus_id, job_id, applicant_id) values(?,?,?,?)');
+            $stmt->bindparam(1, $text);
+            $stmt->bindparam(2, $applicationstatus_id, PDO::PARAM_INT);
+            $stmt->bindparam(3, $job_id, PDO::PARAM_INT);
+            $stmt->bindparam(4, $application_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $application_id = $this->getApplication_id($job_id);
+        }
+        return $application_id;
+    }
+
+    public function getApplication_id($job_id){
+        $stmt = $this->pdo->prepare('select application_id from application where applicant_id = ? and job_id = ?');
+        $stmt->bindparam(1,$this->applicant_id,PDO::PARAM_INT);
+        $stmt->bindparam(2,$job_id,PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        if ($result){
             return $result[0];
         }
         return null;
