@@ -32,11 +32,10 @@ class User extends DB
 
     }
 
-	protected function getUser_id()
+	public function getUser_id()
 	{
-		$stmt = $this->pdo->prepare('select user_id from user where lower(email) = lower(?) and passwordhash = ?');
+		$stmt = $this->pdo->prepare('select user_id from user where lower(email) = lower(?)');
 		$stmt->bindParam(1,$this->email);
-		$stmt->bindParam(2,$this->passwordhash);
 		$stmt->execute();
 		$result = $stmt->fetch();
 		if($result)
