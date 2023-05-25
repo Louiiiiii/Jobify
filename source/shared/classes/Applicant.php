@@ -75,6 +75,17 @@ class Applicant extends User
         return null;
     }
 
+    public function getEducation_Data(){
+        $stmt = $this->pdo->prepare('select education_id, name from education');
+        $stmt->execute();
+        $result = $stmt->fetch();
+        if ($result != null)
+        {
+            return $result;
+        }
+        return null;
+    }
+
     public function addIndustry($industry,$parent = null, $addCorrelation = true){
         $industry_id = $this->getIndustry_id($industry);
         if ($parent != null) {
