@@ -1,3 +1,78 @@
+<?php
+    session_start();
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/getClasses.php";            
+
+    // Befor Submit:
+    $current_user_email = $_SESSION["current_user_email"];
+    $current_user_id = $_SESSION["current_user_id"];
+    $current_user_pwhash = $_SESSION["current_user_pwhash"];
+
+    //After Submit:
+    if (isset($_POST["firstname"])) {
+        //from Form
+        $firstname = $_POST["firstname"];
+        $lastname = $_POST["lastname"];
+        $birthday = $_POST["birthday"];
+        $country = $_POST["country"];
+        $state = $_POST["state"];
+        $postalcode = $_POST["postalcode"];
+        $city = $_POST["city"];
+        $street = $_POST["street"];
+        $streetnumber = $_POST["streetnumber"];
+        $degree = $_POST["degree"];
+        $industryid = $_POST["industryid"];
+        $headhunting = $_POST["headhunting"];
+
+        //Inserts
+
+        //Address
+        $address = new Address($street, $streetnumber, $state, $country, $postalcode, $city);
+        $address->addToDB();
+        $address_id = $address->address_id;
+        
+        //Applicant
+        if ($headhunting == "yes") {
+            $allow_headhunting = 1;
+        } else {
+            $allow_headhunting = 0;
+        }
+
+        $applicant = new Applicant(
+                $firstname, 
+                $lastname, 
+                $birthdate, 
+                null, 
+                $allow_headhunting, 
+                $current_user_id, 
+                $address_id, 
+                $degree, 
+                $current_user_email, 
+                null
+        );
+        
+        //Industry
+        $applicant->addApplicant_Industry($industryid);
+        
+        //Unset $_POST
+        unset($_POST["firstname"]);
+        unset($_POST["lastname"]);
+        unset($_POST["birthday"]);
+        unset($_POST["country"]);
+        unset($_POST["state"]);
+        unset($_POST["postalcode"]);
+        unset($_POST["city"]);
+        unset($_POST["street"]);
+        unset($_POST["streetnumber"]);
+        unset($_POST["degree"]);
+        unset($_POST["industryid"]);
+        unset($_POST["headhunting"]);
+
+        echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/index.php");</script>';
+        exit;
+    } 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +89,7 @@
         <p class="title is-2">Applicant</p>
         <div class="card-content">
             <div class="card-content__body">
-                <form class="form">
+                <form action="./create_user_applicant.php" method="post" class="form">
                     <div class="row">
                         <div class="field">
                             <label class="label">Firstname</label>
@@ -84,7 +159,15 @@
                             <label class="label">Highest Degree</label>
                             <div class="select">
                                 <select name="degree" required>
-                                    <option value="highest">Highest Degree</option>
+                                    <option value="highest">High School Diploma</option>
+                                    <option value="highest">Vocational or Technical Certifications</option>
+                                    <option value="highest">Undergraduate (e.g., Bachelor's Degree)</option>
+                                    <option value="highest">Professional Degrees (e.g., M.D., J.D., D.D.S., D.V.M.)</option>
+                                    <option value="highest">Postgraduate</option>
+                                    <option value="highest">Postdoctoral</option>
+                                    <option value="highest">Graduate (e.g., Master's Degree)</option>
+                                    <option value="highest">Doctorate or Ph.D. (Doctor of Philosophy)</option>
+                                    <option value="highest">Associate's Degree</option>
                                 </select>
                             </div>
                         </div>
@@ -93,8 +176,43 @@
                         <div class="field">
                             <label class="label">Industry</label>
                             <div class="select">
-                                <select name="industry" required>
-                                    <option value="industry">Industry</option>
+                                <select name="industryid" required>
+                                <option value="1">Assistenz</option>
+                                <option value="2">Verwaltung</option>
+                                <option value="3">Beratung</option>
+                                <option value="4">Consulting</option>
+                                <option value="5">Coaching</option>
+                                <option value="6">Training</option>
+                                <option value="7">Einkauf</option>
+                                <option value="8">Logistik</option>
+                                <option value="9">Finanzen</option>
+                                <option value="10">Bankwesen</option>
+                                <option value="11">Führung</option>
+                                <option value="12">Management</option>
+                                <option value="13">Gastronomie</option>
+                                <option value="14">Tourismus</option>
+                                <option value="15">Grafik</option>
+                                <option value="16">Design</option>
+                                <option value="17">IT</option>
+                                <option value="18">EDV</option>
+                                <option value="19">Marketing</option>
+                                <option value="20">PR</option>
+                                <option value="21">Personalwesen</option>
+                                <option value="22">Pharma</option>
+                                <option value="23">Soziales</option>
+                                <option value="24">Produktion</option>
+                                <option value="25">Handwerk</option>
+                                <option value="26">Rechnungswesen</option>
+                                <option value="27">Controlling</option>
+                                <option value="28">Rechtswesen</option>
+                                <option value="29">Sachbearbeitung</option>
+                                <option value="30">Sonstige Berufe</option>
+                                <option value="31">Technik</option>
+                                <option value="32">Ingenieurwesen</option>
+                                <option value="33">Verkauf</option>
+                                <option value="34">Kundenbetreuung</option>
+                                <option value="35">Wissenschaft</option>
+                                <option value="36">Forschung</option>
                                 </select>
                             </div>
                         </div>
@@ -109,7 +227,7 @@
                         </div>
                     </div>
                     <diV class="row">
-                        <button class="button is-link">Submit</button>
+                        <button type="submit" class="button is-link">Submit</button>
                     </diV>
                 </form>
             </div>
