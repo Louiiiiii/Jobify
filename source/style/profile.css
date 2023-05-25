@@ -1,0 +1,70 @@
+body {
+    .form {
+        margin: 30px;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        column-gap: 20px;
+        margin-bottom: 20px;
+
+        &:first-child {
+            .field {
+                justify-content: center;
+                height: auto;
+            }
+        }
+
+        .field {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 40px;
+            margin: 0;
+
+            .label, .checkbox {
+                display: flex;
+                align-items: center;
+                margin: 0 15px 0 0;
+
+                .checkbox-input {
+                    margin-right: 5px;
+                    padding: 0;
+                }
+            }
+
+            .label {
+                width: 35%;
+            }
+        }
+
+        .table-container {
+            width: 100%;
+            
+            .table {
+                width: 100%;
+            }
+        }
+
+        &:last-child {
+            justify-content: flex-end;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    body {
+        height: 100%;
+
+        .row {
+            flex-direction: column;
+            margin: 0;
+
+            .field {
+                justify-content: unset;
+                margin-bottom: 0.75rem;
+            }
+        }
+    }
+}
