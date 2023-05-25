@@ -138,7 +138,7 @@ class Applicant extends User
         return null;
     }
 
-    public function getIndustry_Data(){
+    public static function getIndustry_Data(){
         $db = new DB();
         $stmt = $db->pdo->prepare('select industry_id, name from industry');
         $stmt->execute();
