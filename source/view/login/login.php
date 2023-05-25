@@ -1,3 +1,33 @@
+<?php 
+    session_start();
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/getClasses.php";            
+
+    if (isset($_POST["email"])) {
+        $email = $_POST["email"];
+        $pw = $_POST["password"];
+
+        if (User::doesemailexist($email) == false) {
+            echo "<script>alert('E-Mail does not exist, please sign up first.');</script>";
+            echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/view/login/signup.php");</script>';
+            exit;
+        } else {
+            if(User::validateCredentials($email, $pw) == true) {
+                $user = new User($email, $pw);
+                $pwhash = $user->passwordhash;
+                $user_id = $user->getUser_id();
+
+                $_SESSION["current_user_email"] = $email;
+                $_SESSION["current_user_pwhash"] = $pwhash;
+                $_SESSION["current_user_id"] = $user_id;
+                
+                echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/index.php");</script>';
+            } else {
+                echo "<script>alert('E-Mail or Password wrong!');</script>";
+            }
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,31 +44,33 @@
         <p class="title is-2">Login</p>
         <div class="card-content">
             <div class="card-content__login">
-                <div class="field">
-                    <p class="control has-icons-left has-icons-right">
-                        <input class="input" type="email" placeholder="Email">
-                        <span class="icon is-small is-left">
-                        <i class="fas fa-envelope"></i>
-                        </span>
-                        <span class="icon is-small is-right">
-                        <i class="fas fa-check"></i>
-                        </span>
-                    </p>
-                </div>
-                <div class="field">
-                    <p class="control has-icons-left">
-                        <input class="input" type="password" placeholder="Password">
-                        <span class="icon is-small is-left">
-                        <i class="fas fa-lock"></i>
-                        </span>
-                    </p>
-                </div>
-                <div class="field">
-                    <a>Forgot password?</a>
-                </div>
-                <div class="field">
-                    <button class="button is-primary">Login</button>
-                </div>
+                <form action="./login.php" method="post">
+                    <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                            <input name="email" class="input" type="email" placeholder="Email" required>
+                            <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                            </span>
+                            <span class="icon is-small is-right">
+                            <i class="fas fa-check"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left">
+                            <input name="password" class="input" type="password" placeholder="Password" required>
+                            <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <a>Forgot password?</a>
+                    </div>
+                    <div class="field">
+                        <button type="submit" class="button is-primary">Login</button>
+                    </div>
+                </form>
             </div>
             <div class="card-content__signup">
                 <div class="signup">

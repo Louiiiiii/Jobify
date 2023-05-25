@@ -11,7 +11,14 @@
             echo "<script>alert('E-Mail already exists, please try to login.');</script>";
         } else {
             User::insertuser($email, $pw);
+
+            $user = new User($email, $pw);
+            $pwhash = $user->passwordhash;
+            $user_id = $user->getUser_id();
+
             $_SESSION["current_user_email"] = $email;
+            $_SESSION["current_user_pwhash"] = $pwhash;
+            $_SESSION["current_user_id"] = $user_id;
 
             if ($role == "Company") {
                 echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/view/company/create_user_company.php");</script>';
