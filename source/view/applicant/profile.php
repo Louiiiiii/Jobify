@@ -136,19 +136,40 @@
                             <th>1</th>
                             <td>Lebenslauf</td>
                             <td>.docx</td>
-                            <td><button class="disabling" type="button" disabled>delete</button></td>
+                            <td>
+                                <button class="button is-danger is-outlined disabling" type="button" disabled>
+                                    <span>Delete</span>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                </button>
+                            </td>
                         </tr>
                         <tr>
                             <th>2</th>
                             <td>LAP Zeugnis</td>
                             <td>.pdf</td>
-                            <td><button class="disabling" type="button" disabled>delete</button></td>
+                            <td>
+                                <button class="button is-danger is-outlined disabling" type="button" disabled>
+                                    <span>Delete</span>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                </button>
+                            </td>
                         </tr>
                         <tr>
                             <th>3</th>
                             <td>Matura Zeugnis</td>
                             <td>.png</td>
-                            <td><button class="disabling" type="button" disabled>delete</button></td>
+                            <td>
+                                <button class="button is-danger is-outlined disabling" type="button" disabled>
+                                    <span>Delete</span>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
