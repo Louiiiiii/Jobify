@@ -130,8 +130,11 @@ class Applicant extends User
         $stmt->bindParam(1,$this->user_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch();
-        $this->applicant_id =$result[0];
-        return $result[0];
+        if ($result != null) {
+            $this->applicant_id = $result[0];
+            return $result[0];
+        }
+        return null;
     }
 
     public function addApplicant_Industry($industry_id) {
