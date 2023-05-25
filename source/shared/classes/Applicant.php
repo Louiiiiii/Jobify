@@ -192,7 +192,7 @@ class Applicant extends User
 
     private function insert()
     {
-        $stmt = $this->pdo->prepare('insert into applicant (firstname, lastname, birthdate, description, allow_headhunting, user_id, address_id, edcation_id) values (?,?,?,?,?,?,?,?)');
+        $stmt = $this->pdo->prepare('insert into applicant (firstname, lastname, birthdate, description, allow_headhunting, user_id, address_id, education_id) values (?,?,?,?,?,?,?,?)');
         $stmt->bindParam(1, $this->firstname);
         $stmt->bindParam(2, $this->lastname);
         $stmt->bindParam(3, $this->birthdate);
@@ -214,6 +214,7 @@ class Applicant extends User
         $stmt->bindParam(5, $this->allow_headhunting);
         $stmt->bindParam(6, $this->address_id);
         $stmt->bindParam(7, $this->education_id);
+        $stmt->bindParam(8, $this->applicant_id);
         return $stmt->execute();
     }
 }
