@@ -8,10 +8,11 @@ class User extends DB
     public $email;
     public $passwordhash;
 
-    public function __construct($email, $password)
+    public function __construct($email, $password = null, $user_id = null)
     {
         $this->email = $email;
         $this->passwordhash = hash('sha512',$password);
+        $this->user_id = $user_id;
         parent::__construct();
     }
 
@@ -32,11 +33,10 @@ class User extends DB
 
     }
 
-	protected function getUser_id()
+	public function getUser_id()
 	{
-		$stmt = $this->pdo->prepare('select user_id from user where lower(email) = lower(?) and passwordhash = ?');
+		$stmt = $this->pdo->prepare('select user_id from user where lower(email) = lower(?)');
 		$stmt->bindParam(1,$this->email);
-		$stmt->bindParam(2,$this->passwordhash);
 		$stmt->execute();
 		$result = $stmt->fetch();
 		if($result)

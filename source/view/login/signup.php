@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/getClasses.php";            
 
     if (isset($_POST["email"])) {
@@ -10,6 +11,7 @@
             echo "<script>alert('E-Mail already exists, please try to login.');</script>";
         } else {
             User::insertuser($email, $pw);
+            $_SESSION["current_user_email"] = $email;
 
             if ($role == "Company") {
                 echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/view/company/create_user_company.php");</script>';
@@ -24,8 +26,6 @@
         unset($_POST["password"]);
         unset($_POST["role"]);
     } 
-
-
 ?>
 
 <!DOCTYPE html>

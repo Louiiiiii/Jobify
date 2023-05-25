@@ -10,22 +10,47 @@ class Applicant extends User
     public $birthdate;
     public $description;
     public $allow_headhunting;
-    public $street_id;
-    public $education;
+    public $address_id;
+    public $education_id;
 
     public $user_id;
 
-    public function __construct($firstname, $lastname, $birthdate,$description, $allow_headhunting,$user_id, $street_id,$education)
+    public function __construct($firstname, $lastname, $birthdate, $description, $allow_headhunting, $user_id, $address_id, $education, $email = null, $passwordnothashed = null)
     {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->birthdate = $birthdate;
         $this->description = $description;
         $this->allow_headhunting = $allow_headhunting;
-        $this->street_id = $street_id;
-        $this->education = $education;
+        $this->address_id = $address_id;
+        $this->education_id = $education;
         $this->user_id = $user_id;
-        parent::__construct(null,null);
+        parent::__construct($email, $passwordnothashed, $user_id);
+    }
+
+    public function updateDB()
+    {
+        $this->file_id = $this->getApplicant_id();
+        if ($this->file_id == null) {
+            $success = $this->insert();
+        }
+        elseif ($this->file_id != null)
+        {
+            $success = $this->update();
+        }
+        return $success;
+    }
+
+
+    public static function getApplicantByUserId($user_id) {
+        $db = new DB;
+        $stmt = $db->pdo->prepare('select * from applicant where user_id = ?');
+        $stmt->bindParam(1,$user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_BOTH);
+        $applicant = new Applicant($result['firstname'],$result['lastname'],$result['birthdate'],$result['description'],$result['allow_headhunting'],$result['user_id'],$result['address_id'],$result['education_id']);
+        $applicant->getApplicant_id();
+        return $applicant;
     }
 
     public function addEducation($education){
@@ -137,5 +162,58 @@ class Applicant extends User
             return $result[0];
         }
         return null;
+    }
+
+    public function applyForJob($job_id, $text = '',$applicationstatus_id = 1){
+        $application_id = $this->getApplication_id($job_id);
+        if ($application_id == null){
+            $stmt = $this->pdo->prepare('insert into application (text, applicationstatus_id, job_id, applicant_id) values(?,?,?,?)');
+            $stmt->bindparam(1, $text);
+            $stmt->bindparam(2, $applicationstatus_id, PDO::PARAM_INT);
+            $stmt->bindparam(3, $job_id, PDO::PARAM_INT);
+            $stmt->bindparam(4, $application_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $application_id = $this->getApplication_id($job_id);
+        }
+        return $application_id;
+    }
+
+    public function getApplication_id($job_id){
+        $stmt = $this->pdo->prepare('select application_id from application where applicant_id = ? and job_id = ?');
+        $stmt->bindparam(1,$this->applicant_id,PDO::PARAM_INT);
+        $stmt->bindparam(2,$job_id,PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        if ($result){
+            return $result[0];
+        }
+        return null;
+    }
+
+    private function insert()
+    {
+        $stmt = $this->pdo->prepare('insert into applicant (firstname, lastname, birthdate, description, allow_headhunting, user_id, address_id, edcation_id) values (?,?,?,?,?,?,?,?)');
+        $stmt->bindParam(1, $this->firstname);
+        $stmt->bindParam(2, $this->lastname);
+        $stmt->bindParam(3, $this->birthdate);
+        $stmt->bindParam(4, $this->description);
+        $stmt->bindParam(5, $this->allow_headhunting);
+        $stmt->bindParam(6, $this->user_id);
+        $stmt->bindParam(7, $this->address_id);
+        $stmt->bindParam(8, $this->education_id);
+        return $stmt->execute();
+    }
+
+    private function update()
+    {
+        $stmt = $this->pdo->prepare('update applicant set firstname = ?, lastname = ?, birthdate = ?, description = ?,allow_headhunting = ?, address_id = ?, education_id = ? where applicant_id = ?');
+        $stmt->bindParam(1, $this->firstname);
+        $stmt->bindParam(2, $this->lastname);
+        $stmt->bindParam(3, $this->birthdate);
+        $stmt->bindParam(4, $this->description);
+        $stmt->bindParam(5, $this->allow_headhunting);
+        $stmt->bindParam(6, $this->address_id);
+        $stmt->bindParam(7, $this->education_id);
+        return $stmt->execute();
     }
 }
