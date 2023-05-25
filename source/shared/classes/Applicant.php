@@ -79,7 +79,8 @@ class Applicant extends User
         $db = new DB();
         $stmt = $db->pdo->prepare('select education_id, name from education');
         $stmt->execute();
-        $result = $stmt->fetch();
+        $result = $stmt->fetchAll();
+
         if ($result != null)
         {
             return $result;
