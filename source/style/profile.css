@@ -47,9 +47,13 @@ body {
             }
         }
 
-        &:last-child {
+        &.edit, &.cancel {
             justify-content: flex-end;
         }
+    }
+
+    .hide {
+        display: none;
     }
 }
 
