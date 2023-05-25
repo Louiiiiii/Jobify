@@ -75,8 +75,9 @@ class Applicant extends User
         return null;
     }
 
-    public function getEducation_Data(){
-        $stmt = $this->pdo->prepare('select education_id, name from education');
+    public static function getEducation_Data(){
+        $db = new DB();
+        $stmt = $db->pdo->prepare('select education_id, name from education');
         $stmt->execute();
         $result = $stmt->fetch();
         if ($result != null)
@@ -111,6 +112,32 @@ class Applicant extends User
     }
 
     public function getIndustry_id($industry, $parent = null){
+        if($parent != null){
+            $parent_id = $this->getIndustry_id($parent);
+        } else {
+            $parent_id = null;
+        }
+        $query = 'select industry_id from industry where lower(name) = lower(?)';
+        if ($parent_id == null){
+            $query = $query . ' and parent_industry_id is null';
+        } else {
+            $query = $query . ' and parent_industry_id = ?';
+        }
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(1,$industry);
+        if($parent_id != null) {
+            $stmt->bindParam(2, $parent_id, PDO::PARAM_INT);
+        }
+        $stmt->execute();
+        $result = $stmt->fetch();
+        if ($result)
+        {
+            return $result[0];
+        }
+        return null;
+    }
+
+    public function getIndustry_Data(){
         if($parent != null){
             $parent_id = $this->getIndustry_id($parent);
         } else {
