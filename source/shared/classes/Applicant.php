@@ -94,7 +94,7 @@ class Applicant extends User
         }
 
         if ($addCorrelation){
-            addApplicant_Industry($industry_id);
+            $this->addApplicant_Industry($industry_id);
         }
         return $industry_id;
     }
