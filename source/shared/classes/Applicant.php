@@ -13,8 +13,6 @@ class Applicant extends User
     public $address_id;
     public $education_id;
 
-    public $user_id;
-
     public function __construct($firstname, $lastname, $birthdate, $description, $allow_headhunting, $user_id, $address_id, $education, $email = null, $passwordnothashed = null)
     {
         $this->firstname = $firstname;

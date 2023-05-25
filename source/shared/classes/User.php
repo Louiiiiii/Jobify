@@ -4,7 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/DB.php";
 
 class User extends DB
 {
-    protected $user_id;
+    public $user_id;
     public $email;
     public $passwordhash;
 
