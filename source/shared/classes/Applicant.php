@@ -24,17 +24,16 @@ class Applicant extends User
         $this->allow_headhunting = $allow_headhunting;
         $this->address_id = $address_id;
         $this->education_id = $education;
-        $this->user_id = $user_id;
         parent::__construct($email, $passwordnothashed, $user_id);
     }
 
     public function updateDB()
     {
-        $this->file_id = $this->getApplicant_id();
-        if ($this->file_id == null) {
+        $this->applicant_id = $this->getApplicant_id();
+        if ($this->applicant_id == null) {
             $success = $this->insert();
         }
-        elseif ($this->file_id != null)
+        elseif ($this->applicant_id != null)
         {
             $success = $this->update();
         }
@@ -137,7 +136,7 @@ class Applicant extends User
         return $result[0];
     }
 
-    public function addApplicant_Industry($industry_id){
+    public function addApplicant_Industry($industry_id) {
         $id = $this->getApplicantIndustry_id($industry_id);
         if ($id == null) {
             $this->getApplicant_id();
