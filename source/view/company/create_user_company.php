@@ -3,7 +3,9 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/getClasses.php";            
 
     // Befor Submit:
-    $email = $_SESSION["current_user_email"];
+    $current_user_email = $_SESSION["current_user_email"];
+    $current_user_id = $_SESSION["current_user_id"];
+    $current_user_pwhash = $_SESSION["current_user_pwhash"];
 
     //After Submit:
     if (isset($_POST["company"])) {
@@ -18,10 +20,6 @@
         $streetnumber = $_POST["streetnumber"];
         $description = $_POST["description"];
 
-        //from DB
-        $user = new User($email);
-
-
         //Inserts
 
         //Address
@@ -29,7 +27,7 @@
         $address->addToDB();
         
         //Company
-        $company = new Company($company, $address->address_id, $slogan, $description, $user->getUser_id());
+        $company = new Company($company, $address->address_id, $slogan, $description, $current_user_id);
         $company->insertCompany();
         
         //Unset $_POST
