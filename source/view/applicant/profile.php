@@ -17,7 +17,7 @@
                     <label class="file-label">
                         <input class="file-input" type="file" name="profilePic">
                         <figure class="image is-128x128">
-                            <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+                            <img class="is-rounded" src="../../style/img/user-icon.png">
                         </figure>
                     </label>
                 </div>
@@ -44,6 +44,7 @@
                     <input name="birthday" class="input" type="date" required>
                 </div>
             </div>
+            <div class="field"></div>
         </div>
         <div class="row">
             <div class="field">
@@ -96,6 +97,7 @@
                     </select>
                 </div>
             </div>
+            <div class="field"></div>
         </div>
         <div class="row">
             <div class="field">
@@ -106,32 +108,19 @@
                     </select>
                 </div>
             </div>
+            <div class="field"></div>
         </div>
         <div class="row">
             <div class="field">
                 <label class="label">Allow Headhunting</label>
                 <label class="checkbox">
-                    <input name="headhunting" type="checkbox">
+                    <input class="checkbox-input" name="headhunting" type="checkbox">
                     Yes
                 </label>
-            </div>
+            </div>  
+            <div class="field"></div>
         </div>
         <div class="row">
-            <div class="field">
-                <div class="file">
-                    <label class="file-label">
-                        <input class="file-input" type="file" name="file">
-                        <span class="file-cta">
-                            <span class="file-icon">
-                                <i class="fas fa-upload"></i>
-                            </span>
-                            <span class="file-label">Choose a file…</span>
-                        </span>
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div>
             <div class="table-container">
                 <table class="table">
                     <thead>
@@ -164,6 +153,22 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="row">
+            <div class="field">
+                <div class="file">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="file">
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                            </span>
+                            <span class="file-label">Add a file…</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <div class="field"></div>
         </div>
         <diV class="row">
             <button class="button is-link" disabled>Change</button>
