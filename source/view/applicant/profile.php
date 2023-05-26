@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
+<?php require_once 'applicant_profile_navbar.php'; ?>
     <form class="form">
         <div class="row">
             <div class="field">
