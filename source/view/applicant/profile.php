@@ -25,6 +25,20 @@
         </div>
         <div class="row">
             <div class="field">
+                <label class="label">E-Mail</label>
+                <div class="control">
+                    <input name="email" class="input disabling" type="email" placeholder="Email" required disabled>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                    <input name="password" class="input disabling" type="password" placeholder="Password" required disabled>
+                </div>
+            </div>
+            </div>
+        <div class="row">
+            <div class="field">
                 <label class="label">Firstname</label>
                 <div class="control">
                     <input name="firstname" class="input disabling" type="text" placeholder="Firstname" required disabled>
@@ -137,10 +151,9 @@
                             <td>Lebenslauf</td>
                             <td>.docx</td>
                             <td>
-                                <button class="button is-danger is-outlined disabling" type="button" disabled>
-                                    <span>Delete</span>
+                                <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
                                     <span class="icon is-small">
-                                        <i class="fas fa-times"></i>
+                                        <i class="fas fa-trash"></i>
                                     </span>
                                 </button>
                             </td>
@@ -150,10 +163,9 @@
                             <td>LAP Zeugnis</td>
                             <td>.pdf</td>
                             <td>
-                                <button class="button is-danger is-outlined disabling" type="button" disabled>
-                                    <span>Delete</span>
+                                <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
                                     <span class="icon is-small">
-                                        <i class="fas fa-times"></i>
+                                        <i class="fas fa-trash"></i>
                                     </span>
                                 </button>
                             </td>
@@ -163,10 +175,9 @@
                             <td>Matura Zeugnis</td>
                             <td>.png</td>
                             <td>
-                                <button class="button is-danger is-outlined disabling" type="button" disabled>
-                                    <span>Delete</span>
+                                <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
                                     <span class="icon is-small">
-                                        <i class="fas fa-times"></i>
+                                        <i class="fas fa-trash"></i>
                                     </span>
                                 </button>
                             </td>
