@@ -13,8 +13,6 @@ class Applicant extends User
     public $address_id;
     public $education_id;
 
-    public $user_id;
-
     public function __construct($firstname, $lastname, $birthdate, $description, $allow_headhunting, $user_id, $address_id, $education, $email = null, $passwordnothashed = null)
     {
         $this->firstname = $firstname;
@@ -24,17 +22,16 @@ class Applicant extends User
         $this->allow_headhunting = $allow_headhunting;
         $this->address_id = $address_id;
         $this->education_id = $education;
-        $this->user_id = $user_id;
         parent::__construct($email, $passwordnothashed, $user_id);
     }
 
     public function updateDB()
     {
-        $this->file_id = $this->getApplicant_id();
-        if ($this->file_id == null) {
+        $this->applicant_id = $this->getApplicant_id();
+        if ($this->applicant_id == null) {
             $success = $this->insert();
         }
-        elseif ($this->file_id != null)
+        elseif ($this->applicant_id != null)
         {
             $success = $this->update();
         }
@@ -78,6 +75,19 @@ class Applicant extends User
         return null;
     }
 
+    public static function getEducation_Data(){
+        $db = new DB();
+        $stmt = $db->pdo->prepare('select education_id, name from education');
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if ($result != null)
+        {
+            return $result;
+        }
+        return null;
+    }
+
     public function addIndustry($industry,$parent = null, $addCorrelation = true){
         $industry_id = $this->getIndustry_id($industry);
         if ($parent != null) {
@@ -97,7 +107,7 @@ class Applicant extends User
         }
 
         if ($addCorrelation){
-            addApplicant_Industry($industry_id);
+            $this->addApplicant_Industry($industry_id);
         }
         return $industry_id;
     }
@@ -128,16 +138,32 @@ class Applicant extends User
         return null;
     }
 
+    public static function getIndustry_Data(){
+        $db = new DB();
+        $stmt = $db->pdo->prepare('select industry_id, name from industry');
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if ($result != null)
+        {
+            return $result;
+        }
+        return null;
+    }
+
     public function getApplicant_id() {
         $stmt = $this->pdo->prepare('select applicant_id id from applicant where user_id = ?');
         $stmt->bindParam(1,$this->user_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch();
-        $this->applicant_id =$result[0];
-        return $result[0];
+        if ($result != null) {
+            $this->applicant_id = $result[0];
+            return $result[0];
+        }
+        return null;
     }
 
-    public function addApplicant_Industry($industry_id){
+    public function addApplicant_Industry($industry_id) {
         $id = $this->getApplicantIndustry_id($industry_id);
         if ($id == null) {
             $this->getApplicant_id();
@@ -192,7 +218,7 @@ class Applicant extends User
 
     private function insert()
     {
-        $stmt = $this->pdo->prepare('insert into applicant (firstname, lastname, birthdate, description, allow_headhunting, user_id, address_id, edcation_id) values (?,?,?,?,?,?,?,?)');
+        $stmt = $this->pdo->prepare('insert into applicant (firstname, lastname, birthdate, description, allow_headhunting, user_id, address_id, education_id) values (?,?,?,?,?,?,?,?)');
         $stmt->bindParam(1, $this->firstname);
         $stmt->bindParam(2, $this->lastname);
         $stmt->bindParam(3, $this->birthdate);
@@ -214,6 +240,7 @@ class Applicant extends User
         $stmt->bindParam(5, $this->allow_headhunting);
         $stmt->bindParam(6, $this->address_id);
         $stmt->bindParam(7, $this->education_id);
+        $stmt->bindParam(8, $this->applicant_id);
         return $stmt->execute();
     }
 }
