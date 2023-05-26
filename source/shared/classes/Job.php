@@ -44,13 +44,14 @@ class Job extends DB
     //TODO: OBLE new insertorupd implementieren
     public static function insertorupdjob($job_id, $title, $description=null, $salary=null, $isvolunteerwork, $company_id)
     {
-        $stmt = pdo->prepare("select job_id from job where job_id = ?");
+		$db = new DB();
+        $stmt = $db->pdo->prepare("select job_id from job where job_id = ?");
         $stmt->bindParam(1, $job_id, PDO::PARAM_STR);
 
-        $statement->execute();
+		$stmt->execute();
 
         // Fetch the first row
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
         // Check if a row was returned
         if ($row) {
