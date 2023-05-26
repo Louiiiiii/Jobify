@@ -32,9 +32,7 @@
             </div>
             <div class="field">
                 <label class="label">Password</label>
-                <div class="control">
-                    <input name="password" class="input disabling" type="password" placeholder="Password" required disabled>
-                </div>
+                <button type="button" class="button js-modal-trigger" data-target="modal-js-example">Change Password</button>
             </div>
             </div>
         <div class="row">
@@ -210,7 +208,49 @@
             <button class="button is-link">Change</button>
         </diV>
     </form>
+
+    <div id="modal-js-example" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="box">
+                <form class="form">
+                    <div class="row">
+                        <div class="field">
+                            <label class="label">Current Password</label>
+                            <div class="control">
+                                <input id="currentpassword" name="currentpassword" class="input" type="password" placeholder="Current Password" oninput="checkpw()" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control">
+                                <input id="password" name="password" class="input" type="password" placeholder="Password" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="field">
+                            <label class="label">Repeat Password</label>
+                            <div class="control">
+                                <input id="repeatpassword" name="repeatpassword" class="input" type="password" placeholder="Repeat Password" oninput="checkpw()" required> 
+                            </div>
+                            <p class="checkpasswordtext" id="checkpasswordtext"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="button is-link">Change</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
 </body>
 </html>
 
 <script src="../../scripts/hideButton.js"></script>
+<script src="../../scripts/modal.js"></script>
+<script src="../../scripts/checkpassword.js"></script>
