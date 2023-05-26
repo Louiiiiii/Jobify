@@ -17,3 +17,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+function toggleNavbars() {
+   alert('pipipupu');
+
+   var comNavHome= document.getElementById("comNavHome");
+   var comNavProfile = document.getElementById("comNavProfile");
+
+
+    if (window.getComputedStyle(comNavHome).display === "none") {
+        alert('Com Nav home is hidden')
+        comNavHome.style.display = "block"
+        comNavProfile.style.display = "none";
+    } else {
+        alert('Com Nav Company is hidden')
+        comNavHome.style.display = "none";
+        comNavProfile.style.display = "block";
+    }
+}
