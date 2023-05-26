@@ -44,6 +44,10 @@ body {
             
             .table {
                 width: 100%;
+
+                .button.is-danger.is-outlined.is-rounded.disabling {
+                    width: 0;
+                }
             }
         }
 
