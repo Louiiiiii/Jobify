@@ -1,3 +1,52 @@
+<?php
+    session_start();
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/getClasses.php";            
+
+    // Befor Submit:
+    $current_user_email = $_SESSION["current_user_email"];
+    $current_user_id = $_SESSION["current_user_id"];
+    $current_user_pwhash = $_SESSION["current_user_pwhash"];
+
+    //After Submit:
+    if (isset($_POST["company"])) {
+        //from Form
+        $company = $_POST["company"];
+        $slogan = $_POST["slogan"];
+        $country = $_POST["country"];
+        $state = $_POST["state"];
+        $postalcode = $_POST["postalcode"];
+        $city = $_POST["city"];
+        $street = $_POST["street"];
+        $streetnumber = $_POST["streetnumber"];
+        $description = $_POST["description"];
+
+        //Inserts
+
+        //Address
+        $address = new Address($street, $streetnumber, $state, $country, $postalcode, $city);
+        $address->addToDB();
+        
+        //Company
+        $company = new Company($company, $address->address_id, $slogan, $description, $current_user_id);
+        $company->insertCompany();
+        
+        //Unset $_POST
+        unset($_POST["company"]);
+        unset($_POST["slogan"]);
+        unset($_POST["country"]);
+        unset($_POST["state"]);
+        unset($_POST["postalcode"]);
+        unset($_POST["city"]);
+        unset($_POST["street"]);
+        unset($_POST["streetnumber"]);
+        unset($_POST["description"]);
+
+        echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/index.php");</script>';
+        exit;
+    } 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,12 +63,12 @@
         <p class="title is-2">Create User</p>
         <div class="card-content">
             <div class="card-content__body">
-                <form class="form">
+                <form action="./create_user_company.php" method="post" class="form">
                     <div class="row">
                         <div class="field">
                             <label class="label">Company</label>
                             <div class="control">
-                                <input name="name" class="input" type="text" placeholder="Company Name" required>
+                                <input name="company" class="input" type="text" placeholder="Company Name" required>
                             </div>
                         </div>
                         <div class="field">
@@ -78,7 +127,7 @@
                         </div>
                     </div>
                     <diV class="row company-submit">
-                        <button class="button is-link">Submit</button>
+                        <button type="submit" class="button is-link">Submit</button>
                     </diV>
                 </form>
             </div>

@@ -1,5 +1,5 @@
-<!--Navbar Company Home -->
-<nav class="navbar is-black has-shadow" id="comNavHome" role="navigation" aria-label="main navigation">
+<!--Navbar Company Profile -->
+<nav class="navbar is-black has-shadow" id="comNavProfile" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
             <img src="../../../source/style/img/jobify_slogan.png">
@@ -12,25 +12,15 @@
     </div>
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item">
-                Published Jobs
-            </a>
-            <a class="navbar-item">
-                Applicants
-            </a>
-            <a class="navbar-item">
-                Headhunting
-            </a>
         </div>
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
                     <a class="button is-white">
-                        <strong>Profile</strong>
+                        <strong>Home</strong>
                     </a>
                 </div>
             </div>
         </div>
     </div>
 </nav>
-

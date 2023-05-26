@@ -4,14 +4,15 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/DB.php";
 
 class User extends DB
 {
-    protected $user_id;
+    public $user_id;
     public $email;
     public $passwordhash;
 
-    public function __construct($email, $password = null)
+    public function __construct($email, $password = null, $user_id = null)
     {
         $this->email = $email;
         $this->passwordhash = hash('sha512',$password);
+        $this->user_id = $user_id;
         parent::__construct();
     }
 

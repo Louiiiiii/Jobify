@@ -1,5 +1,4 @@
-<!--Navbar Company Home -->
-<nav class="navbar is-black has-shadow" id="comNavHome" role="navigation" aria-label="main navigation">
+<nav class="navbar is-black has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
             <img src="../../../source/style/img/jobify_slogan.png">
@@ -13,24 +12,23 @@
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item">
-                Published Jobs
+                Available Jobs
             </a>
             <a class="navbar-item">
-                Applicants
+                Applications
             </a>
             <a class="navbar-item">
-                Headhunting
+                Favorites
+            </a>
+            <a class="navbar-item">
+                Requested Jobs
             </a>
         </div>
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-white">
-                        <strong>Profile</strong>
-                    </a>
                 </div>
             </div>
         </div>
     </div>
 </nav>
-
