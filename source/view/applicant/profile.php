@@ -219,7 +219,7 @@
                         <div class="field">
                             <label class="label">Current Password</label>
                             <div class="control">
-                                <input id="currentpassword" name="currentpassword" class="input" type="password" placeholder="Current Password" oninput="checkpw()" required>
+                                <input id="currentpassword" name="currentpassword" class="input" type="password" placeholder="Current Password" required>
                             </div>
                         </div>
                     </div>
@@ -237,7 +237,12 @@
                             <div class="control">
                                 <input id="repeatpassword" name="repeatpassword" class="input" type="password" placeholder="Repeat Password" oninput="checkpw()" required> 
                             </div>
-                            <p class="checkpasswordtext" id="checkpasswordtext"></p>
+                        </div>
+                    </div>
+                    <div class="row checkpasswordtext">
+                        <div class="field">
+                            <label class="label"></label>
+                            <div class="checkpasswordtext" id="checkpasswordtext"></div>
                         </div>
                     </div>
                     <div class="row">
