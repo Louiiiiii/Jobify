@@ -1,3 +1,8 @@
+<?php
+    echo "<script>";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/source/scripts/navbar.js";      
+    echo "</script>";
+?>
 <nav class="navbar is-black has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
