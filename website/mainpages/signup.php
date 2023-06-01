@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/getClasses.php";            
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/website/classes/getClasses.php";
 
     if (isset($_POST["email"])) {
         $email = $_POST["email"];
@@ -42,8 +42,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registration</title>
-        <link rel="stylesheet" href="../../style/bulma.css">
-        <link rel="stylesheet" href="../../style/login_signup.css">
+        <link rel="stylesheet" href="../source/css/bulma.css">
+        <link rel="stylesheet" href="../source/css/login_signup.css">
         <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
     </head>
     <body>
