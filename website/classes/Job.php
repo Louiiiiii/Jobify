@@ -41,14 +41,13 @@ class Job extends DB
         }
     }
 
-    //TODO: OBLE new insertorupd implementieren
+
     public static function insertorupdjob($job_id, $title, $description=null, $salary=null, $isvolunteerwork, $company_id)
     {
-		$db = new DB();
-        $stmt = $db->pdo->prepare("select job_id from job where job_id = ?");
+        $stmt = pdo->prepare("select job_id from job where job_id = ?");
         $stmt->bindParam(1, $job_id, PDO::PARAM_STR);
 
-		$stmt->execute();
+        $stmt->execute();
 
         // Fetch the first row
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -79,70 +78,5 @@ class Job extends DB
             return null;
         }
     }
-
-    //todo: change to insertorupd
-    public function insertorupdHeadhunt($text=null, $applicant_id)
-    {
-        $stmt = $this->pdo->prepare("insert into headhunt (text, job_id, applicant_id) values (?,?,?)");
-        $stmt->bindParam(1, $text, PDO::PARAM_INT);
-        $stmt->bindParam(2, $this->job_id, PDO::PARAM_INT);
-        $stmt->bindParam(3, $applicant_id, PDO::PARAM_STR);
-
-        if($stmt->execute())
-        {
-            return $this;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public static function getHeadhunt_Applicant($applicant_id)
-    {
-        $myDb = new DB();
-        $stmt = $myDb->pdo->prepare("select * from headhunt where applicant_id = (?)");
-        $stmt->bindParam(1, $applicant_id, PDO::PARAM_INT);
-
-        if($stmt->execute())
-        {
-            return $stmt->fetchAll();
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public static function getHeadhunt_Job($job_id)
-    {
-        $myDb = new DB();
-        $stmt = $myDb->pdo->prepare("select * from headhunt where job_id = (?)");
-        $stmt->bindParam(1, $job_id, PDO::PARAM_INT);
-
-        if($stmt->execute())
-        {
-            return $stmt->fetchAll();
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public static function getHeadhunt_Company($company_id)
-    {
-        $myDb = new DB();
-        $stmt = $myDb->pdo->prepare("select * from job, headhunt where job.company_id = (?) and job.job_id = headhunt.job_id");
-        $stmt->bindParam(1, $company_id, PDO::PARAM_INT);
-
-        if($stmt->execute())
-        {
-            return $stmt->fetchAll();
-        }
-        else
-        {
-            return null;
-        }
-    }
 }
+

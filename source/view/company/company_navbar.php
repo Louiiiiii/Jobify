@@ -38,4 +38,26 @@
         </div>
     </div>
 </nav>
+<!--Filter -->
+<div class="card">
+    <header class="card-header">
+        <p class="card-header-title">
+        <h1>Mein Name lena wurmsdobler suiiii</h1>
+        </p>
+        <button class="card-header-icon" aria-label="more options">
+      <span class="icon">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+        </button>
+    </header>
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
