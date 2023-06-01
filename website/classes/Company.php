@@ -22,7 +22,7 @@ class Company extends User
 
     public function insertCompany()
     {
-        $stmt = $this->pdo->prepare("insert into company (name, address_id, user_id, slogan, description) values (?,?,?,?,?)");
+        $stmt = $this->pdo->prepare("insert into Company (name, address_id, user_id, slogan, description) values (?,?,?,?,?)");
         $stmt->bindParam(1, $this->name, PDO::PARAM_STR);
         $stmt->bindParam(2, $this->address_id, PDO::PARAM_INT);
         $stmt->bindParam(3, $this->user_id, PDO::PARAM_INT);

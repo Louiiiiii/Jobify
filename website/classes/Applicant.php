@@ -41,7 +41,7 @@ class Applicant extends User
 
     public static function getApplicantByUserId($user_id) {
         $db = new DB;
-        $stmt = $db->pdo->prepare('select * from applicant where user_id = ?');
+        $stmt = $db->pdo->prepare('select * from Applicant where user_id = ?');
         $stmt->bindParam(1,$user_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_BOTH);
@@ -55,7 +55,7 @@ class Applicant extends User
         if ($education_id == null)
         {
             $db = new DB();
-            $stmt = $db->pdo->prepare('insert into education (name) values (?)');
+            $stmt = $db->pdo->prepare('insert into Education (name) values (?)');
             $stmt->bindParam(1, $education);
             $stmt->execute();
             $education_id = self::getEducation_id($education);
@@ -64,7 +64,7 @@ class Applicant extends User
     }
 
     public function getEducation_id($education){
-        $stmt = $this->pdo->prepare('select education_id from education where lower(name) = lower(?)');
+        $stmt = $this->pdo->prepare('select education_id from Education where lower(name) = lower(?)');
         $stmt->bindParam(1,$education);
         $stmt->execute();
         $result = $stmt->fetch();
@@ -99,7 +99,7 @@ class Applicant extends User
         if ($industry_id == null)
         {
             $db = new DB();
-            $stmt = $db->pdo->prepare('insert into industry (name, parent_industry) values (?,?)');
+            $stmt = $db->pdo->prepare('insert into Industry (name, parent_industry) values (?,?)');
             $stmt->bindParam(1, $industry);
             $stmt->bindParam(2, $parent_id, PDO::PARAM_INT);
             $stmt->execute();
@@ -118,7 +118,7 @@ class Applicant extends User
         } else {
             $parent_id = null;
         }
-        $query = 'select industry_id from industry where lower(name) = lower(?)';
+        $query = 'select industry_id from Industry where lower(name) = lower(?)';
         if ($parent_id == null){
             $query = $query . ' and parent_industry_id is null';
         } else {
@@ -152,7 +152,7 @@ class Applicant extends User
     }
 
     public function getApplicant_id() {
-        $stmt = $this->pdo->prepare('select applicant_id id from applicant where user_id = ?');
+        $stmt = $this->pdo->prepare('select applicant_id id from Applicant where user_id = ?');
         $stmt->bindParam(1,$this->user_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch();
@@ -167,7 +167,7 @@ class Applicant extends User
         $id = $this->getApplicantIndustry_id($industry_id);
         if ($id == null) {
             $this->getApplicant_id();
-            $stmt = $this->pdo->prepare('insert into applicant_industry (applicant_id,industry_id) values (?,?)');
+            $stmt = $this->pdo->prepare('insert into Applicant_Industry (applicant_id,industry_id) values (?,?)');
             $stmt->bindparam(1, $this->applicant_id);
             $stmt->bindparam(2, $industry_id);
             $stmt->execute();
@@ -179,7 +179,7 @@ class Applicant extends User
 
     public function getApplicantIndustry_id($industry_id){
         $this->getApplicant_id();
-        $stmt = $this->pdo->prepare('select applicant_industry_id from applicant_industry where applicant_id = ? and industry_id = ?');
+        $stmt = $this->pdo->prepare('select applicant_industry_id from Applicant_Industry where applicant_id = ? and industry_id = ?');
         $stmt->bindparam(1, $this->applicant_id);
         $stmt->bindparam(2, $industry_id);
         $stmt->execute();
@@ -193,7 +193,7 @@ class Applicant extends User
     public function applyForJob($job_id, $text = '',$applicationstatus_id = 1){
         $application_id = $this->getApplication_id($job_id);
         if ($application_id == null){
-            $stmt = $this->pdo->prepare('insert into application (text, applicationstatus_id, job_id, applicant_id) values(?,?,?,?)');
+            $stmt = $this->pdo->prepare('insert into Application (text, applicationstatus_id, job_id, applicant_id) values(?,?,?,?)');
             $stmt->bindparam(1, $text);
             $stmt->bindparam(2, $applicationstatus_id, PDO::PARAM_INT);
             $stmt->bindparam(3, $job_id, PDO::PARAM_INT);
@@ -205,7 +205,7 @@ class Applicant extends User
     }
 
     public function getApplication_id($job_id){
-        $stmt = $this->pdo->prepare('select application_id from application where applicant_id = ? and job_id = ?');
+        $stmt = $this->pdo->prepare('select application_id from Application where applicant_id = ? and job_id = ?');
         $stmt->bindparam(1,$this->applicant_id,PDO::PARAM_INT);
         $stmt->bindparam(2,$job_id,PDO::PARAM_INT);
         $stmt->execute();
@@ -218,7 +218,7 @@ class Applicant extends User
 
     private function insert()
     {
-        $stmt = $this->pdo->prepare('insert into applicant (firstname, lastname, birthdate, description, allow_headhunting, user_id, address_id, education_id) values (?,?,?,?,?,?,?,?)');
+        $stmt = $this->pdo->prepare('insert into Applicant (firstname, lastname, birthdate, description, allow_headhunting, user_id, address_id, education_id) values (?,?,?,?,?,?,?,?)');
         $stmt->bindParam(1, $this->firstname);
         $stmt->bindParam(2, $this->lastname);
         $stmt->bindParam(3, $this->birthdate);
@@ -232,7 +232,7 @@ class Applicant extends User
 
     private function update()
     {
-        $stmt = $this->pdo->prepare('update applicant set firstname = ?, lastname = ?, birthdate = ?, description = ?,allow_headhunting = ?, address_id = ?, education_id = ? where applicant_id = ?');
+        $stmt = $this->pdo->prepare('update Applicant set firstname = ?, lastname = ?, birthdate = ?, description = ?,allow_headhunting = ?, address_id = ?, education_id = ? where applicant_id = ?');
         $stmt->bindParam(1, $this->firstname);
         $stmt->bindParam(2, $this->lastname);
         $stmt->bindParam(3, $this->birthdate);
