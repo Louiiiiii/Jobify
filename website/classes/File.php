@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/User.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/website/classes/User.php";
 
 // TODO: set right path
 $path = 'C:/testpath';

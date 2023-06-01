@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/classes/DB.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/website/classes/DB.php";
 class Address extends DB
 {
     public $address_id;
