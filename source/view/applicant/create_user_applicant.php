@@ -2,7 +2,7 @@
     session_start();
     require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/getClasses.php";            
 
-    // Befor Submit:
+    // Before Submit:
     $current_user_email = $_SESSION["current_user_email"];
     $current_user_id = $_SESSION["current_user_id"];
     $current_user_pwhash = $_SESSION["current_user_pwhash"];

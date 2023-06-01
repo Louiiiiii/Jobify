@@ -6,6 +6,7 @@ body {
     .row {
         display: flex;
         flex-direction: row;
+        justify-content: center;
         column-gap: 20px;
         margin-bottom: 20px;
 
@@ -58,6 +59,18 @@ body {
 
     .hide {
         display: none;
+    }
+
+    .box {
+        .row {
+            .field {
+                justify-content: flex-start;
+            }
+
+            &:last-child {
+                justify-content: flex-end;
+            }
+        }
     }
 }
 

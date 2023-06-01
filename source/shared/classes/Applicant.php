@@ -77,7 +77,7 @@ class Applicant extends User
 
     public static function getEducation_Data(){
         $db = new DB();
-        $stmt = $db->pdo->prepare('select education_id, name from education');
+        $stmt = $db->pdo->prepare('select education_id, name from Education');
         $stmt->execute();
         $result = $stmt->fetchAll();
 
@@ -140,7 +140,7 @@ class Applicant extends User
 
     public static function getIndustry_Data(){
         $db = new DB();
-        $stmt = $db->pdo->prepare('select industry_id, name from industry');
+        $stmt = $db->pdo->prepare('select industry_id, name from Industry');
         $stmt->execute();
         $result = $stmt->fetchAll();
 
