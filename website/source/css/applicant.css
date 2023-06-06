@@ -3,5 +3,40 @@ body {
         display: flex;
         flex-direction: row;
         margin: 0 25px;
+
+        .column {
+            .card {
+                .card-header {
+                    .like {
+                        display: flex;
+                        align-items: center;
+                        margin-right: 1rem;
+            
+                        .fa-heart {
+                            -webkit-text-stroke: 1px black;
+                            color: #fff;
+                            cursor: pointer;
+                        }
+            
+                        .liked {
+                            -webkit-text-stroke: none;
+                            color: #f00;
+                        }
+                    }
+                }
+
+                .card-content {
+                    .content {
+                        .button {
+                            margin-top: 10px;
+
+                            &.is-rounded {
+                                width: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
