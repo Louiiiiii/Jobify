@@ -72,4 +72,32 @@ class User extends DB
         }
         return false;
     }
+
+    public function isUserCompanyOrApplicant()
+    {
+        $stmt = $this->pdo->prepare( "SELECT 
+                                            u.user_id,
+                                            CASE 
+                                                WHEN a.applicant_id IS NULL then 'Company'
+                                                ELSE 'Applicant'
+                                            END AS 'User_is'
+                                        FROM jobify.user u
+                                        LEFT JOIN jobify.applicant a ON u.user_id = a.user_id
+                                        LEFT JOIN jobify.company c ON u.user_id = c.user_id
+                                        WHERE u.user_id = ?;");
+        if ($this->user_id != null) {
+            $stmt->bindParam(1, $this->user_id);
+        }else{
+            $id = $this->getUser_id();
+            $stmt->bindParam(1, $id);
+        }
+        $stmt->execute();
+        $result = $stmt->fetch();
+        if ($result != null)
+        {
+            return $result[1];
+        }
+
+        return null;
+    }
 }
