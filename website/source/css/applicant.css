@@ -40,3 +40,19 @@ body {
         }
     }
 }
+
+@media (max-width: 800px) {
+    body {
+        height: 100%;
+
+        .row {
+            flex-direction: column;
+            margin: 0;
+
+            .field {
+                justify-content: unset;
+                margin-bottom: 0.75rem;
+            }
+        }
+    }
+}
