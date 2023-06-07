@@ -1,3 +1,50 @@
+<?php 
+    session_start();
+
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/website/classes/getClasses.php';
+
+    $current_user_email = $_SESSION["current_user_email"];
+    $current_user_pwhash = $_SESSION["current_user_pwhash"];
+    $current_user_id = $_SESSION["current_user_id"];
+
+    if (isset($_POST["changepw"])) {
+        $current_pw = $_POST["current_pw"]; 
+        $new_pw = $_POST["new_pw"];
+        $repeat_new_pw = $_POST["repeat_new_pw"];
+
+        if (hash('sha512', $current_pw) == $current_user_pwhash) {
+
+            if ($new_pw == $repeat_new_pw) {
+
+                $user = new User($current_user_email, $current_pw);
+                $user->updatePW($new_pw);
+
+                $_SESSION["current_user_pwhash"] = hash('sha512', $new_pw);
+                
+                echo "<script>alert('Your new Password is set.');</script>";
+
+            } else {
+                echo "<script>alert('Your new Password is unequal.');</script>";
+            }
+
+        } else {
+            echo "<script>alert('Current Password is wrong.');</script>";
+        }
+
+
+        unset($_POST["changepw"]);
+        unset($_POST["current_pw"]);
+        unset($_POST["new_pw"]);
+        unset($_POST["repeat_new_pw"]);
+
+
+    }
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -139,8 +186,9 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>File</th>
-                            <th>File Extension</th>
+                            <th>Name</th>
+                            <th>Extension</th>
+                            <th>Type</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -149,6 +197,7 @@
                             <th>1</th>
                             <td>Lebenslauf</td>
                             <td>.docx</td>
+                            <td>CV</td>
                             <td>
                                 <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
                                     <span class="icon is-small">
@@ -161,6 +210,7 @@
                             <th>2</th>
                             <td>LAP Zeugnis</td>
                             <td>.pdf</td>
+                            <td>Resumee</td>
                             <td>
                                 <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
                                     <span class="icon is-small">
@@ -173,6 +223,7 @@
                             <th>3</th>
                             <td>Matura Zeugnis</td>
                             <td>.png</td>
+                            <td>Resumee</td>
                             <td>
                                 <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
                                     <span class="icon is-small">
@@ -214,12 +265,12 @@
         <div class="modal-background"></div>
         <div class="modal-content">
             <div class="box">
-                <form class="form">
+                <form class="form" method="post" action="./applicant_profile.php">
                     <div class="row">
                         <div class="field">
                             <label class="label">Current Password</label>
                             <div class="control">
-                                <input id="currentpassword" name="currentpassword" class="input" type="password" placeholder="Current Password" required>
+                                <input id="currentpassword" name="current_pw" class="input" type="password" placeholder="Current Password" required>
                             </div>
                         </div>
                     </div>
@@ -227,7 +278,7 @@
                         <div class="field">
                             <label class="label">Password</label>
                             <div class="control">
-                                <input id="password" name="password" class="input" type="password" placeholder="Password" required>
+                                <input id="password" name="new_pw" class="input" type="password" placeholder="Password" required>
                             </div>
                         </div>
                     </div>
@@ -235,7 +286,7 @@
                         <div class="field">
                             <label class="label">Repeat Password</label>
                             <div class="control">
-                                <input id="repeatpassword" name="repeatpassword" class="input" type="password" placeholder="Repeat Password" oninput="checkpw()" required> 
+                                <input id="repeatpassword" name="repeat_new_pw" class="input" type="password" placeholder="Repeat Password" oninput="checkpw()" required> 
                             </div>
                         </div>
                     </div>
@@ -246,7 +297,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <button class="button is-link">Change</button>
+                        <button type="submit" name="changepw" class="button is-link">Change</button>
                     </div>
                 </form>
             </div>
@@ -257,6 +308,6 @@
 </body>
 </html>
 
-<script src="../../source/js/hideButton.js"></script>
-<script src="../../source/js/modal.js"></script>
-<script src="../../source/js/checkpassword.js"></script>
+<script src="/website/source/js/hideButton.js"></script>
+<script src="/website/source/js/modal.js"></script>
+<script src="/website/source/js/checkpassword.js"></script>
