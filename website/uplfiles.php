@@ -1,15 +1,15 @@
 <?php
     //this file is just for Julian because i implement the fileupload
 
-    $file = $_FILES["fileToUpload"];
+    $filename = "fileToUpload";
     $user_id = 8;
 
     if(uploadFile($file, $user_id)) {
         echo "<script>alert('File was uploaded succysesyfully');</script>";
     }
 
-    function uploadFile($file, $user_id) {
-        print_r($file);
+    function uploadFile($filename, $user_id) {
+        $file = $_FILES[$filename];
 
         $FileFormat = strtolower(pathinfo($file["name"],PATHINFO_EXTENSION));
         $allowedFileFormats = ["jpg","png","jpeg","pdf","docx","xlsx","txt"];
@@ -44,7 +44,7 @@
 
         // Check if file already exists
         if (file_exists($targetFilePath)) {
-            echo "<script>alert('Sorry, a file with this name is allready exsisting!');</script>";
+            echo "<script>alert('Sorry, a file with this name is already exsisting!');</script>";
             return false;
         }
 
