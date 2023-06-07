@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overview</title>
+    <title>Requested</title>
     <link rel="stylesheet" href="../../source/css/bulma.css">
     <link rel="stylesheet" href="../../source/css/applicant.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
     <script src="../../source/js/favourites.js"></script>
 </head>
 <body>
-<?php require_once '../parts/applicant_navbar.php'; ?>
+<?php require_once '../parts/applicant_profile_navbar.php'; ?>
     <div class="row">
         <div class="column">
             <div class="card">
                 <header class="card-header">
                     <p class="card-header-title">
-                        4 jobs currently available
+                        4 jobs requested
                     </p>
                 </header>
             </div>
@@ -31,7 +31,7 @@
                         Jobtitle
                         <div class="like">
                             <span class="icon is-small">
-                                <i class="fas fa-heart liked"></i>
+                                <i class="fas fa-heart"></i>
                             </span>
                         </div>
                     </p>
