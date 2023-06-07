@@ -21,10 +21,10 @@
             $_SESSION["current_user_id"] = $user_id;
 
             if ($role == "Company") {
-                echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/view/company/create_user_company.php");</script>';
+                echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/company/signup/create_user_company.php");</script>';
                 exit;
             } else if ($role == "Applicant") {
-                echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/view/applicant/create_user_applicant.php");</script>';
+                echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/applicant/signup/create_user_applicant.php");</script>';
                 exit;
             }
         }
@@ -105,5 +105,5 @@
     </body>
 </html>
 
-<script src="../../scripts/dropdown.js"></script>
-<script src="../../scripts/checkpassword.js"></script>
+<script src="/website/source/js/dropdown.js"></script>
+<script src="/website/source/js/checkpassword.js"></script>

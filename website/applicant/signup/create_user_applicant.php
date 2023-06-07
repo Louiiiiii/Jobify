@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/getClasses.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/website/classes/getClasses.php";
 
     // Before Submit:
     $current_user_email = $_SESSION["current_user_email"];
@@ -21,7 +21,12 @@
         $streetnumber = $_POST["streetnumber"];
         $education_id = $_POST["education_id"];
         $industry_id = $_POST["industry_id"];
-        $headhunting = $_POST["headhunting"];
+        //pleas ignore this it is working and i dont want to change it 😘
+        if (isset($_POST["headhunting"])) {
+            $headhunting = $_POST["headhunting"];
+        } else {
+            $headhunting = "off";
+        }
         
         //Inserts
 
@@ -67,9 +72,13 @@
         unset($_POST["streetnumber"]);
         unset($_POST["education_id"]);
         unset($_POST["industry_id"]);
-        unset($_POST["headhunting"]);
 
-        echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/index.php");</script>';
+        //the same like line 25
+        if (isset($_POST["headhunting"])) {
+            unset($_POST["headhunting"]);
+        }
+
+        echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/applicant/pages/applicant_profile.php");</script>';
         exit;
     } 
 
@@ -82,8 +91,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create User</title>
-    <link rel="stylesheet" href="../../style/bulma.css">
-    <link rel="stylesheet" href="../../style/create_user.css">
+    <link rel="stylesheet" href="/website/source/css/bulma.css">
+    <link rel="stylesheet" href="/website/source/css/create_user.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>

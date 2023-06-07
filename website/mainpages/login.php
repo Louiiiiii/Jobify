@@ -19,8 +19,15 @@
                 $_SESSION["current_user_email"] = $email;
                 $_SESSION["current_user_pwhash"] = $pwhash;
                 $_SESSION["current_user_id"] = $user_id;
+
+                $user_is = $user->isUserCompanyOrApplicant();
                 
-                echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/index.php");</script>';
+                if ($user_is == "Company") {
+                    echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/company/pages/company_profile.php");</script>';
+                } else {
+                    echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/applicant/pages/applicant_profile.php");</script>';
+                }
+
             } else {
                 echo "<script>alert('E-Mail or Password wrong!');</script>";
             }
