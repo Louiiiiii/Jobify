@@ -24,8 +24,10 @@
                 
                 if ($user_is == "Company") {
                     echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/company/pages/company_profile.php");</script>';
+                    exit;
                 } else {
                     echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/applicant/pages/applicant_profile.php");</script>';
+                    exit;
                 }
 
             } else {
