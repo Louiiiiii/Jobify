@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/source/shared/getClasses.php";            
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/website/classes/getClasses.php";            
 
     // Befor Submit:
     $current_user_email = $_SESSION["current_user_email"];
@@ -41,7 +41,7 @@
         unset($_POST["streetnumber"]);
         unset($_POST["description"]);
 
-        echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/index.php");</script>';
+        echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/company/pages/company_profile.php");</script>';
         exit;
     } 
 
@@ -54,8 +54,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create User</title>
-    <link rel="stylesheet" href="../../style/bulma.css">
-    <link rel="stylesheet" href="../../style/create_user.css">
+    <link rel="stylesheet" href="/website/source/css/bulma.css">
+    <link rel="stylesheet" href="/website/source/css/create_user.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
