@@ -61,14 +61,9 @@
     <form class="form">
         <div class="row">
             <div class="field">
-                <div class="file">
-                    <label class="file-label">
-                        <input class="file-input disabling" type="file" name="profilePic" disabled>
-                        <figure class="image is-128x128">
-                            <img class="is-rounded" src="../../source/img/user-icon.png">
-                        </figure>
-                    </label>
-                </div>
+                <figure class="image is-128x128">
+                    <img class="is-rounded" src="../../source/img/user-icon.png">
+                </figure>
             </div>
         </div>
         <div class="row">
@@ -238,14 +233,19 @@
         </div>
         <div class="row">
             <div class="field">
-                <div class="file">
+                <div class="file has-name">
                     <label class="file-label">
-                        <input class="file-input disabling" type="file" name="file" disabled>
+                        <input class="file-input" type="file" name="resume">
                         <span class="file-cta">
                             <span class="file-icon">
                                 <i class="fas fa-upload"></i>
                             </span>
-                            <span class="file-label">Add a file…</span>
+                            <span class="file-label">
+                                Choose a file…
+                            </span>
+                        </span>
+                        <span class="file-name">
+                            file name
                         </span>
                     </label>
                 </div>
