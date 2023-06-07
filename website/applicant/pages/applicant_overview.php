@@ -11,7 +11,7 @@
     <script src="../../source/js/favourites.js"></script>
 </head>
 <body>
-<?php require_once '../parts/applicant_navbar.php'; ?>
+<?php require_once '../parts/applicant_profile_navbar.php'; ?>
     <div class="row">
         <div class="column">
             <div class="card">
