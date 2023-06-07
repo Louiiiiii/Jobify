@@ -20,7 +20,7 @@ class Job extends DB
         $this->company_id = $company_id;
     }
 
-    public static function insertjob($job_id, $title, $description=null, $salary=null, $isvolunteerwork, $company_id)
+    public static function insertjob($job_id, $title, $isvolunteerwork, $company_id, $description=null, $salary=null)
     {
         $job = new job($title, $description=null, $salary=null, $isvolunteerwork, $company_id);
         $stmt = $job->pdo->prepare("insert into Job (job_id, title, description, salary, isvolunteerwork, company_id) values (?,?,?,?,?)");
@@ -42,7 +42,7 @@ class Job extends DB
     }
 
 
-    public static function insertorupdjob($job_id, $title, $description=null, $salary=null, $isvolunteerwork, $company_id)
+    public static function insertorupdjob($job_id, $title, $isvolunteerwork, $company_id,$description=null, $salary=null)
     {
         $stmt = pdo->prepare("select job_id from Job where job_id = ?");
         $stmt->bindParam(1, $job_id, PDO::PARAM_STR);
@@ -60,7 +60,7 @@ class Job extends DB
 
         }
 
-        $job = new job($title, $description=null, $salary=null, $isvolunteerwork, $company_id);
+        $job = new job($title, $isvolunteerwork, $company_id, $description=null, $salary=null);
         $stmt = $job->pdo->prepare("insert into Job (job_id, title, description, salary, isvolunteerwork, company_id) values (?,?,?,?,?)");
         $stmt->bindParam(1, $job_id, PDO::PARAM_STR);
         $stmt->bindParam(2, $title, PDO::PARAM_INT);
