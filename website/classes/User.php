@@ -81,9 +81,9 @@ class User extends DB
                                                 WHEN a.applicant_id IS NULL then 'Company'
                                                 ELSE 'Applicant'
                                             END AS 'User_is'
-                                        FROM jobify.user u
-                                        LEFT JOIN jobify.applicant a ON u.user_id = a.user_id
-                                        LEFT JOIN jobify.company c ON u.user_id = c.user_id
+                                        FROM User u
+                                        LEFT JOIN Applicant a ON u.user_id = a.user_id
+                                        LEFT JOIN Company c ON u.user_id = c.user_id
                                         WHERE u.user_id = ?;");
         if ($this->user_id != null) {
             $stmt->bindParam(1, $this->user_id);
@@ -99,5 +99,20 @@ class User extends DB
         }
 
         return null;
+    }
+
+    public function updatePW ($newPW)
+    {
+        $pwhash = hash('sha512',$newPW);
+        if ($this->user_id == null){
+            $id = $this->getUser_id();
+        }else{
+            $id = $this->user_id;
+        }
+        $stmt = $this->pdo->prepare("update User set passwordhash = ?
+                                            where user_id = ?");
+        $stmt->bindParam(1,$pwhash);
+        $stmt->bindParam(2,$id);
+        return $stmt->execute();
     }
 }
