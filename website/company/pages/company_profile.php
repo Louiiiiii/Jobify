@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
+<?php require_once '../parts/company_profile_navbar.php'; ?>
     <form class="form">
         <div class="row">
             <div class="field">
@@ -116,9 +117,9 @@
                         <td>$job->title</td>
                         <td>$jb->description</td>
                         <td>
-                            <button class="button is-info is-outlined is-rounded disabling" type="button" disabled>
+                            <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
                                 <span class="icon is-small">
-                                    <i class="fas fa-file-pen"></i>
+                                    <i class="fas fa-trash"></i>
                                 </span>
                             </button>
                         </td>
@@ -127,9 +128,9 @@
                         <td>$job->title</td>
                         <td>$jb->description</td>
                         <td>
-                            <button class="button is-info is-outlined is-rounded disabling" type="button" disabled>
+                            <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
                                 <span class="icon is-small">
-                                    <i class="fas fa-file-pen"></i>
+                                    <i class="fas fa-trash"></i>
                                 </span>
                             </button>
                         </td>
@@ -138,9 +139,9 @@
                         <td>$job->title</td>
                         <td>$jb->description</td>
                         <td>
-                            <button class="button is-info is-outlined is-rounded disabling" type="button" disabled>
+                            <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
                                 <span class="icon is-small">
-                                    <i class="fas fa-file-pen"></i>
+                                    <i class="fas fa-trash"></i>
                                 </span>
                             </button>
                         </td>
@@ -149,9 +150,9 @@
                         <td>$job->title</td>
                         <td>$jb->description</td>
                         <td>
-                            <button class="button is-info is-outlined is-rounded disabling" type="button" disabled>
+                            <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
                                 <span class="icon is-small">
-                                    <i class="fas fa-file-pen"></i>
+                                    <i class="fas fa-trash"></i>
                                 </span>
                             </button>
                         </td>
