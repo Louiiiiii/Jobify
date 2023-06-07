@@ -5,10 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="../../style/bulma.css">
-    <link rel="stylesheet" href="../../style/profile.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,700,1,0" />    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />    <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
-    <script src="https://kit.fontawesome.com/12c744b539.js" crossOrigin="anonymous"></script>
+    <link rel="stylesheet" href="../../source/css/bulma.css">
+    <link rel="stylesheet" href="../../source/css/profile.css">
+    <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
     <form class="form">
@@ -18,7 +17,7 @@
                     <label class="file-label">
                         <input class="file-input" type="file" name="profilePic">
                         <figure class="image is-128x128">
-                            <img class="is-rounded" src="../../style/img/user-icon.png">
+                            <img class="is-rounded" src="../../source/img/user-icon.png">
                         </figure>
                     </label>
                 </div>
@@ -217,6 +216,6 @@
 </body>
 </html>
 
-<script src="../../scripts/hideButton.js"></script>
-<script src="../../scripts/modal.js"></script>
-<script src="../../scripts/checkpassword.js"></script>
+<script src="../../source/js/hideButton.js"></script>
+<script src="../../source/js/modal.js"></script>
+<script src="../../source/js/checkpassword.js"></script>
