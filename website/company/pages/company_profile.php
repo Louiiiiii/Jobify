@@ -16,7 +16,7 @@
             <div class="field">
                 <div class="file" >
                     <label class="file-label">
-                        <input class="file-input" type="file" name="profilePic">
+                        <input class="file-input" type="file" name="profilePic" disabled>
                         <figure class="image is-128x128">
                             <img class="is-rounded" src="../../source/img/user-icon.png">
                         </figure>
@@ -45,6 +45,7 @@
                     <input name="description" class="input disabling" type="text" placeholder="Company Description" disabled>
                 </div>
             </div>
+            <div class="field"></div>
         </div>
         <hr class="solid">
         <div class="row">
