@@ -27,16 +27,31 @@ body {
 
                 .card-content {
                     .content {
-                        .button {
-                            margin-top: 10px;
+                        .content__button {
+                            display: flex;
+                            justify-content: flex-end;
 
-                            &.is-rounded {
-                                width: 0;
+                            .button {
+                                margin-top: 10px;
+    
+                                &.is-rounded {
+                                    width: 0;
+                                }
                             }
                         }
                     }
                 }
             }
+        }
+    }
+
+    .search-row, .add-row {
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 37px 0;
+
+        .button {
+            width: 0;
         }
     }
 }
