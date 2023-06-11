@@ -1,0 +1,43 @@
+body {
+    .row {
+        .column {
+            &.caret {
+                cursor: pointer;
+                user-select: none;
+            }
+              
+            & .triangle::before {
+                content: "\25B6";
+                color: black;
+                display: inline-block;
+                margin-right: 6px;
+            }
+              
+            & .triangle-down::before {
+                transform: rotate(90deg);
+            }
+        }
+
+        &#treeView {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+
+            .parent {
+                width: 100%;
+
+                .child {
+                    width: 50%;
+                }
+            }
+        }
+
+        &.nested {
+            display: none;
+        }
+          
+        &.active {
+            display: flex;
+        }
+    }
+}
