@@ -62,7 +62,7 @@
         <div class="row">
             <div class="field">
                 <figure class="image is-128x128">
-                    <img class="is-rounded" src="../../source/img/user-icon.png">
+                    <img class="is-rounded" src="/website/uplfiles/3/Bild.png">
                 </figure>
             </div>
         </div>
@@ -175,64 +175,80 @@
             </div>  
             <div class="field"></div>
         </div>
-        <div class="row">
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Extension</th>
-                            <th>Type</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>Lebenslauf</td>
-                            <td>.docx</td>
-                            <td>CV</td>
-                            <td>
-                                <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
-                                    <span class="icon is-small">
-                                        <i class="fas fa-trash"></i>
-                                    </span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>LAP Zeugnis</td>
-                            <td>.pdf</td>
-                            <td>Resumee</td>
-                            <td>
-                                <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
-                                    <span class="icon is-small">
-                                        <i class="fas fa-trash"></i>
-                                    </span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>Matura Zeugnis</td>
-                            <td>.png</td>
-                            <td>Resumee</td>
-                            <td>
-                                <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
-                                    <span class="icon is-small">
-                                        <i class="fas fa-trash"></i>
-                                    </span>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+
+        
+    
+        <diV class="row edit">
+            <button type="button" class="button is-link" onclick="edit()">Edit Profile</button>
         </div>
+        <diV class="row cancel hide">
+            <button type="button" class="button" onclick="cancel()">Cancel</button>
+            <button class="button is-link">Change</button>
+        </diV>
+        
+    </form>
+
+    <div class="row">
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Extension</th>
+                        <th>Type</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>1</th>
+                        <td>Lebenslauf</td>
+                        <td>.docx</td>
+                        <td>CV</td>
+                        <td>
+                            <button class="button is-danger is-outlined is-rounded" type="button">
+                                <span class="icon is-small">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <td>LAP Zeugnis</td>
+                        <td>.pdf</td>
+                        <td>Resumee</td>
+                        <td>
+                            <button class="button is-danger is-outlined is-rounded" type="button">
+                                <span class="icon is-small">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>3</th>
+                        <td>Matura Zeugnis</td>
+                        <td>.png</td>
+                        <td>Resumee</td>
+                        <td>
+                            <button class="button is-danger is-outlined is-rounded" type="button">
+                                <span class="icon is-small">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <form action="">
+
         <div class="row">
-            <div class="field">
+            <div class="field is-justify-content-left">
                 <div class="file has-name">
                     <label class="file-label">
                         <input class="file-input" type="file" name="resume">
@@ -250,15 +266,8 @@
                     </label>
                 </div>
             </div>
-            <div class="field"></div>
         </div>
-        <diV class="row edit">
-            <button type="button" class="button is-link" onclick="edit()">Edit Profile</button>
-        </diV>
-        <diV class="row cancel hide">
-            <button type="button" class="button" onclick="cancel()">Cancel</button>
-            <button class="button is-link">Change</button>
-        </diV>
+
     </form>
 
     <div id="modal-js-example" class="modal">
