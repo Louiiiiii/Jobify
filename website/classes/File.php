@@ -167,6 +167,7 @@ class File extends User
             WHERE user_id = ?
             AND ft.type = ? 
             ORDER BY f.upldate desc
+			LIMIT 1 
         ');
         $stmt->bindParam(1,$user_id,PDO::PARAM_INT);
         $stmt->bindParam(2,$filetype,PDO::PARAM_STR);
@@ -177,7 +178,7 @@ class File extends User
         }
     }
 
-    public function getAllFilesByUser($user_id){
+    public static function getAllFilesByUser($user_id){
         $db = new DB();
         $stmt = $db->pdo->prepare('
             SELECT f.file_id,
@@ -185,8 +186,9 @@ class File extends User
                 ft.type
             FROM File f
             LEFT JOIN Filetype ft ON f.filetype_id = ft.filetype_id
-            WHERE user_id = ?'
-        );
+            WHERE user_id = ?
+            ORDER BY f.file_id
+        ');
         $stmt->bindParam(1,$user_id,PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();

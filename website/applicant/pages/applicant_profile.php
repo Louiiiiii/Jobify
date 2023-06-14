@@ -70,8 +70,8 @@
             <div class="field">
                 <figure class="image is-128x128">
                     <?php 
-                        $file = File::getFile($current_user_id, "Profile Picture");
-                        $profile_pic_path = "/website/uplfiles/" . $current_user_id . "/" . $file["name"];
+                        $profile_pic = File::getFile($current_user_id, "Profile Picture");
+                        $profile_pic_path = "/website/uplfiles/" . $current_user_id . "/" . $profile_pic["name"];
 
                         if(!file_exists($_SERVER['DOCUMENT_ROOT'] . $profile_pic_path)) {
                             $profile_pic_path = "/website/source/img/user-icon.png";
@@ -220,6 +220,33 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php 
+                        $files = File::getAllFilesByUser($current_user_id);
+
+                        foreach($files as $file) {
+                            $filepath = $_SERVER['DOCUMENT_ROOT'] . "/website/uplfiles/" . $current_user_id . "/" . $file["name"];
+                            
+                            $name = pathinfo($filepath, PATHINFO_FILENAME);
+                            $extension = '.' . pathinfo($filepath, PATHINFO_EXTENSION);
+
+                            echo "<tr>";
+                            echo "<th>" . $file["file_id"] . "</th>";
+                            echo "<td>" . $name . "</td>";
+                            echo "<td>" . $extension . "</td>";
+                            echo "<td>" . $file["type"] . "</td>";
+                            echo '
+                                <td>
+                                    <button class="button is-danger is-outlined is-rounded" type="button">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+                                    </button>
+                                </td>
+                            ';
+                            echo "</tr>";
+                        }
+                    ?>
+                    <!--
                     <tr>
                         <th>1</th>
                         <td>Lebenslauf</td>
@@ -259,6 +286,7 @@
                             </button>
                         </td>
                     </tr>
+                    -->
                 </tbody>
             </table>
         </div>
