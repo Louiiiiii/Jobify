@@ -1,5 +1,10 @@
 <?php 
+
     session_start();
+    
+    $_SESSION["current_user_email"] = "j.p@g.com";
+    $_SESSION["current_user_pwhash"] = "b7c3bd1e3976deb58236e6fb91da0cd5f4b0c2f6290cdc2b6f17c6da88d000420ec2d5d73b3e1e8ae14cafeabafe117a58060f427a66bdab1b97cf2d52aa0a94";
+    $_SESSION["current_user_id"] = 3;
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/website/classes/getClasses.php';
 
@@ -57,15 +62,22 @@
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
-<?php require_once '../parts/applicant_profile_navbar.php'; ?>
-    <form class="form">
+    <?php require_once '../parts/applicant_profile_navbar.php'; ?>
+
+    <form class="form" action="" method="post">
+
         <div class="row">
             <div class="field">
                 <figure class="image is-128x128">
+                    <?php 
+                        $file = File::getFile($current_user_id, "Profile Picture");
+                        print_r($file);
+                    ?>
                     <img class="is-rounded" src="/website/uplfiles/3/Bild.png">
                 </figure>
             </div>
         </div>
+        
         <div class="row">
             <div class="field">
                 <label class="label">E-Mail</label>

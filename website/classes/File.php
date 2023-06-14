@@ -161,13 +161,13 @@ class File extends User
         }
     }
 
-    public function getFile($user_id, $filetype){
-        $file = new File();
-        $stmt = $file->pdo->prepare('SELECT f.*
+    public static function getFile($user_id, $filetype){
+        $db = new DB();
+        $stmt = $db->pdo->prepare('SELECT f.*
                                                 FROM File f
                                                 LEFT JOIN Filetype ft ON f.filetype_id = ft.filetype_id
                                                 WHERE user_id = ?
-                                                AND ft.type = ?');
+                                                AND ft.type = ? ORDER BY f.upldate desc');
         $stmt->bindParam(1,$user_id,PDO::PARAM_INT);
         $stmt->bindParam(2,$filetype,PDO::PARAM_STR);
         $stmt->execute();
