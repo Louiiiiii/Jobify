@@ -12,7 +12,7 @@ class File extends User
     public $filetype_name;
     public $job_id;
 
-    public function __construct($path,$filetype_name,$user_email, $user_passwordhash, $name = null,$job_id = null,  $date = null)
+    public function __construct($path,$filetype_name,$name,$job_id,$date = null, $user_email = null, $user_passwordhash = null)
     {
 		if($date == null)
 		{
@@ -159,5 +159,55 @@ class File extends User
         } else {
             return false;
         }
+    }
+
+    public function getFile($user_id, $filetype){
+        $file = new File();
+        $stmt = $file->pdo->prepare('SELECT f.*
+                                                FROM File f
+                                                LEFT JOIN Filetype ft ON f.filetype_id = ft.filetype_id
+                                                WHERE user_id = ?
+                                                AND ft.type = ?');
+        $stmt->bindParam(1,$user_id,PDO::PARAM_INT);
+        $stmt->bindParam(2,$filetype,PDO::PARAM_STR);
+        $stmt->execute();
+        $res = $stmt->fetch();
+        if($res != null){
+            return new File($res['path'],$filetype,$res['name'],$res['job_id'],$res['upldate']);
+        }
+    }
+
+    public function getAllFilesByUser($user_id){
+        $db = new DB();
+        $stmt = $db->pdo->prepare('SELECT f.file_id,
+                                                f.name,
+                                                ft.type
+                                            FROM File f
+                                            LEFT JOIN Filetype ft ON f.filetype_id = ft.filetype_id
+                                            WHERE user_id = ?');
+        $stmt->bindParam(1,$user_id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+        /*
+         * rückgabe:
+        (
+            [0] => Array
+                (
+                    [name] => apple
+                    [0] => apple
+                    [colour] => red
+                    [1] => red
+                )
+
+            [1] => Array
+                (
+                    [name] => pear
+                    [0] => pear
+                    [colour] => green
+                    [1] => green
+                )
+        )
+                 * */
     }
 }
