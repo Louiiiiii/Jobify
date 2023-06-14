@@ -71,9 +71,16 @@
                 <figure class="image is-128x128">
                     <?php 
                         $file = File::getFile($current_user_id, "Profile Picture");
-                        print_r($file);
+                        $profile_pic_path = "/website/uplfiles/" . $current_user_id . "/" . $file["name"];
+
+                        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . $profile_pic_path)) {
+                            $profile_pic_path = "/website/source/img/user-icon.png";
+                        }
+
+                        //The result of file_exists() is cached. Use clearstatcache() to clear the cache.
+                        clearstatcache();
                     ?>
-                    <img class="is-rounded" src="/website/uplfiles/3/Bild.png">
+                    <img class="is-rounded" src="<?php echo $profile_pic_path ?>">
                 </figure>
             </div>
         </div>

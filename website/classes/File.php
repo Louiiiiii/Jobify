@@ -45,6 +45,7 @@ class File extends User
         $stmt->bindParam(1,$filetype);
         $stmt->execute();
         $result = $stmt->fetch();
+        print_r($result);
 		if ($result == null)
 		{
 			return $result[0];
@@ -163,28 +164,33 @@ class File extends User
 
     public static function getFile($user_id, $filetype){
         $db = new DB();
-        $stmt = $db->pdo->prepare('SELECT f.*
-                                                FROM File f
-                                                LEFT JOIN Filetype ft ON f.filetype_id = ft.filetype_id
-                                                WHERE user_id = ?
-                                                AND ft.type = ? ORDER BY f.upldate desc');
+        $stmt = $db->pdo->prepare('
+            SELECT f.*
+            FROM File f
+            LEFT JOIN Filetype ft ON f.filetype_id = ft.filetype_id
+            WHERE user_id = ?
+            AND ft.type = ? 
+            ORDER BY f.upldate desc
+        ');
         $stmt->bindParam(1,$user_id,PDO::PARAM_INT);
         $stmt->bindParam(2,$filetype,PDO::PARAM_STR);
         $stmt->execute();
         $res = $stmt->fetch();
         if($res != null){
-            return new File($res['path'],$filetype,$res['name'],$res['job_id'],$res['upldate']);
+            return $res;
         }
     }
 
     public function getAllFilesByUser($user_id){
         $db = new DB();
-        $stmt = $db->pdo->prepare('SELECT f.file_id,
-                                                f.name,
-                                                ft.type
-                                            FROM File f
-                                            LEFT JOIN Filetype ft ON f.filetype_id = ft.filetype_id
-                                            WHERE user_id = ?');
+        $stmt = $db->pdo->prepare('
+            SELECT f.file_id,
+                f.name,
+                ft.type
+            FROM File f
+            LEFT JOIN Filetype ft ON f.filetype_id = ft.filetype_id
+            WHERE user_id = ?'
+        );
         $stmt->bindParam(1,$user_id,PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
