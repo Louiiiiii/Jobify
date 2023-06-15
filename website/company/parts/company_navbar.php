@@ -1,7 +1,7 @@
 <?php
-    echo "<script>";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/source/scripts/navbar.js";      
-    echo "</script>";
+echo "<script>";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/source/scripts/navbar.js";
+echo "</script>";
 ?>
 <!--Navbar Company Home -->
 <nav class="navbar is-black has-shadow" id="comNavHome" role="navigation" aria-label="main navigation">

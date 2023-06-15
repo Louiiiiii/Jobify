@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="../../source/css/bulma.css">
-    <link rel="stylesheet" href="../../source/css/profile.css">
+    <link rel="stylesheet" href="/website/source/css/bulma.css">
+    <link rel="stylesheet" href="/website/source/css/profile.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
@@ -221,3 +221,4 @@
 <script src="../../source/js/hideButton.js"></script>
 <script src="../../source/js/modal.js"></script>
 <script src="../../source/js/checkpassword.js"></script>
+<script src="../../source/js/navbar.js"></script>

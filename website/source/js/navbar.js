@@ -18,20 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-function toggleNavbars() {
-   alert('pipipupu');
+function hide_show_something(ID) {
 
-   var comNavHome= document.getElementById("comNavHome");
-   var comNavProfile = document.getElementById("comNavProfile");
+    if (document.getElementById(ID).style.display == "none") {
 
+        document.getElementById(ID).style.display = "block";
 
-    if (window.getComputedStyle(comNavHome).display === "none") {
-        alert('Com Nav home is hidden')
-        comNavHome.style.display = "block"
-        comNavProfile.style.display = "none";
     } else {
-        alert('Com Nav Company is hidden')
-        comNavHome.style.display = "none";
-        comNavProfile.style.display = "block";
+
+        document.getElementById(ID).style.display = "none";
+
     }
 }
