@@ -44,7 +44,63 @@
 
 
     }
+    
+    if (isset($_POST["change_applicant_infos"])) {
+        //from Form
+        $firstname = $_POST["email"];
+        $firstname = $_POST["firstname"];
+        $lastname = $_POST["lastname"];
+        $birthday = $_POST["birthday"];
+        $country = $_POST["country"];
+        $state = $_POST["state"];
+        $postalcode = $_POST["postalcode"];
+        $city = $_POST["city"];
+        $street = $_POST["street"];
+        $streetnumber = $_POST["streetnumber"];
+        $education_id = $_POST["education_id"];
+        $industry_id = $_POST["industry_id"];
+        //pleas ignore this it is working and i dont want to change it 😘
+        if (isset($_POST["headhunting"])) {
+            $headhunting = $_POST["headhunting"];
+        } else {
+            $headhunting = "off";
+        }
+        
+        //Inserts
 
+        //Address
+        $address = new Address($street, $streetnumber, $state, $country, $postalcode, $city);
+        $address->addToDB();
+        $address_id = $address->address_id;
+        
+        //Applicant
+        if ($headhunting == "on") {
+            $allow_headhunting = 1;
+        } else {
+            $allow_headhunting = 0;
+        }
+
+        $applicant = new Applicant(
+                $firstname, 
+                $lastname, 
+                $birthday, 
+                null, 
+                $allow_headhunting, 
+                $current_user_id, 
+                $address_id, 
+                $education_id, 
+                $current_user_email, 
+                null
+        );
+
+        $applicant->updateDB();
+        
+        //Industry
+        $applicant->addApplicant_Industry($industry_id);
+        
+        //Unset $_POST
+        unset($_POST);
+    } 
 
 
 ?>
@@ -64,7 +120,7 @@
 <body>
     <?php require_once '../parts/applicant_profile_navbar.php'; ?>
 
-    <form class="form" action="" method="post">
+    <form class="form" action="./applicant_profile.php" method="post">
 
         <div class="row">
             <div class="field">
@@ -166,8 +222,14 @@
             <div class="field">
                 <label class="label">Highest Degree</label>
                 <div class="select">
-                    <select class="disabling" name="degree" required disabled>
-                        <option value="highest">Highest Degree</option>
+                    <select class="disabling" name="education_id" required disabled>
+                        <?php
+                            $allEducations = Applicant::getEducation_Data();
+
+                            foreach ($allEducations as $row) {
+                                echo '<option value="' . $row["education_id"] . '">' . $row["name"] . '</option>';
+                            }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -177,8 +239,14 @@
             <div class="field">
                 <label class="label">Industry</label>
                 <div class="select">
-                    <select class="disabling" name="industry" required disabled>
-                        <option value="industry">Industry</option>
+                    <select class="disabling" name="industry_id" required disabled>
+                        <?php
+                            $allIndustries = Applicant::getIndustry_Data();
+
+                            foreach ($allIndustries as $row) {
+                                echo '<option value="' . $row["industry_id"] . '">' . $row["name"] . '</option>';
+                            }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -194,15 +262,13 @@
             </div>  
             <div class="field"></div>
         </div>
-
-        
     
         <diV class="row edit">
             <button type="button" class="button is-link" onclick="edit()">Edit Profile</button>
         </div>
         <diV class="row cancel hide">
-            <button type="button" class="button" onclick="cancel()">Cancel</button>
-            <button class="button is-link">Change</button>
+            <button type="reset" class="button" onclick="cancel()">Cancel</button>
+            <button type="submit" name="change_applicant_infos" class="button is-link">Change</button>
         </diV>
         
     </form>

@@ -8,7 +8,7 @@
     $current_user_pwhash = $_SESSION["current_user_pwhash"];
 
     //After Submit:
-    if (isset($_POST["firstname"])) {
+    if (isset($_POST["signup_applicant"])) {
         //from Form
         $firstname = $_POST["firstname"];
         $lastname = $_POST["lastname"];
@@ -197,6 +197,42 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="field">
+                            <label class="label">Industry</label>
+                            
+                            <div class="columns">
+                                <?php
+                                    //if you have questions about the following, ask Julian 😘
+                                    $industries = Applicant::getIndustry_Data();
+                                    $count_industries = ceil(count($industries)/3);
+                                    $correction = ($count_industries*3)-count($industries);
+
+                                    $i = 0;
+
+                                    for ($x = 0; $x < 3; $x++) {
+                                        if ($x == 2) {
+                                            $corrector = $correction;
+                                        } else {
+                                            $corrector = 0;
+                                        }
+
+                                        echo '<div class="column is-one-thirds">';                                    
+                                        for ($j = 0; $j < $count_industries-$corrector; $j++) {
+                                            echo '<input type="checkbox" id="' . $industries[$i]["industry_id"] . '" name="' . $industries[$i]["name"] . '" value="' . $industries[$i]["name"] . '">';
+                                            echo '<label for="' . $industries[$i]["industry_id"] . '">' . $industries[$i]["name"] . '</label><br>';
+                                            $i++;
+                                        }
+                                        echo '</div>';
+                                    }
+                                    
+                                ?>
+                            </div>
+
+                        </div>    
+                    </div>
+                    
                     <div class="row">
                         <div class="field">
                             <label class="label">Allow Headhunting</label>
@@ -207,7 +243,7 @@
                         </div>
                     </div>
                     <diV class="row">
-                        <button type="submit" class="button is-link">Submit</button>
+                        <button type="submit" name="signup_applicant" class="button is-link">Submit</button>
                     </diV>
                 </form>
             </div>
