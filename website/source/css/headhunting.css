@@ -1,0 +1,58 @@
+body {
+    .row {
+        display: flex;
+        flex-direction: row;
+        margin: 0 25px;
+
+        .column {
+            .card {
+                display: flex;
+                flex-direction: row;
+
+                .card-content {
+                    width: 100%;
+
+                    .button.is-rounded {
+                        margin: 0;
+                    }
+
+                    .button:nth-child(1) {
+                        margin: 0 20px 0 0;
+                    }
+
+                    .content {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .left-content {
+                            display: flex;
+                            align-items: center;
+                            flex-direction: row;
+
+                            .image {
+                                margin: 0 0 0 15px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    body {
+        height: 100%;
+
+        .row {
+            flex-direction: column;
+            margin: 0;
+
+            .field {
+                justify-content: unset;
+                margin-bottom: 0.75rem;
+            }
+        }
+    }
+}
