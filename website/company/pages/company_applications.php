@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../source/css/bulma.css">
     <link rel="stylesheet" href="../../source/css/applicant.css">
     <link rel="stylesheet" href="../../source/css/treeView.css">
+    <link rel="stylesheet" href="../../source/css/person_card.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
@@ -28,20 +29,23 @@
                 <li class="child">
                     <div class="column">
                         <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    Jobtitle
-                                </p>
-                            </header>
                             <div class="card-content">
                                 <div class="content">
-                                    <div>
-                                        Some Content. Don't know which content!
+                                    <div class="left-content">
+                                        <div>Human 4</div>
+                                        <figure class="image is-64x64">
+                                            <img class="is-rounded" src="../../source/img/user-icon.png">
+                                        </figure>
                                     </div>
                                     <div class="content__button">
                                         <button class="button is-info is-rounded">
                                             <span class="icon is-small">
-                                                <i class="fas fa-edit"></i>
+                                                <i class="fas fa-envelope-open-text"></i>
+                                            </span>
+                                        </button>
+                                        <button class="button is-info is-rounded">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-info"></i>
                                             </span>
                                         </button>
                                     </div>
@@ -53,20 +57,23 @@
                 <li class="child">
                     <div class="column">
                         <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    Jobtitle
-                                </p>
-                            </header>
                             <div class="card-content">
                                 <div class="content">
-                                    <div>
-                                        Some Content. Don't know which content!
+                                    <div class="left-content">
+                                        <div>Human 4</div>
+                                        <figure class="image is-64x64">
+                                            <img class="is-rounded" src="../../source/img/user-icon.png">
+                                        </figure>
                                     </div>
                                     <div class="content__button">
                                         <button class="button is-info is-rounded">
                                             <span class="icon is-small">
-                                                <i class="fas fa-edit"></i>
+                                                <i class="fas fa-envelope-open-text"></i>
+                                            </span>
+                                        </button>
+                                        <button class="button is-info is-rounded">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-info"></i>
                                             </span>
                                         </button>
                                     </div>
@@ -80,20 +87,23 @@
                 <li class="child">
                     <div class="column">
                         <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    Jobtitle
-                                </p>
-                            </header>
                             <div class="card-content">
                                 <div class="content">
-                                    <div>
-                                        Some Content. Don't know which content!
+                                    <div class="left-content">
+                                        <div>Human 4</div>
+                                        <figure class="image is-64x64">
+                                            <img class="is-rounded" src="../../source/img/user-icon.png">
+                                        </figure>
                                     </div>
                                     <div class="content__button">
                                         <button class="button is-info is-rounded">
                                             <span class="icon is-small">
-                                                <i class="fas fa-edit"></i>
+                                                <i class="fas fa-envelope-open-text"></i>
+                                            </span>
+                                        </button>
+                                        <button class="button is-info is-rounded">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-info"></i>
                                             </span>
                                         </button>
                                     </div>
@@ -105,20 +115,23 @@
                 <li class="child">
                     <div class="column">
                         <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    Jobtitle
-                                </p>
-                            </header>
                             <div class="card-content">
                                 <div class="content">
-                                    <div>
-                                        Some Content. Don't know which content!
+                                    <div class="left-content">
+                                        <div>Human 4</div>
+                                        <figure class="image is-64x64">
+                                            <img class="is-rounded" src="../../source/img/user-icon.png">
+                                        </figure>
                                     </div>
                                     <div class="content__button">
                                         <button class="button is-info is-rounded">
                                             <span class="icon is-small">
-                                                <i class="fas fa-edit"></i>
+                                                <i class="fas fa-envelope-open-text"></i>
+                                            </span>
+                                        </button>
+                                        <button class="button is-info is-rounded">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-info"></i>
                                             </span>
                                         </button>
                                     </div>
@@ -146,20 +159,23 @@
                 <li class="child">
                     <div class="column">
                         <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    Jobtitle
-                                </p>
-                            </header>
                             <div class="card-content">
                                 <div class="content">
-                                    <div>
-                                        Some Content. Don't know which content!
+                                    <div class="left-content">
+                                        <div>Human 4</div>
+                                        <figure class="image is-64x64">
+                                            <img class="is-rounded" src="../../source/img/user-icon.png">
+                                        </figure>
                                     </div>
                                     <div class="content__button">
                                         <button class="button is-info is-rounded">
                                             <span class="icon is-small">
-                                                <i class="fas fa-edit"></i>
+                                                <i class="fas fa-envelope-open-text"></i>
+                                            </span>
+                                        </button>
+                                        <button class="button is-info is-rounded">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-info"></i>
                                             </span>
                                         </button>
                                     </div>
@@ -171,20 +187,23 @@
                 <li class="child">
                     <div class="column">
                         <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    Jobtitle
-                                </p>
-                            </header>
                             <div class="card-content">
                                 <div class="content">
-                                    <div>
-                                        Some Content. Don't know which content!
+                                    <div class="left-content">
+                                        <div>Human 4</div>
+                                        <figure class="image is-64x64">
+                                            <img class="is-rounded" src="../../source/img/user-icon.png">
+                                        </figure>
                                     </div>
                                     <div class="content__button">
                                         <button class="button is-info is-rounded">
                                             <span class="icon is-small">
-                                                <i class="fas fa-edit"></i>
+                                                <i class="fas fa-envelope-open-text"></i>
+                                            </span>
+                                        </button>
+                                        <button class="button is-info is-rounded">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-info"></i>
                                             </span>
                                         </button>
                                     </div>
