@@ -8,6 +8,19 @@
     <link rel="stylesheet" href="../../source/css/bulma.css">
     <link rel="stylesheet" href="../../source/css/applicant.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
+    <style>
+        .hoverable-label {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        width: fit-content;
+        }
+
+        .hoverable-label:hover {
+        text-decoration: line-through;
+        color: grey;
+        }
+    </style>
 </head>
 <body>
 <?php require_once '../parts/company_profile_navbar.php'; ?>
@@ -28,29 +41,29 @@
                                 <div>
                                     <label for="fname">Anforderung:</label><br>
                                     <input class="input" type="text" id="fname" name="fname" style="max-width: 350px;">
-                                    <button class="button is-light in-row">Add</button>
+                                    <button class="button is-light in-row" type="button">Add</button>
                                     <ul>
-                                        <li>Fachkenntnisse</li>
-                                        <li>Erfahrung</li>
-                                        <li>Kreativität</li>
-                                        <li>Zuverlässigkeit</li>
+                                        <li><label class="hoverable-label">Cool</label></li>
+                                        <li><label class="hoverable-label">Erfahrung</label></li>
+                                        <li><label class="hoverable-label">Kreativität</label></li>
+                                        <li><label class="hoverable-label">Zuverlässigkeit</label></li>
                                     </ul>
                                     <br>
                                 </div>
                                 <div>
                                     <label for="fname">Benefits:</label><br>
                                     <input class="input" type="text" id="fname" name="fname" style="max-width: 350px;">
-                                    <button class="button is-light in-row">Add</button>
+                                    <button class="button is-light in-row" type="button">Add</button>
                                     <ul>
-                                        <li>Flexible Arbeitszeiten</li>
-                                        <li>Mitarbeiterbeteiligung</li>
-                                        <li>Gesundheitsförderung</li>
-                                        <li>Teamarbeit und Zusammenhalt</li>
+                                        <li><label class="hoverable-label">Flexible Arbeitszeiten</label></li>
+                                        <li><label class="hoverable-label">Mitarbeiterbeteiligung</label></li>
+                                        <li><label class="hoverable-label">Gesundheitsförderung</label></li>
+                                        <li><label class="hoverable-label">Teamarbeit und Zusammenhalt</label></li>
                                     </ul>
                                     <br>
                                 </div>
                                 <div>
-                                    <label for="fname">Gehalt in brutto:</label><br>
+                                    <label for="fname">Gehalt in brutto €:</label><br>
                                     <input class="input" type="text" id="fname" name="fname" style="max-width: 350px;">
                                 </div>
                             </div>
