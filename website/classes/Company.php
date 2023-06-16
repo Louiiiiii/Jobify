@@ -31,5 +31,12 @@ class Company extends User
 
         $stmt->execute();
     }
+
+    public static function getAllCompanyNames(){
+        $db = new DB();
+        $stmt = $db->pdo->prepare('select name from Company');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+    }
 }
 
