@@ -8,7 +8,7 @@ body {
         display: flex;
         align-items: center;
         flex-direction: column;
-        height: auto;
+        height: 100%;
         width: 700px;
 
         .title {
