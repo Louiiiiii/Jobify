@@ -126,7 +126,7 @@
         <div class="modal-background"></div>
         <div class="modal-content">
             <div class="box">
-                <form class="form" method="post" action="./applicant_profile.php">
+                <form class="form" method="post">
                     <div class="row">
                         <div class="column">
                             <figure class="image is-64x64">

@@ -56,6 +56,27 @@ body {
     }
 }
 
+.modal {
+    .modal-content {
+        .row {
+            .column:has(.checkbox) {
+                padding: 0;
+            }
+        }
+        .row:nth-child(2) {
+            .column {
+                padding-top: 0.75rem;
+            }
+        }
+
+        .row:nth-last-child(3) {
+            .column {
+                padding-bottom: 0.75rem;
+            }
+        }
+    }
+}
+
 @media (max-width: 800px) {
     body {
         height: 100%;
