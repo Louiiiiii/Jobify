@@ -1,9 +1,5 @@
 body {
     .row {
-        display: flex;
-        flex-direction: row;
-        margin: 0 25px;
-
         .column:not(.caret) {
             .card {
                 display: flex;

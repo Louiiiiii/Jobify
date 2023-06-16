@@ -1,0 +1,31 @@
+.modal {
+    .modal-content {
+        .box {
+            .row:first-child {
+                .column {
+                    padding-bottom: 0;
+                }
+            }
+
+            .row:nth-child(-n + 2) {
+                .column {
+                    display: flex;
+                    justify-content: center;
+                }   
+            }
+
+            .row:nth-child(3) {
+                .column:first-child {
+                    margin: 0;
+                }
+            }
+
+            .row:last-child {
+                .column {
+                    display: flex;
+                    justify-content: flex-end;
+                }
+            }
+        }
+    }
+}
