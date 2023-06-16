@@ -111,27 +111,33 @@ class File extends User
 		return $stmt->execute();
 	}
 
-	function uploadFile($file, $user_id) {
+	public static function uploadFile($file, $user_id) {
         print_r($file);
 
         $FileFormat = strtolower(pathinfo($file["name"],PATHINFO_EXTENSION));
         $allowedFileFormats = ["jpg","png","jpeg","pdf","docx","xlsx","txt"];
         
         $folderName = $user_id;
-        $uplFilesDir = $_SERVER['DOCUMENT_ROOT'] . "/source/uplfiles/";
+        $uplFilesDir = $_SERVER['DOCUMENT_ROOT'] . "/website/uplfiles/";
         $folderPath = $uplFilesDir . $folderName;
 
         $targetFilePath = $folderPath . "/" . $file["name"];
 
 
         //check file format
+        $file_format_ok = 0;
+
+        //check if file format is under the $allowedFileFormats 
         foreach ($allowedFileFormats as $type) {
             if ($type == $FileFormat) {
-                break;
-            } else {
-                echo "<script>alert('Sorry, wrong file format! (allowed formats: jpg, png, jpeg, pdf, docx, xlsx, txt)');</script>";
-                return false;
+                $file_type_ok = 1;
             }
+        }
+
+        //if file format is not under $allowedFileFormats var $file_type_ok will still be 0 and therefore this if will faile
+        if ($file_format_ok == 0) {
+            echo "<script>alert('Sorry, wrong file format! (allowed formats: jpg, png, jpeg, pdf, docx, xlsx, txt)');</script>";
+            return false;
         }
 
         //check size
@@ -141,6 +147,7 @@ class File extends User
         }
 
         // Check if folder already exists
+        echo $folderPath;
         if (!is_dir($folderPath)) {
             mkdir($folderPath);
         }
@@ -213,5 +220,15 @@ class File extends User
                 )
         )
                  * */
+    }
+
+    public static function getAllFileTypes(){
+        $db = new DB();
+        $stmt = $db->pdo->prepare('
+            SELECT *
+            FROM Filetype
+        ');
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }

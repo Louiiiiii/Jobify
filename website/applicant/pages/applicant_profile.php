@@ -1,6 +1,10 @@
 <?php 
 
     session_start();
+    
+    $_SESSION["current_user_email"] = "j.p@g.com";
+    $_SESSION["current_user_pwhash"] = "b7c3bd1e3976deb58236e6fb91da0cd5f4b0c2f6290cdc2b6f17c6da88d000420ec2d5d73b3e1e8ae14cafeabafe117a58060f427a66bdab1b97cf2d52aa0a94";
+    $_SESSION["current_user_id"] = 3;
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/website/classes/getClasses.php';
 
@@ -53,8 +57,9 @@
         $city = $_POST["city"];
         $street = $_POST["street"];
         $streetnumber = $_POST["streetnumber"];
-        $education_id = $_POST["education_id"];
-        $industry_id = $_POST["industry_id"];
+        $education_id = $_POST["education_id"];        
+        $industry_ids = $_POST["industry_ids"];     
+
         //pleas ignore this it is working and i dont want to change it 😘
         if (isset($_POST["headhunting"])) {
             $headhunting = $_POST["headhunting"];
@@ -92,11 +97,32 @@
         $applicant->updateDB();
         
         //Industry
-        $applicant->addApplicant_Industry($industry_id);
+        foreach ($industry_ids as $industry_id) {
+            $applicant->addApplicant_Industry($industry_id);
+        }
         
         //Unset $_POST
         unset($_POST);
     } 
+
+    if (isset($_POST["file_submit"])) {
+
+        File::uploadFile($_FILES["fileToUpload"], $current_user_id);
+
+        //Unset and delete file from server
+        unset($_POST);
+        
+        $fileToUpload = $_FILES['fileToUpload']['tmp_name'];
+
+        if (unlink($fileToUpload)) {
+            echo "File deleted successfully.";
+        } else {
+            echo "Failed to delete the file.";
+        }
+        
+        unset($_FILES);
+        
+    }
 
 
 ?>
@@ -234,19 +260,36 @@
         <div class="row">
             <div class="field">
                 <label class="label">Industry</label>
-                <div class="select">
-                    <select class="disabling" name="industry_id" required disabled>
-                        <?php
-                            $allIndustries = Applicant::getIndustry_Data();
+                
+                <div class="columns">
+                    <?php
+                        //if you have questions about the following, ask Julian 😘
+                        $industries = Applicant::getIndustry_Data();
+                        $count_industries = ceil(count($industries)/3);
+                        $correction = ($count_industries*3)-count($industries);
 
-                            foreach ($allIndustries as $row) {
-                                echo '<option value="' . $row["industry_id"] . '">' . $row["name"] . '</option>';
+                        $i = 0;
+
+                        for ($x = 0; $x < 3; $x++) {
+                            if ($x == 2) {
+                                $corrector = $correction;
+                            } else {
+                                $corrector = 0;
                             }
-                        ?>
-                    </select>
+
+                            echo '<div class="column is-one-thirds">';                                    
+                            for ($j = 0; $j < $count_industries-$corrector; $j++) {
+                                echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industries[$i]["industry_id"] . '" name="industry_ids[]" value="' . $industries[$i]["industry_id"] . '" disabled>';
+                                echo '<label for="' . $industries[$i]["industry_id"] . '">' . $industries[$i]["name"] . '</label><br>';
+                                $i++;
+                            }
+                            echo '</div>';
+                        }
+                        
+                    ?>
                 </div>
-            </div>
-            <div class="field"></div>
+
+            </div>    
         </div>
         <div class="row">
             <div class="field">
@@ -308,74 +351,35 @@
                             echo "</tr>";
                         }
                     ?>
-                    <!--
-                    <tr>
-                        <th>1</th>
-                        <td>Lebenslauf</td>
-                        <td>.docx</td>
-                        <td>CV</td>
-                        <td>
-                            <button class="button is-danger is-outlined is-rounded" type="button">
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <td>LAP Zeugnis</td>
-                        <td>.pdf</td>
-                        <td>Resumee</td>
-                        <td>
-                            <button class="button is-danger is-outlined is-rounded" type="button">
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>3</th>
-                        <td>Matura Zeugnis</td>
-                        <td>.png</td>
-                        <td>Resumee</td>
-                        <td>
-                            <button class="button is-danger is-outlined is-rounded" type="button">
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                        </td>
-                    </tr>
-                    -->
                 </tbody>
             </table>
         </div>
     </div>
 
-    <form action="">
+    <form action="./applicant_profile.php" method="post" enctype="multipart/form-data">
+        <div class="columns">
+            <div class="column">
+                <label class="label" for="fileToUpload">Choose a file:</label>
+                <input class="button" type="file" name="fileToUpload" id="fileToUpload">        
+            </div>
+            <div class="column">
+                <label class="label">File Type:</label>
+                <div class="select">
+                    <select class="" name="filetype_id" required>
+                        <?php
+                            $allFileTypes = File::getAllFileTypes();
 
-        <div class="row">
-            <div class="field is-justify-content-left">
-                <div class="file has-name">
-                    <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
-                        <span class="file-cta">
-                            <span class="file-icon">
-                                <i class="fas fa-upload"></i>
-                            </span>
-                            <span class="file-label">
-                                Choose a file…
-                            </span>
-                        </span>
-                        <span class="file-name">
-                            file name
-                        </span>
-                    </label>
+                            foreach ($allFileTypes as $row) {
+                                echo '<option value="' . $row["filetype_id"] . '">' . $row["type"] . '</option>';
+                            }
+                        ?>
+                    </select>
                 </div>
             </div>
-        </div>
+            <div class="column is-4"></div>
+        </div>        
+
+        <button class="button" type="submit" name="file_submit">Upload File</button>
 
     </form>
 
