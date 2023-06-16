@@ -35,6 +35,10 @@ body {
                         .button {
                             margin-top: 10px;
 
+                            &.in-row {
+                                margin: 0;
+                            }
+
                             &.is-rounded {
                                 width: 0;
                             }
