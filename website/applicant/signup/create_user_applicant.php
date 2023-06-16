@@ -9,6 +9,7 @@
 
     //After Submit:
     if (isset($_POST["signup_applicant"])) {
+
         //from Form
         $firstname = $_POST["firstname"];
         $lastname = $_POST["lastname"];
@@ -20,7 +21,8 @@
         $street = $_POST["street"];
         $streetnumber = $_POST["streetnumber"];
         $education_id = $_POST["education_id"];
-        $industry_id = $_POST["industry_id"];
+        $industry_ids = $_POST["industry_ids"];     
+
         //pleas ignore this it is working and i dont want to change it 😘
         if (isset($_POST["headhunting"])) {
             $headhunting = $_POST["headhunting"];
@@ -58,25 +60,12 @@
         $applicant->updateDB();
         
         //Industry
-        $applicant->addApplicant_Industry($industry_id);
+        foreach ($industry_ids as $industry_id) {
+            $applicant->addApplicant_Industry($industry_id);
+        }
         
         //Unset $_POST
-        unset($_POST["firstname"]);
-        unset($_POST["lastname"]);
-        unset($_POST["birthday"]);
-        unset($_POST["country"]);
-        unset($_POST["state"]);
-        unset($_POST["postalcode"]);
-        unset($_POST["city"]);
-        unset($_POST["street"]);
-        unset($_POST["streetnumber"]);
-        unset($_POST["education_id"]);
-        unset($_POST["industry_id"]);
-
-        //the same like line 25
-        if (isset($_POST["headhunting"])) {
-            unset($_POST["headhunting"]);
-        }
+        unset($_POST);
 
         echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/applicant/pages/applicant_profile.php");</script>';
         exit;
@@ -181,22 +170,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="field">
-                            <label class="label">Industry</label>
-                            <div class="select">
-                                <select name="industry_id" required>
-                                    <?php
-                                        $allIndustries = Applicant::getIndustry_Data();
-
-                                        foreach ($allIndustries as $row) {
-                                            echo '<option value="' . $row["industry_id"] . '">' . $row["name"] . '</option>';
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="row">
                         <div class="field">
@@ -220,7 +193,7 @@
 
                                         echo '<div class="column is-one-thirds">';                                    
                                         for ($j = 0; $j < $count_industries-$corrector; $j++) {
-                                            echo '<input type="checkbox" id="' . $industries[$i]["industry_id"] . '" name="' . $industries[$i]["name"] . '" value="' . $industries[$i]["name"] . '">';
+                                            echo '<input type="checkbox" id="' . $industries[$i]["industry_id"] . '" name="industry_ids[]" value="' . $industries[$i]["industry_id"] . '">';
                                             echo '<label for="' . $industries[$i]["industry_id"] . '">' . $industries[$i]["name"] . '</label><br>';
                                             $i++;
                                         }
