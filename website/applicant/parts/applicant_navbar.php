@@ -36,25 +36,19 @@
             </div>
         </div>
     </div>
-</nav>
-<div class="card">
-    <div class="card">
-        <div class="card-content">
-            <div class="content">
-                <form>
-                    <div>
-                        <input class="input" type="text" placeholder="Beruf, Firma, Stichwort">
-                        <input class="input" type="text" placeholder="Ort">
-                        <button class="button is-primary is-rounded">Job suchen</button>
-                    </div>
-                    <div>
-
-                    </div>
-                </form>
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-white">
+                        <!--Link profile page here-->
+                        <strong>Profile</strong>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</nav>
 <!--Filter -->
 <div class="card">
     <header class="card-header" onclick="hide_show_something('filters'); hide_show_something('filters-footer')">
