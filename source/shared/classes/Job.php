@@ -23,7 +23,7 @@ class Job extends DB
     public static function insertjob($job_id, $title, $description=null, $salary=null, $isvolunteerwork, $company_id)
     {
         $job = new job($title, $description=null, $salary=null, $isvolunteerwork, $company_id);
-        $stmt = $job->pdo->prepare("insert into job (job_id, title, description, salary, isvolunteerwork, company_id) values (?,?,?,?,?)");
+        $stmt = $job->pdo->prepare("insert into Job (job_id, title, description, salary, isvolunteerwork, company_id) values (?,?,?,?,?)");
         $stmt->bindParam(1, $job_id, PDO::PARAM_STR);
         $stmt->bindParam(2, $title, PDO::PARAM_INT);
         $stmt->bindParam(3, $description, PDO::PARAM_INT);
@@ -45,7 +45,7 @@ class Job extends DB
     public static function insertorupdjob($job_id, $title, $description=null, $salary=null, $isvolunteerwork, $company_id)
     {
 		$db = new DB();
-        $stmt = $db->pdo->prepare("select job_id from job where job_id = ?");
+        $stmt = $db->pdo->prepare("select job_id from Job where job_id = ?");
         $stmt->bindParam(1, $job_id, PDO::PARAM_STR);
 
 		$stmt->execute();
@@ -62,7 +62,7 @@ class Job extends DB
         }
 
         $job = new job($title, $description=null, $salary=null, $isvolunteerwork, $company_id);
-        $stmt = $job->pdo->prepare("insert into job (job_id, title, description, salary, isvolunteerwork, company_id) values (?,?,?,?,?)");
+        $stmt = $job->pdo->prepare("insert into Job (job_id, title, description, salary, isvolunteerwork, company_id) values (?,?,?,?,?)");
         $stmt->bindParam(1, $job_id, PDO::PARAM_STR);
         $stmt->bindParam(2, $title, PDO::PARAM_INT);
         $stmt->bindParam(3, $description, PDO::PARAM_INT);
@@ -83,7 +83,7 @@ class Job extends DB
     //todo: change to insertorupd
     public function insertorupdHeadhunt($text=null, $applicant_id)
     {
-        $stmt = $this->pdo->prepare("insert into headhunt (text, job_id, applicant_id) values (?,?,?)");
+        $stmt = $this->pdo->prepare("insert into Headhunt (text, job_id, applicant_id) values (?,?,?)");
         $stmt->bindParam(1, $text, PDO::PARAM_INT);
         $stmt->bindParam(2, $this->job_id, PDO::PARAM_INT);
         $stmt->bindParam(3, $applicant_id, PDO::PARAM_STR);
@@ -101,7 +101,7 @@ class Job extends DB
     public static function getHeadhunt_Applicant($applicant_id)
     {
         $myDb = new DB();
-        $stmt = $myDb->pdo->prepare("select * from headhunt where applicant_id = (?)");
+        $stmt = $myDb->pdo->prepare("select * from Headhunt where applicant_id = (?)");
         $stmt->bindParam(1, $applicant_id, PDO::PARAM_INT);
 
         if($stmt->execute())
@@ -117,7 +117,7 @@ class Job extends DB
     public static function getHeadhunt_Job($job_id)
     {
         $myDb = new DB();
-        $stmt = $myDb->pdo->prepare("select * from headhunt where job_id = (?)");
+        $stmt = $myDb->pdo->prepare("select * from Headhunt where job_id = (?)");
         $stmt->bindParam(1, $job_id, PDO::PARAM_INT);
 
         if($stmt->execute())
@@ -133,7 +133,7 @@ class Job extends DB
     public static function getHeadhunt_Company($company_id)
     {
         $myDb = new DB();
-        $stmt = $myDb->pdo->prepare("select * from job, headhunt where job.company_id = (?) and job.job_id = headhunt.job_id");
+        $stmt = $myDb->pdo->prepare("select * from Job, Headhunt where company_id = (?) and Job.job_id = Headhunt.job_id");
         $stmt->bindParam(1, $company_id, PDO::PARAM_INT);
 
         if($stmt->execute())
