@@ -45,7 +45,8 @@ class Job extends DB
 
     public static function insertorupdjob($job_id, $title, $isvolunteerwork, $company_id,$description=null, $salary=null)
     {
-        $stmt = pdo->prepare("select job_id from Job where job_id = ?");
+		$db = new DB();
+        $stmt = $db->pdo->prepare("select job_id from Job where job_id = ?");
         $stmt->bindParam(1, $job_id, PDO::PARAM_STR);
 
         $stmt->execute();
