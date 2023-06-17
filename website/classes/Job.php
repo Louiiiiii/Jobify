@@ -1,4 +1,5 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . "/website/classes/DB.php";
 
 class Job extends DB
 {
@@ -78,5 +79,38 @@ class Job extends DB
             return null;
         }
     }
+
+
+	public static function getHeadhunt_Job($job_id)
+	{
+		$myDb = new DB();
+		$stmt = $myDb->pdo->prepare("select * from Headhunt where job_id = (?)");
+		$stmt->bindParam(1, $job_id, PDO::PARAM_INT);
+
+		if($stmt->execute())
+		{
+			return $stmt->fetchAll();
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	public static function getHeadhunt_Company($company_id)
+	{
+		$myDb = new DB();
+		$stmt = $myDb->pdo->prepare("select * from Job, Headhunt where company_id = (?) and Job.job_id = Headhunt.job_id");
+		$stmt->bindParam(1, $company_id, PDO::PARAM_INT);
+
+		if($stmt->execute())
+		{
+			return $stmt->fetchAll();
+		}
+		else
+		{
+			return null;
+		}
+	}
 }
 
