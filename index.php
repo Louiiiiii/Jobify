@@ -1,1 +1,4 @@
-<script>window.location.href = 'source/view/login/login.php';</script>
+<?php
+header("Location: website/mainpages/login.php");
+die();
+?>

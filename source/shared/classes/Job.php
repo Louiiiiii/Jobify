@@ -52,10 +52,10 @@ class Job extends DB
 
         // Fetch the first row
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         // Check if a row was returned
         if ($row) {
-            
+
         }
         else{
 

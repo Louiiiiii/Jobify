@@ -1,0 +1,98 @@
+body {
+    .row {
+        display: flex;
+        flex-direction: row;
+        margin: 0 25px;
+
+        .column {
+            .card {
+                .card-header {
+                    .like {
+                        display: flex;
+                        align-items: center;
+                        margin-right: 1rem;
+            
+                        .fa-heart {
+                            -webkit-text-stroke: 1px black;
+                            color: #fff;
+                            cursor: pointer;
+                        }
+            
+                        .liked {
+                            -webkit-text-stroke: none;
+                            color: #f00;
+                        }
+                    }
+                }
+
+                .card-content {
+                    .content {
+                        .content__button {
+                            display: flex;
+                            justify-content: flex-end;
+                        }
+
+                        .button {
+                            margin-top: 10px;
+
+                            &.in-row {
+                                margin: 0;
+                            }
+
+                            &.is-rounded {
+                                width: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .search-row, .add-row {
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 37px 0;
+
+        .button {
+            width: 0;
+        }
+    }
+}
+
+.modal {
+    .modal-content {
+        .row {
+            .column:has(.checkbox) {
+                padding: 0;
+            }
+        }
+        .row:nth-child(2) {
+            .column {
+                padding-top: 0.75rem;
+            }
+        }
+
+        .row:nth-last-child(3) {
+            .column {
+                padding-bottom: 0.75rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    body {
+        height: 100%;
+
+        .row {
+            flex-direction: column;
+            margin: 0;
+
+            .field {
+                justify-content: unset;
+                margin-bottom: 0.75rem;
+            }
+        }
+    }
+}
