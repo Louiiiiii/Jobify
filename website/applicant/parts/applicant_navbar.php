@@ -16,16 +16,16 @@
     </div>
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item">
+            <a class="navbar-item" href="../pages/applicant_overview.php">
                 Available Jobs
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="../pages/applicant_applications.php">
                 Applications
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="../pages/applicant_favourite.php">
                 Favorites
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="../pages/applicant_requested.php">
                 Requested Jobs
             </a>
         </div>
