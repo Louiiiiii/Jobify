@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Overview</title>
     <link rel="stylesheet" href="/website/source/css/bulma.css">
-    <link rel="stylesheet" href="/website/source/css/profile.css">
+    <link rel="stylesheet" href="/website/source/css/applicant.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
     <script src="../../source/js/favourites.js"></script>
 </head>
@@ -72,7 +72,7 @@ $filter = $db->pdo->prepare('select   j.title title,
                                         and a.city_postalcode_id = cp.city_postalcode_id
                                         and cp.city_id = ci.city_id
                                         and (lower(j.title) like :jobtitle or :jobtitle is null)
-                                        and (j.salary between :salaryfrom and :salaryfrom or :salaryto is null)
+                                        and (j.salary between :salaryfrom and :salaryfrom or :salaryfrom is null)
                                         and (lower(c.name) like :companyname or :companyname is null)
                                         and (lower(ci.city) like :cityname or :cityname is null)');
 $filter->bindParam('userid', $userid,PDO::PARAM_INT);
@@ -113,7 +113,7 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
                                 ?>
                             <div class="like">
                                 <form method="post">
-                                    <button type="submit" name="favorite" value=<?php echo $res['job_id']?> style= "background:transparent border:transparent">
+                                    <button type="submit" name="favorite" value=1 style="background: transparent; border: transparent">
                                     <span class="icon is-small">
                                         <i class="fas fa-heart <?php if($res['favorite'] == 1){echo 'liked';}?>"></i>
                                     </span>
