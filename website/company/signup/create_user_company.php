@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="/website/source/css/create_user.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
-<body>
+<body class="company">
     <div class="card">
         <p class="title is-2">Create User</p>
         <div class="card-content">

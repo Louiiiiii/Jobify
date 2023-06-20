@@ -2,13 +2,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 
     .card {
         display: flex;
         align-items: center;
         flex-direction: column;
-        height: 100%;
         width: 700px;
 
         .title {
@@ -85,6 +83,14 @@ body {
     }
 }
 
+.company {
+    height: 100vh;
+
+    .card {
+        height: 100%;
+    }
+}
+
 input[type="text"]::-webkit-calendar-picker-indicator {
     display: none !important;
 }
@@ -104,10 +110,32 @@ input[type="text"]::-webkit-calendar-picker-indicator {
                         .field {
                             justify-content: unset;
                             margin-bottom: 0.75rem;
+
+                            .is-one-thirds {
+                                &:nth-child(2) {
+                                    padding: 0 0.75rem;
+                                }
+                                
+                                &:first-child {
+                                    padding-bottom: 0;
+                                }
+    
+                                &:last-child {
+                                    padding-top: 0;
+                                }
+                            }
                         }
                     }
                 }
             }
+        }
+    }
+
+    .company {
+        height: auto;
+
+        .card {
+            height: auto;
         }
     }
 }
