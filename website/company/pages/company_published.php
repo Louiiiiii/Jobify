@@ -71,7 +71,7 @@
         </div>
     </div>
     <div class="row">
-    <div class="column">
+        <div class="column">
             <div class="card">
                 <header class="card-header">
                     <p class="card-header-title">

@@ -1,0 +1,73 @@
+body {
+    .form {
+        padding: 1.5rem;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        margin: 0 25px;
+    
+        .column {
+            display: flex;
+            flex-direction: row;
+
+            .label {
+                display: flex;
+                align-items: center;
+                width: 100px;
+                margin: 0 15px 0 0;
+            }
+
+            .textarea {
+                min-width: 0;
+                width: calc(100% - 165px);
+            }
+
+            .button {
+                margin-left: 20px;
+            }
+
+            .ul {
+                list-style-type: initial;
+                padding-left: 25px;
+            }
+
+            .hoverable-label-req, .hoverable-label-benf {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+                width: fit-content;
+            }
+            
+            .hoverable-label-req:hover, .hoverable-label-benf:hover {
+                text-decoration: line-through;
+                color: gray;
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    body {
+        height: 100%;
+
+        .row {
+            flex-direction: column;
+            margin: 0;
+
+            .column {
+                justify-content: unset;
+
+                &:has(.ul) {
+                    margin: 0;
+                    padding: 0 0 0 15px;
+                }
+
+                .label {
+                    width: 100px;
+                }
+            }
+        }
+    }
+}
