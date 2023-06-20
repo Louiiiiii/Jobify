@@ -86,6 +86,9 @@
                 </ul>
             </div>
         </div>
+        <div class="row">
+            <button type="submit" class="button is-info"> Create</button>
+        </div>
     </form>
 </body>
 </html>
