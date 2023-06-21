@@ -243,4 +243,30 @@ class Applicant extends User
         $stmt->bindParam(8, $this->applicant_id);
         return $stmt->execute();
     }
+
+    private function checkFavorite($job_id){
+        $stmt = $this->pdo->prepare('select * 
+                                             from Favorite
+                                            where applicant_id = ?
+                                              and job_id = ?');
+        $stmt->bindParam(1,$this->applicant_id,PDO::PARAM_INT);
+        $stmt->bindParam(2,$job_id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount() == 1;
+    }
+
+    public function changeFavoriteStatus($job_id){
+        if($this->checkFavorite($job_id)){
+            $stmt = $this->pdo->prepare('delete from Favorite 
+                                                where applicant_id = ? 
+                                                  and job_id = ?');
+        }
+        else{
+            $stmt = $this->pdo->prepare('insert into Favorite(applicant_id, job_id) values (?,?)');
+        }
+
+        $stmt->bindParam(1,$this->applicant_id,PDO::PARAM_INT);
+        $stmt->bindParam(2,$job_id,PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }
