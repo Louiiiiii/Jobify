@@ -96,3 +96,8 @@ body {
         }
     }
 }
+
+.navbar-current-page {
+    border-bottom: 4px solid #fff;
+    border-top: 4px solid #000000;
+}
