@@ -31,7 +31,7 @@
                                     <i class="fas fa-envelope-open-text"></i>
                                 </span>
                             </button>
-                            <button class="button is-info is-rounded">
+                            <button class="button is-info is-rounded js-modal-trigger" data-target="modal-js-example-info">
                                 <span class="icon is-small">
                                     <i class="fas fa-info"></i>
                                 </span>
@@ -57,7 +57,7 @@
                                     <i class="fas fa-envelope-open-text"></i>
                                 </span>
                             </button>
-                            <button class="button is-info is-rounded">
+                            <button class="button is-info is-rounded js-modal-trigger" data-target="modal-js-example-info">
                                 <span class="icon is-small">
                                     <i class="fas fa-info"></i>
                                 </span>
@@ -85,7 +85,7 @@
                                     <i class="fas fa-envelope-open-text"></i>
                                 </span>
                             </button>
-                            <button class="button is-info is-rounded">
+                            <button class="button is-info is-rounded js-modal-trigger" data-target="modal-js-example-info">
                                 <span class="icon is-small">
                                     <i class="fas fa-info"></i>
                                 </span>
@@ -111,7 +111,7 @@
                                     <i class="fas fa-envelope-open-text"></i>
                                 </span>
                             </button>
-                            <button class="button is-info is-rounded">
+                            <button class="button is-info is-rounded js-modal-trigger" data-target="modal-js-example-info">
                                 <span class="icon is-small">
                                     <i class="fas fa-info"></i>
                                 </span>
@@ -169,6 +169,36 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+    <div id="modal-js-example-info" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="box">
+            <div class="header">
+                <div class="row">
+                        <div class="column">
+                            <figure class="image is-64x64">
+                                <img class="is-rounded" src="../../source/img/user-icon.png">
+                            </figure>
+                        </div>
+                </div>
+                <b><h6><b>Name: </b>Hugo Maier</h6></b>
+                </div>
+                <div>
+                    <b>State: </b>Florida
+                </div>
+                <div>
+                    <b>City: </b>Buxtehude
+                </div>
+                <div>
+                    <b>Birthday: </b>10.10.2010
+                </div>
+                <div>
+                    <b>Highest Degree: </b>Bachelor of Sience
+                </div>
             </div>
         </div>
         <button class="modal-close is-large" aria-label="close"></button>
