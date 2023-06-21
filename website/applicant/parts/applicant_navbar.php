@@ -1,29 +1,8 @@
 <?php
-
     echo "<script>";
     require_once $_SERVER['DOCUMENT_ROOT'] . "/website/source/js/navbar.js";
     echo "</script>";
-
-    $current_page = basename($_SERVER['PHP_SELF']);
-    
-    switch ($current_page) {
-        case "applicant_overview.php":
-            $overview = "navbar-current-page";
-            break;
-        case "applicant_applications.php":
-            $applications = "navbar-current-page";
-            break;
-        case "applicant_favourite.php":
-            $favourite = "navbar-current-page";
-            break;
-        case "applicant_requested.php":
-            $requested = "navbar-current-page";
-            break;
-        default:
-            echo "Invalid header option";
-    }
 ?>
-
 <nav class="navbar is-black has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
@@ -37,16 +16,16 @@
     </div>
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item <?php echo $overview ?>" href="../pages/applicant_overview.php">
+            <a class="navbar-item" href="../pages/applicant_overview.php">
                 Available Jobs
             </a>
-            <a class="navbar-item <?php echo $applications ?>" href="../pages/applicant_applications.php">
+            <a class="navbar-item" href="../pages/applicant_applications.php">
                 Applications
             </a>
-            <a class="navbar-item <?php echo $favourite ?>" href="../pages/applicant_favourite.php">
+            <a class="navbar-item" href="../pages/applicant_favourite.php">
                 Favorites
             </a>
-            <a class="navbar-item <?php echo $requested ?>" href="../pages/applicant_requested.php">
+            <a class="navbar-item" href="../pages/applicant_requested.php">
                 Requested Jobs
             </a>
         </div>
@@ -61,7 +40,7 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href="/website/applicant/pages/applicant_profile.php" class="button is-white">
+                    <a class="button is-white">
                         <!--Link profile page here-->
                         <strong>Profile</strong>
                     </a>
@@ -108,10 +87,15 @@
                             <label class="label">Branche</label>
                             <div class="control">
                                 <div class="select is-dark">
-                                    <select>
-                                        <option>EDV, IT</option>
-                                        <option>Bau</option>
-                                        <option>Fahrzeugtechnik</option>
+                                        <!-- Dropdown select for industries-->
+                                    <select name="industry">
+                                        <?php
+                                        $data = Applicant::getIndustry_Data();
+                                        for ($i = 0; $i < count($data); $i++)
+                                        {
+                                            echo '<option value="'.$data[$i][0].'">'.$data[$i][1];
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
