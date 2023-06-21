@@ -107,11 +107,15 @@
                         <div class="field">
                             <label class="label">Branche</label>
                             <div class="control">
-                                <div class="select is-dark">
-                                    <select>
-                                        <option>EDV, IT</option>
-                                        <option>Bau</option>
-                                        <option>Fahrzeugtechnik</option>
+                                <div class="select is-dark"><!-- Dropdown select for industries-->
+                                    <select name="industry">
+                                        <?php
+                                        $data = Applicant::getIndustry_Data();
+                                        for ($i = 0; $i < count($data); $i++)
+                                        {
+                                            echo '<option value="'.$data[$i][0].'">'.$data[$i][1];
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
