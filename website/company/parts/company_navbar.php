@@ -31,9 +31,7 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-white">
-                        <strong>Profile</strong>
-                    </a>
+                    <button class="button is-white" onclick="window.location.href = 'company_profile.php';">Profil</button>
                 </div>
             </div>
         </div>
