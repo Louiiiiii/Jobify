@@ -85,7 +85,7 @@ class File extends User
 		return $stmt->execute();
 	}
 
-    public function addJob($job_id):bool{
+    public function addJob($job_id) {
         $this->getFile_id();
         if (!$this->checkJob($job_id)){
             $stmt = $this->pdo->prepare('insert into Job_File (job_id, file_id) values(?,?)');
