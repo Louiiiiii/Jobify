@@ -5,7 +5,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/website/classes/User.php";
 class Company extends User
 {
     /*user_id?*/
-    private $company_id;
+    public $company_id;
     public $name;
     public $slogan;
     public $description;
@@ -37,6 +37,29 @@ class Company extends User
         $stmt = $db->pdo->prepare('select name from Company');
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN,0);
+    }
+
+    public static function getCompanyByUserId($user_id){
+        $db = new DB;
+        $stmt = $db->pdo->prepare('select * from Company where user_id = ?');
+        $stmt->bindParam(1,$user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_BOTH);
+        $company = new Company($result['name'],$result['address_id'],$result['slogan'],$result['description'],$result['user_id']);
+        $company->getCompany_id();
+        return $company;
+    }
+
+    public function getCompany_id(){
+        $stmt = $this->pdo->prepare('select company_id id from Company where user_id = ?');
+        $stmt->bindParam(1,$this->user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        if ($result != null) {
+            $this->company_id = $result[0];
+            return $result[0];
+        }
+        return null;
     }
 }
 

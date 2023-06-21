@@ -88,7 +88,7 @@ class Address extends DB
 		return null;
 	}
 
-    public static function addState($state, $country_id){
+    private static function addState($state, $country_id){
 		$state_id = self::getState_id($state,$country_id);
         if($state_id == null) {
             $db = new DB();
@@ -101,7 +101,7 @@ class Address extends DB
 		return $state_id;
     }
 
-    public static function getState_id($state, $country_id){
+    private static function getState_id($state, $country_id){
 		$db = new DB();
 		$stmt = $db->pdo->prepare('select state_id from State where lower(state) = lower(?) and country_id = ?');
 		$stmt->bindParam(1,$state);
@@ -115,7 +115,7 @@ class Address extends DB
 		return null;
 	}
 
-	public static function addPostalCode($postalCode, $state_id){
+	private static function addPostalCode($postalCode, $state_id){
 		$postalCode_id = self::getPostalCode_id($postalCode, $state_id);
 		if($postalCode_id == null) {
 			$db = new DB();
@@ -128,7 +128,7 @@ class Address extends DB
 		return $postalCode_id;
 	}
 
-	public static function getPostalCode_id($postalCode, $state_id){
+	private static function getPostalCode_id($postalCode, $state_id){
 		$db = new DB();
 		$stmt = $db->pdo->prepare('select postalcode_id from Postalcode where lower(postalcode) = lower(?) and state_id = ?');
 		$stmt->bindParam(1,$postalCode);
@@ -169,7 +169,7 @@ class Address extends DB
 		return null;
 	}
 
-	public static function addAddress($street, $number,$city_postalcode_id, $additionalInfo = null){
+	private static function addAddress($street, $number,$city_postalcode_id, $additionalInfo = null){
 		$address_id = self::getAddress_id($street, $number,$city_postalcode_id,$additionalInfo);
 		if($address_id == null) {
 			$db = new DB();
@@ -199,4 +199,37 @@ class Address extends DB
 		}
 		return null;
 	}
+
+    public static function getAddressbyUserId($user_id){
+         $db = new DB();
+         $applicant = Applicant::getApplicantByUserId($user_id);
+         $company = Company::getCompanyByUserId($user_id);
+         if ($applicant->applicant_id != null){
+            $stmt = $db->pdo->prepare('select address_id from Applicant where user_id = ?');
+            $stmt->bindParam(1,$user_id,PDO::PARAM_INT);
+            $stmt->execute();
+            $address_id = $stmt->fetch();
+         }elseif($company->company_id != null){
+            $stmt = $db->pdo->prepare('select address_id from Company where user_id = ?');
+            $stmt->bindParam(1,$user_id,PDO::PARAM_INT);
+            $stmt->execute();
+            $address_id = $stmt->fetch();
+         }
+         $stmt = $db->pdo->prepare('SELECT    a.street,
+                                                    a.number,
+                                                    c.city,
+                                                    pc.Postalcode,
+                                                    s.state,
+                                                    co.country
+                                                FROM Address a 
+                                                LEFT JOIN City_Postalcode cp ON a.City_Postalcode_id = cp.City_Postalcode_id
+                                                LEFT JOIN City c ON cp.city_id = c.city_id
+                                                LEFT JOIN Postalcode pc ON cp.postalcode_id = pc.postalcode_id
+                                                LEFT JOIN State s ON pc.state_id = s.state_id
+                                                LEFT JOIN Country co ON s.country_id = co.country_id
+                                                WHERE a.address_id = ?');
+         $stmt->bindParam(1,$address_id);
+         $stmt->execute();
+         return $stmt->fetch();
+    }
 }
