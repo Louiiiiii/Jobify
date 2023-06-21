@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
-<?php require_once '../parts/company_profile_navbar.php'; ?>
+<?php require_once '../parts/company_navbar.php'; ?>
     <ul class="row" id="treeView">
         <li class="parent">
             <div class="column caret">
