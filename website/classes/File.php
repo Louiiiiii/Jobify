@@ -9,9 +9,8 @@ class File extends User
     public $name;
     public $upldate;
     public $filetype_name;
-    public $job_id;
 
-    public function __construct($filetype_name,$name,$job_id,$date = null, $user_email = null, $user_passwordhash = null)
+    public function __construct($filetype_name,$name,$date = null, $user_email = null, $user_passwordhash = null)
     {
 		if($date == null)
 		{
@@ -21,7 +20,6 @@ class File extends User
         $this->upldate = $date;
 		$this->filetype_name = $filetype_name;
 		$this->filetype_name = self::getFiletypeId($filetype_name);
-        $this->job_id = $job_id;
         parent::__construct($user_email, $user_passwordhash);
     }
 	public function updateDB()
@@ -29,10 +27,6 @@ class File extends User
 		$this->file_id = $this->getFile_id();
 		if ($this->file_id == null) {
 			$success = $this->insert();
-		}
-		elseif ($this->file_id != null && $this->hasDifferentJob())
-		{
-			$success = $this->updateJob();
 		}
 		return $success;
 	}
@@ -78,37 +72,44 @@ class File extends User
 		return null;
 	}
 
-	private function hasDifferentJob(): bool
-	{
-		$stmt = $this->pdo->prepare('select job_id from File where file_id = ?');
-		$stmt->bindParam(1,$this->file_id);
-		$stmt->execute();
-		$result = $stmt->fetch();
-		if($result[0] != $this->job_id)
-		{
-			return true;
-		}
-		return false;
-	}
-
 	private function insert(): bool
 	{
 		$filetype_id = self::addFileType($this->filetype_name);
 		$stmt = $this->pdo->prepare('insert into File (name,upldate,filetype_id,user_id) values (?,?,?,?)');
-		$stmt->bindParam(1, $this->name);
-		$stmt->bindParam(2, $this->upldate);
-		$stmt->bindParam(3, $filetype_id);
-		$stmt->bindParam(4, $this->user_id);
+		$stmt->bindParam(2, $this->name);
+		$stmt->bindParam(3, $this->upldate);
+		$stmt->bindParam(4, $filetype_id);
+		$stmt->bindParam(5, $this->user_id);
 		return $stmt->execute();
 	}
 
-	private function updateJob(): bool
-	{
-		$stmt = $this->pdo->prepare('update File set job_id = ? where file_id = ?');
-		$stmt->bindParam(1, $this->job_id);
-		$stmt->bindParam(2, $this->file_id);
-		return $stmt->execute();
-	}
+    public function addJob($job_id):bool{
+        $this->getFile_id();
+        if (!$this->checkJob($job_id)){
+            $stmt = $this->pdo->prepare('insert into Job_File (job_id, file_id) values(?,?)');
+            $stmt->bindParam(1,$job_id,PDO::PARAM_INT);
+            $stmt->bindParam(2,$this->file_id,PDO::PARAM_INT);
+            $stmt->execute();
+        }
+    }
+
+    public function delJob($job_id){
+        $this->getFile_id();
+        if ($this->checkJob($job_id)){
+            $stmt = $this->pdo->prepare('delete from File_Job where job_id = ? and file_id = ?');
+            $stmt->bindParam(1,$job_id,PDO::PARAM_INT);
+            $stmt->bindParam(2,$this->file_id,PDO::PARAM_INT);
+            $stmt->execute();
+        }
+    }
+
+    private function checkJob($job_id){
+        $stmt = $this->pdo->prepare('select * from Job_File where job_id = ? and file_id = ?');
+        $stmt->bindParam(1,$job_id,PDO::PARAM_INT);
+        $stmt->bindParam(2,$this->file_id,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount() >= 1;
+    }
 
 	public static function uploadFile($file, $user_id) {
         print_r($file);
@@ -160,7 +161,7 @@ class File extends User
 
         if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
 
-            
+
 
             return true;
         } else {
