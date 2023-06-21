@@ -94,12 +94,11 @@ class File extends User
 	private function insert(): bool
 	{
 		$filetype_id = self::addFileType($this->filetype_name);
-		$stmt = $this->pdo->prepare('insert into File (name,upldate,filetype_id,user_id, job_id) values (?,?,?,?,?)');
-		$stmt->bindParam(2, $this->name);
-		$stmt->bindParam(3, $this->upldate);
-		$stmt->bindParam(4, $filetype_id);
-		$stmt->bindParam(5, $this->user_id);
-		$stmt->bindParam(6, $this->job_id);
+		$stmt = $this->pdo->prepare('insert into File (name,upldate,filetype_id,user_id) values (?,?,?,?)');
+		$stmt->bindParam(1, $this->name);
+		$stmt->bindParam(2, $this->upldate);
+		$stmt->bindParam(3, $filetype_id);
+		$stmt->bindParam(4, $this->user_id);
 		return $stmt->execute();
 	}
 
@@ -129,8 +128,9 @@ class File extends User
 
         //check if file format is under the $allowedFileFormats 
         foreach ($allowedFileFormats as $type) {
+            echo "<script>alert('".$type."-".$FileFormat."');</script>";
             if ($type == $FileFormat) {
-                $file_type_ok = 1;
+                $file_format_ok = 1;
             }
         }
 
@@ -159,6 +159,9 @@ class File extends User
         }
 
         if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
+
+            
+
             return true;
         } else {
             return false;
