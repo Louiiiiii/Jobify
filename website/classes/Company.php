@@ -61,5 +61,18 @@ class Company extends User
         }
         return null;
     }
+
+    public static function getCompany_Data(){
+        $db = new DB();
+        $stmt = $db->pdo->prepare('select company_id, name from Company');
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if ($result != null)
+        {
+            return $result;
+        }
+        return null;
+    }
 }
 
