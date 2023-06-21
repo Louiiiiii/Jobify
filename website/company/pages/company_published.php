@@ -11,7 +11,7 @@
     <script src="../../source/js/favourites.js"></script>
 </head>
 <body>
-<?php require_once '../parts/company_profile_navbar.php'; ?>
+<?php include '../parts/company_navbar.php'; ?>
     <div class="search-row">
         <div class="field">
             <p class="control has-icons-left">

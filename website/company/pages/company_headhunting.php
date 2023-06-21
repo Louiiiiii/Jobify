@@ -13,7 +13,7 @@
     <script src="../../source/js/favourites.js"></script>
 </head>
 <body>
-<?php require_once '../parts/company_profile_navbar.php'; ?>
+<?php require_once '../parts/company_navbar.php'; ?>
     <div class="row">
         <div class="column">
             <div class="card">
