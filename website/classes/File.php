@@ -59,14 +59,16 @@ class File extends User
 	}
 
 	private function getFile_id(){
-		$stmt = $this->pdo->prepare('select file_id from File where name = ? and filetype_id = ? and user_id = ? and ifnull(job_id,0) = ifnull(?,0)');
-		$stmt->bindParam(2,$this->name);
-		$stmt->bindParam(3,$this->user_id);
-		$stmt->bindParam(4,$this->job_id);
+        $filetypeid = self::getFiletypeId($this->filetype_name);
+		$stmt = $this->pdo->prepare('select file_id from File where name = ? and user_id = ?  and filetype_id = ?');
+		$stmt->bindParam(1,$this->name);
+        $stmt->bindParam(2,$this->user_id);
+        $stmt->bindParam(2,$filetypeid);
 		$stmt->execute();
 		$result = $stmt->fetch();
 		if($result)
 		{
+            $this->file_id = $result[0];
 			return $result[0];
 		}
 		return null;
@@ -83,7 +85,7 @@ class File extends User
 		return $stmt->execute();
 	}
 
-    public function addJob($job_id):bool{
+    public function addJob($job_id) {
         $this->getFile_id();
         if (!$this->checkJob($job_id)){
             $stmt = $this->pdo->prepare('insert into Job_File (job_id, file_id) values(?,?)');
