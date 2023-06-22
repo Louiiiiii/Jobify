@@ -104,9 +104,10 @@
                                         <select name="industry">
                                             <?php
                                             $data = Applicant::getIndustry_Data();
+                                            echo '<option>--Alle--</option>';
                                             foreach($data as $item)
                                             {
-                                                echo '<option value="'.$item[0].'">'.$item[1].'</option>';
+                                                echo '<option value="'.$item[1].'">'.$item[1].'</option>';
                                             }
                                             ?>
                                         </select>
@@ -122,9 +123,10 @@
                                         <select name="companyname">
                                             <?php
                                             $data = Company::getCompany_Data();
+                                            echo '<option>--Alle--</option>';
                                             foreach ($data as $item)
                                             {
-                                                echo '<option value="'.$item[0].'">'.$item[1].'</option>';
+                                                echo '<option value="'.$item[1].'">'.$item[1].'</option>';
                                             }
                                             ?>
                                         </select>
