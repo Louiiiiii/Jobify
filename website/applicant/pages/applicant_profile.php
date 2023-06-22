@@ -173,13 +173,13 @@
             </div>
         <div class="row">
             <div class="field">
-                <label class="label">Vorname</label>
+                <label class="label">Firstname</label>
                 <div class="control">
                     <input name="firstname" class="input disabling" type="text" placeholder="Firstname" required disabled>
                 </div>
             </div>
             <div class="field">
-                <label class="label">Nachname</label>
+                <label class="label">Lastname</label>
                 <div class="control">
                     <input name="lastname" class="input disabling" type="text" placeholder="Lastname" required disabled>
                 </div>
