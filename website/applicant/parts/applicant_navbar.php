@@ -146,7 +146,7 @@
                     <div class="columns">
                         <div class="column is-4">
                             <div class="buttons">
-                                <button class="button is-dark is-rounded">Speichern</button>
+                                <button class="button is-dark is-rounded" name="filter">Speichern</button>
                                 <button class="button is-light">Filter zurücksetzen</button>
                             </div>
                         </div>
