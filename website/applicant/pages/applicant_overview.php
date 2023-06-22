@@ -1,3 +1,10 @@
+<?php
+if (isset($_POST['jobinfo'])){
+    $_SESSION['currjob_id'] = $_POST['jobinfo'];
+    header("Location: applicant_job.php");
+    die();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +34,8 @@ if (!isset($_SESSION["current_user_id"]))
 }
 
 if (isset($_POST['favorite'])){
-
+    $applicant = Applicant::getApplicantByUserId($userid);
+    $applicant->changeFavoriteStatus($_POST['favorite']);
 }
 
 if (isset($_POST['filter'])){
