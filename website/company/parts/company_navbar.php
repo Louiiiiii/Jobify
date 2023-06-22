@@ -42,27 +42,20 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
     <div class="card">
         <header class="card-header">
             <p class="card-header-title">Filter Applicants</p>
-            <button class="card-header-icon toggleFilter"  aria-label="more options" onclick="test('toggleFilter', 'filter')" >
+            <button class="card-header-icon toggleFilter"  aria-label="more options" onclick="hide_show_something('filter')" >
         <i class="fas fa-angle-down" aria-hidden="true"></i>
       </span>
             </button>
         </header>
-        <div class="card test filter">
+        <div class="card test filter" id="filter">
             <div class="card-content">
                 <div class="content">
                     <div class="columns">
                         <div class="column is-2">
-                            <input class="input is-dark" type="text" placeholder="Name">
+                            <input class="input" type="text" placeholder="Name">
                         </div>
                         <div class="column is-2">
-                            <div class="field">
-                                <p class="control has-icons-left has-icons-right">
-                                    <input class="input is-dark" type="place" placeholder="Ort">
-                                    <span class="icon is-small is-left">
-                          <i class="fas fa-city"></i>
-                        </span>
-                                </p>
-                            </div>
+                            <input class="input" type="place" placeholder="Ort">
                         </div>
                     </div>
                     <div class="columns">
@@ -70,7 +63,7 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
                             <div class="field">
                                 <label class="label">Fachbereich</label>
                                 <div class="control">
-                                    <div class="select is-dark"><!-- Dropdown select for industries-->
+                                    <div class="select"><!-- Dropdown select for industries-->
                                         <select name="industry">
                                             <?php
                                             $data = Applicant::getIndustry_Data();
@@ -88,7 +81,7 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
                             <div class="field">
                                 <label for="education" class="label">Abschluss/Ausbildung</label>
                                 <div class="control">
-                                    <div class="select is-dark"><!-- Dropdown select for industries-->
+                                    <div class="select"><!-- Dropdown select for industries-->
                                         <select name="education">
                                             <?php
                                             $data = Applicant::getEducation_Data();
@@ -106,7 +99,7 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
                             <div class="field">
                                 <label class="label" for="jobtitle">Jobbeschreibung</label>
                                 <div class="control">
-                                    <div class="select is-dark">
+                                    <div class="select">
                                         <select name="jobtitle">
                                             <?php
                                             $data = Job::getJob_Data();

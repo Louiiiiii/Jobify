@@ -54,8 +54,14 @@ if (isset($_POST['filter'])){
     if (isset($_POST['cityname'])){
         $cityname = '%'.$_POST['cityname'].'%';
     }
+    if (isset($_POST['industryname'])){
+        $industryname = '%'.$_POST['industryname'].'%';
+    }
+    if (isset($_POST['industry'])){
+        $industry = '%'.$_POST['industry'].'%';
+    }
 }
-
+//TODO select um industry und industryname ergänzen
 $db = new DB();
 $filter = $db->pdo->prepare('select   j.title title,
                                             j.description description,
@@ -89,6 +95,8 @@ $filter->bindParam('salaryfrom', $salaryfrom, PDO::PARAM_INT);
 $filter->bindParam('salaryto', $salaryto,PDO::PARAM_INT);
 $filter->bindParam('companyname', $companyname);
 $filter->bindParam('cityname', $cityname);
+$filter->bindParam('industry', $industry);
+$filter->bindParam('industryname', $industryname);
 $filter->execute();
 ?>
 <div class="row">

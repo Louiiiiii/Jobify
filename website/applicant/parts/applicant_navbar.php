@@ -87,25 +87,18 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-3">
-                            <input class="input is-dark" type="text" placeholder="Beruf">
+                            <input class="input is-dark" type="text" name="jobtitle" placeholder="Beruf">
                         </div>
                         <div class="column is-2">
-                            <div class="field">
-                                <p class="control has-icons-left has-icons-right">
-                                    <input class="input is-dark" type="place" placeholder="Ort">
-                                    <span class="icon is-small is-left">
-                          <i class="fas fa-city"></i>
-                        </span>
-                                </p>
-                            </div>
+                            <input class="input is-dark" type="place" name="cityname" placeholder="Ort">
                         </div>
                         <div class="column is-2">
-                            <input class="input is-dark" type="text" placeholder="Branche">
+                            <input class="input is-dark" type="text" name="industryname" placeholder="Branche">
                         </div>
                         <div class="column is-5"></div>
                     </div>
                     <div class="columns">
-                        <div class="column is-1">
+                        <div class="column is-2">
                             <div class="field">
                                 <label class="label">Branche</label>
                                 <div class="control">
@@ -114,24 +107,6 @@
                                             <?php
                                             $data = Applicant::getIndustry_Data();
                                             foreach($data as $item)
-                                            {
-                                                echo '<option value="'.$item[0].'">'.$item[1].'</option>';
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column is-2">
-                            <div class="field">
-                                <label class="label" for="jobtitle">Beruf</label>
-                                <div class="control">
-                                    <div class="select is-dark">
-                                        <select name="jobtitle">
-                                            <?php
-                                            $data = Job::getJob_Data();
-                                            foreach ($data as $item)
                                             {
                                                 echo '<option value="'.$item[0].'">'.$item[1].'</option>';
                                             }
