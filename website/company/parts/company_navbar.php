@@ -1,8 +1,21 @@
 <?php
-echo "<script>";
-require $_SERVER['DOCUMENT_ROOT'] . "/website/source/js/navbar.js";
-echo "</script>";
 include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
+
+$current_page = basename($_SERVER['PHP_SELF']);
+
+switch ($current_page) {
+    case "company_published.php":
+        $published = "navbar-current-page";
+        break;
+    case "company_applications.php":
+        $applicants = "navbar-current-page";
+        break;
+    case "company_headhunting.php":
+        $headhunting = "navbar-current-page";
+        break;
+    default:
+        echo "Invalid header option";
+}
 ?>
 <!--Navbar Company Home -->
 <nav class="navbar is-black has-shadow" id="comNavHome" role="navigation" aria-label="main navigation">
@@ -18,13 +31,13 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
     </div>
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item">
+            <a class="navbar-item  <?php echo $published ?>" href="../pages/company_published.php" >
                 Published Jobs
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item <?php echo $applicants ?>" href="../pages/company_applications.php">
                 Applicants
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item <?php echo $headhunting ?>" href="../pages/company_headhunting.php">
                 Headhunting
             </a>
         </div>
@@ -108,6 +121,7 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
         </div>
     </div>
 </form>
+<script src="../../source/js/navbar.js"></script>
 
 
 
