@@ -114,7 +114,6 @@ class File extends User
     }
 
 	public static function uploadFile($file, $user_id) {
-        print_r($file);
 
         $FileFormat = strtolower(pathinfo($file["name"],PATHINFO_EXTENSION));
         $allowedFileFormats = ["jpg","png","jpeg","pdf","docx","xlsx","txt"];
@@ -131,7 +130,6 @@ class File extends User
 
         //check if file format is under the $allowedFileFormats 
         foreach ($allowedFileFormats as $type) {
-            echo "<script>alert('".$type."-".$FileFormat."');</script>";
             if ($type == $FileFormat) {
                 $file_format_ok = 1;
             }
