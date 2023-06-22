@@ -95,29 +95,11 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
                                 </div>
                             </div>
                         </div>
-                        <div class="column is-3">
-                            <div class="field">
-                                <label class="label" for="jobtitle">Jobbeschreibung</label>
-                                <div class="control">
-                                    <div class="select">
-                                        <select name="jobtitle">
-                                            <?php
-                                            $data = Job::getJob_Data();
-                                            foreach ($data as $item)
-                                            {
-                                                echo '<option value="'.$item[0].'">'.$item[1].'</option>';
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="columns">
                         <div class="column is-4">
                             <div class="buttons">
-                                <button class="button is-dark is-rounded">Speichern</button>
+                                <button class="button is-dark is-rounded" name="filter">Speichern</button>
                                 <button class="button is-light">Filter zurücksetzen</button>
                             </div>
                         </div>
