@@ -194,7 +194,7 @@
                                         echo '<div class="column is-one-thirds">';                                    
                                         for ($j = 0; $j < $count_industries-$corrector; $j++) {
                                             echo '<input type="checkbox" id="' . $industries[$i]["industry_id"] . '" name="industry_ids[]" value="' . $industries[$i]["industry_id"] . '">';
-                                            echo '<label for="' . $industries[$i]["industry_id"] . '">' . $industries[$i]["name"] . '</label><br>';
+                                            echo ' <label for="' . $industries[$i]["industry_id"] . '">' . $industries[$i]["name"] . '</label><br>';
                                             $i++;
                                         }
                                         echo '</div>';
