@@ -11,48 +11,29 @@
     <script src="../../source/js/favourites.js"></script>
 </head>
 <body>
-<?php require_once '../parts/applicant_profile_navbar.php'; ?>
+<?php
+include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
+if (isset($_SESSION['currjob_id'])){
+    $currjob_id = $_SESSION['currjob_id'];
+}
+else{
+    $currjob_id = 1;
+}
+$job = Job::getDatabyId($currjob_id);
+$company = Company::getDatabyId($job->company_id);
+?>
     <div class="row">
         <div class="column">
             <div class="card">
             <header class="card-header">
                     <p class="card-header-title">
-                        Job as Gooflord
+                        <?php echo $job->title;?>
                     </p>
                 </header>
                 <div class="card-content">
                     <div class="content">
-                        <div class="header">
-                            <?php 
-                                $titlename = 'select title, description from job';
-
-
-                                // Establish a database connection
-                                //$conn = new mysqli("localhost", "localhost", "raspberry", "Jobify");
-
-                                // Check connection
-                                //if ($conn->connect_error) {
-                                //    die("Connection failed: " . $conn->connect_error);
-                                //}
-
-                                // SQL query to fetch titles and descriptions
-                                //$sql = "SELECT title, description FROM job";
-                                //$result = $conn->query($sql);
-
-                                //if ($result->num_rows > 0) {
-                                    // Display the titles and descriptions as labels
-                                //    while ($row = $result->fetch_assoc()) {
-                                //        echo '<b><h6><label>' . $row["title"] . '</label>: <label>' . $row["description"] . '</label></h6></b>';
-                                //    }
-                                //}
-
-                                // Close the database connection
-                                //$conn->close();
-                            ?>
-                            <b><h6><label>Goofy Gmbh Marchtrenk</label>: <label>we make a difference</label></h6></b>
-                        </div>
                         <div>
-                            Wir suchen einen motivierten und goofy Junior Marketing Manager, der Teil unseres dynamischen und goofy Teams werden möchte. In dieser goofy Rolle unterstützen Sie uns bei der Entwicklung und Umsetzung von goofy Marketingstrategien, der goofy Marktforschung und der Erstellung von goofy Marketingmaterialien. Sie arbeiten goofy eng mit dem Marketingteam zusammen, um goofy innovative Kampagnen zu entwickeln und unsere goofy Marktposition zu stärken. Der goofy ideale Kandidat verfügt über eine goofy Leidenschaft für Marketing, eine goofy kreative Denkweise und goofy gute kommunikative Fähigkeiten. Erfahrungen im goofy digitalen Marketing und mit goofy Social-Media-Kanälen sind von goofy Vorteil. Wenn Sie eine goofy Karriere im Marketing anstreben und goofy bereit sind, neue goofy Herausforderungen anzunehmen, freuen wir uns auf Ihre goofy Bewerbung.
+                            <?php echo $job->description; ?>
                         </div>
                         <div>
                             <br><b>Anforderungen:</b>
@@ -72,8 +53,16 @@
                                 <li>Teamarbeit und Zusammenhalt</li>
                             </ul>
                         </div>
-                        <div>
-                            <br><b>Gehalt: 3200€ brutto</b>
+                        <?php
+                        if($job->salary != null) {
+                            echo "<div>";
+                            echo "<br><b>Gehalt: ".$job->salary."€ brutto</b>";
+                            echo "</div>";
+                        }
+                        ?>
+
+                        <div class="header">
+                            <b><h4><?php echo $company->name;?></h4></b>
                         </div>
                     </div>
                     <div>
