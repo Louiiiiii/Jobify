@@ -16,9 +16,7 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-white">
-                        <strong>Home</strong>
-                    </a>
+                    <button class="button is-white" onclick="window.location.href = 'company_published.php';">Home</button>
                 </div>
             </div>
         </div>

@@ -113,5 +113,18 @@ class Job extends DB
 			return null;
 		}
 	}
+
+    public static function getJob_Data(){
+        $db = new DB();
+        $stmt = $db->pdo->prepare('select job_id, title from Job');
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if ($result != null)
+        {
+            return $result;
+        }
+        return null;
+    }
 }
 

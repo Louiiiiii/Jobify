@@ -269,4 +269,18 @@ class Applicant extends User
         $stmt->bindParam(2,$job_id,PDO::PARAM_INT);
         $stmt->execute();
     }
+
+    public function getEduction_Data()
+    {
+        $stmt = $this->pdo->prepare('select education_id, name from Education');
+
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if ($result != null)
+        {
+            return $result;
+        }
+        return null;
+    }
 }

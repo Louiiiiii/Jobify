@@ -287,6 +287,27 @@
 
             </div>    
         </div>
+        <br>
+        <div class="row">
+            <div class="field">
+                <label class="label">Industry test</label>
+                <div class="columns">
+                    <div class="container">
+                        <div class="select is-multiple">
+                            <select multiple size="3">
+                                <?php
+                                $data = Applicant::getIndustry_Data();
+                                foreach ($data as $item)
+                                {
+                                    echo '<option value="'.$item[0].'">'.$item[1].'</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="field">
                 <label class="label">Allow Headhunting</label>
