@@ -4,6 +4,8 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . "/website/source/js/navbar.js";
     echo "</script>";
 
+    include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
+
     $current_page = basename($_SERVER['PHP_SELF']);
     
     switch ($current_page) {
@@ -23,7 +25,6 @@
             echo "Invalid header option";
     }
 ?>
-
 <nav class="navbar is-black has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
@@ -104,7 +105,7 @@
                         <div class="column is-5"></div>
                     </div>
                     <div class="columns">
-                        <div class="column is-2">
+                        <div class="column is-1">
                             <div class="field">
                                 <label class="label">Branche</label>
                                 <div class="control">
@@ -112,9 +113,9 @@
                                         <select name="industry">
                                             <?php
                                             $data = Applicant::getIndustry_Data();
-                                            for ($i = 0; $i < count($data); $i++)
+                                            foreach($data as $item)
                                             {
-                                                echo '<option value="'.$data[$i][0].'">'.$data[$i][1];
+                                                echo '<option value="'.$item[0].'">'.$item[1].'</option>';
                                             }
                                             ?>
                                         </select>
@@ -124,14 +125,17 @@
                         </div>
                         <div class="column is-2">
                             <div class="field">
-                                <label class="label">Beruf</label>
+                                <label class="label" for="jobtitle">Beruf</label>
                                 <div class="control">
                                     <div class="select is-dark">
-                                        <select>
-                                            <option>Java-Entwickler</option>
-                                            <option>IT System Engineer</option>
-                                            <option>Bauassistenz</option>
-                                            <option>CEO of deiMudder</option>
+                                        <select name="jobtitle">
+                                            <?php
+                                            $data = Job::getJob_Data();
+                                            foreach ($data as $item)
+                                            {
+                                                echo '<option value="'.$item[0].'">'.$item[1].'</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -142,47 +146,33 @@
                                 <label class="label">Firma</label>
                                 <div class="control">
                                     <div class="select is-dark">
-                                        <select>
-                                            <option>TGW</option>
-                                            <option>BWT</option>
-                                            <option>WIRO Consulting</option>
-                                            <option>Voestalpine</option>
+                                        <select name="companyname">
+                                            <?php
+                                            $data = Company::getCompany_Data();
+                                            foreach ($data as $item)
+                                            {
+                                                echo '<option value="'.$item[0].'">'.$item[1].'</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="column is-2">
-                            <div class="field">
-                                <label class="label">Gehalt</label>
-                                <div class="control">
-                                    <div class="select is-dark">
-                                        <select>
-                                            <option>bis 520.00 €</option>
-                                            <option>520.00 € bis 850.00 €</option>
-                                            <option>850.00 € bis 1200.00 €</option>
-                                            <option>1200.00 € bis 2500.00 €</option>
-                                            <option>2500.00 € bis 5300.00 €</option>
-                                            <option>ab 5300.00 €</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="column is-1">
+                            <label class="label" for="salaryfrom">Gehalt von</label>
+                            <input class="input is-dark" name="salaryfrom" type="number" min="500" placeholder="€">
+                        </div>
+                        <div class="column is-1">
+                            <label class="label" for="salaryto" hidden>bis</label>
+                            <input class="input is-dark" name="salaryto" type="number" placeholder="€ ">
                         </div>
                     </div>
                     <div class="columns">
                         <div class="column is-4">
-                            <div class="field is-grouped">
-                                <p class="control">
-                                    <a class="button is-dark">
-                                        Job Suchen
-                                    </a>
-                                </p>
-                                <p class="control">
-                                    <a class="button is-light">
-                                        Filter zurücksetzen
-                                    </a>
-                                </p>
+                            <div class="buttons">
+                                <button class="button is-dark is-rounded">Speichern</button>
+                                <button class="button is-light">Filter zurücksetzen</button>
                             </div>
                         </div>
                     </div>

@@ -30,3 +30,33 @@ function hide_show_something(ID) {
 
     }
 }
+
+function test (button, card)
+{
+    var buttons = document.querySelectorAll(button);
+    var contents = document.querySelectorAll(card);
+
+    buttons.forEach((item) =>
+        item.addEventListener("click", function(e) {
+            const content = document.querySelector(`#${this.id}-content`);
+            content.classList.toggle("show");
+
+            contents.forEach((item) => {
+                if (!item.id.startsWith(this.id)) {
+                    item.classList.remove("show");
+                }
+            });
+        })
+    );
+}
+
+/*
+function test (ID)
+{
+    var x = document.getElementById(ID);
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}*/
