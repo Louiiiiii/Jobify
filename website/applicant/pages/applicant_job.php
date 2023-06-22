@@ -23,7 +23,33 @@
                 <div class="card-content">
                     <div class="content">
                         <div class="header">
-                            <b><h6>Goofy Gmbh Marchtrenk;    we make a difference</h6></b>
+                            <?php 
+                                $titlename = 'select title, description from job';
+
+
+                                // Establish a database connection
+                                //$conn = new mysqli("localhost", "localhost", "raspberry", "Jobify");
+
+                                // Check connection
+                                //if ($conn->connect_error) {
+                                //    die("Connection failed: " . $conn->connect_error);
+                                //}
+
+                                // SQL query to fetch titles and descriptions
+                                //$sql = "SELECT title, description FROM job";
+                                //$result = $conn->query($sql);
+
+                                //if ($result->num_rows > 0) {
+                                    // Display the titles and descriptions as labels
+                                //    while ($row = $result->fetch_assoc()) {
+                                //        echo '<b><h6><label>' . $row["title"] . '</label>: <label>' . $row["description"] . '</label></h6></b>';
+                                //    }
+                                //}
+
+                                // Close the database connection
+                                //$conn->close();
+                            ?>
+                            <b><h6><label>Goofy Gmbh Marchtrenk</label>: <label>we make a difference</label></h6></b>
                         </div>
                         <div>
                             Wir suchen einen motivierten und goofy Junior Marketing Manager, der Teil unseres dynamischen und goofy Teams werden möchte. In dieser goofy Rolle unterstützen Sie uns bei der Entwicklung und Umsetzung von goofy Marketingstrategien, der goofy Marktforschung und der Erstellung von goofy Marketingmaterialien. Sie arbeiten goofy eng mit dem Marketingteam zusammen, um goofy innovative Kampagnen zu entwickeln und unsere goofy Marktposition zu stärken. Der goofy ideale Kandidat verfügt über eine goofy Leidenschaft für Marketing, eine goofy kreative Denkweise und goofy gute kommunikative Fähigkeiten. Erfahrungen im goofy digitalen Marketing und mit goofy Social-Media-Kanälen sind von goofy Vorteil. Wenn Sie eine goofy Karriere im Marketing anstreben und goofy bereit sind, neue goofy Herausforderungen anzunehmen, freuen wir uns auf Ihre goofy Bewerbung.
