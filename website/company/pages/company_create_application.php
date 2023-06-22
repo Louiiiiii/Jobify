@@ -16,6 +16,31 @@
     <form class="form" action="" method="post">
         <div class=row>
             <div class="column">
+                <label class="label">Gehalt: </label>
+                <input class="input" type="text" id="currencyInput" name="currencyInput" oninput="addCurrencySign(this)" style="max-width: 350px;">
+    
+                <script>
+                    function addCurrencySign(inputField) {
+                        // Remove any existing € sign from the input value
+                        let value = inputField.value.replace("€", "");
+                        
+                        // Add the € sign at the beginning of the input value
+                        value = "€" + value;
+                        
+                        // Update the input value
+                        inputField.value = value;
+                    }
+                </script>
+            </div>
+        </div>
+        <div class=row>
+            <div class="column">
+                <label class="label">Jobtitel: </label>
+                <input class="input" type="text" id="jobtitel" name="jobtitel" style="max-width: 350px;">
+            </div>
+        </div>
+        <div class=row>
+            <div class="column">
                 <label class="label">Description: </label>
                 <textarea class="textarea" placeholder="Description of the job"></textarea>
             </div>
