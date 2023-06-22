@@ -1,9 +1,5 @@
 <?php
 
-    echo "<script>";
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/website/source/js/navbar.js";
-    echo "</script>";
-
     include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 
     $current_page = basename($_SERVER['PHP_SELF']);
@@ -25,6 +21,8 @@
             echo "Invalid header option";
     }
 ?>
+
+
 <nav class="navbar is-black has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
@@ -74,15 +72,15 @@
 <!--Filter -->
 <form method="post">
     <div class="card">
-        <header class="card-header" onclick="hide_show_something('filters'); hide_show_something('filters-footer')">
+        <header class="card-header">
             <p class="card-header-title">Filter Jobs</p>
-            <button class="card-header-icon" aria-label="more options">
-      <span class="icon">
-        <i class="fas fa-angle-down" aria-hidden="true"></i>
-      </span>
+            <button type="button" class="card-header-icon" aria-label="more options" onclick="hide_show_something('filters')">
+                <span class="icon">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
             </button>
         </header>
-        <div class="card" id="filters" style="display: block">
+        <div class="card" id="filters" style="display: block;">
             <div class="card-content">
                 <div class="content">
                     <div class="columns">
@@ -181,3 +179,5 @@
         </div>
     </div>
 </form>
+
+<script src="../../source/js/navbar.js"></script>
