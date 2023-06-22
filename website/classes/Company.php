@@ -20,6 +20,19 @@ class Company extends User
         parent::__construct($email, $passwordnothashed, $user_id);
     }
 
+    public static function getDatabyId($company_id):Company{
+        $db = new DB();
+        $stmt = $db->pdo->prepare('select * 
+                                           from Company
+                                          where company_id = ?');
+        $stmt->bindParam(1,$company_id);
+        $stmt->execute();
+        $res = $stmt->fetch();
+        $company = new Company($res['name'],$res['address_id'],$res['slogan'],$res['description'],$res['user_id']);
+        $company->company_id = $res['company_id'];
+        return $company;
+    }
+
     public function insertCompany()
     {
         $stmt = $this->pdo->prepare("insert into Company (name, address_id, user_id, slogan, description) values (?,?,?,?,?)");

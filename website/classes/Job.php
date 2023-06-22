@@ -21,6 +21,17 @@ class Job extends DB
         $this->company_id = $company_id;
     }
 
+    public static function getDatabyId($job_id):Job{
+        $db = new DB;
+        $stmt = $db->pdo->prepare('select * from Job where job_id = ?');
+        $stmt->bindParam(1,$job_id);
+        $stmt->execute();
+        $res = $stmt->fetch();
+        $job = new Job($res['title'],$res['isvolunteerwork'],$res['company_id'],$res['description'],$res['salary']);
+        $job->job_id = $job_id;
+        return $job;
+    }
+
     public static function insertjob($job_id, $title, $isvolunteerwork, $company_id, $description=null, $salary=null)
     {
         $job = new job($title, $description=null, $salary=null, $isvolunteerwork, $company_id);
