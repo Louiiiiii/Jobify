@@ -1,3 +1,12 @@
+<?php
+if (isset($_POST['jobinfo'])){
+    $_SESSION['currjob_id'] = $_POST['jobinfo'];
+    header("Location: applicant_job.php");
+    die();
+}
+include '../parts/applicant_navbar.php';
+include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,9 +21,6 @@
 </head>
 <body>
 <?php
-include '../parts/applicant_navbar.php';
-include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
-
 $jobtitle = null;
 $salaryfrom = null;
 $salaryto = null;
@@ -27,7 +33,8 @@ if (!isset($_SESSION["current_user_id"]))
 }
 
 if (isset($_POST['favorite'])){
-
+    $applicant = Applicant::getApplicantByUserId($userid);
+    $applicant->changeFavoriteStatus($_POST['favorite']);
 }
 
 if (isset($_POST['filter'])){
