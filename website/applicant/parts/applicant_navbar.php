@@ -60,7 +60,7 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href="/website/applicant/pages/applicant_profile.php" class="button is-white">
+                    <a href="applicant_profile.php" class="button is-white">
                         <!--Link profile page here-->
                         <strong>Profile</strong>
                     </a>
@@ -69,6 +69,7 @@
         </div>
     </div>
 </nav>
+<?php if(!isset($skipfilter)){?>
 <!--Filter -->
 <form method="post">
     <div class="card">
@@ -156,5 +157,8 @@
         </div>
     </div>
 </form>
+<?php
+}
+?>
 
 <script src="../../source/js/navbar.js"></script>

@@ -13,7 +13,7 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href="/website/applicant/pages/applicant_overview.php" class="button is-white">
+                    <a href="applicant_overview.php" class="button is-white">
                         <!--Link Default Homepage here-->
                         <strong>Home</strong>
                     </a>
