@@ -106,9 +106,9 @@
                     </div>
                     <div class="row">
                         <div class="field">
-                            <label class="label">Birthday</label>
+                            <label class="label">Birthday</label> <!--  style="width: 250"   -->
                             <div class="control">
-                                <input name="birthday" class="input" type="date" required>
+                                <input style="width: 200px" name="birthday" class="input" type="date" required>
                             </div>
                         </div>
                     </div>

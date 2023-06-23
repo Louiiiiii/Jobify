@@ -119,7 +119,7 @@
         </div>
     </div>
     <div class="add-row">
-        <button class="button is-info is-rounded">
+        <button style="margin-bottom: 25px" class="button is-info is-rounded">
             <span class="icon is-small">
                 <i class="fas fa-plus"></i>
             </span>
