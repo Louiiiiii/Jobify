@@ -14,9 +14,11 @@
         case "applicant_favourite.php":
             $favourite = "navbar-current-page";
             break;
-        case "applicant_requested.php":
-            $requested = "navbar-current-page";
-            break;
+		case "applicant_requested.php":
+			$requested = "navbar-current-page";
+			break;
+		case "applicant_job.php":
+			break;
         default:
             echo "Invalid header option";
     }
