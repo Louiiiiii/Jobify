@@ -189,7 +189,7 @@
             <div class="field">
                 <label class="label">Birthday</label>
                 <div class="control">
-                    <input name="birthday" class="input disabling" type="date" required disabled>
+                    <input style="width: 204.4px" name="birthday" class="input disabling" type="date" required disabled>
                 </div>
             </div>
             <div class="field"></div>
@@ -255,7 +255,7 @@
         </div>
         <div class="row">
             <div class="field">
-                <label class="label">Industry</label>
+                <label style="width: 20%" class="label">Industry</label>
                 
                 <div class="columns">
                     <?php
@@ -276,7 +276,7 @@
                             echo '<div class="column is-one-thirds">';                                    
                             for ($j = 0; $j < $count_industries-$corrector; $j++) {
                                 echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industries[$i]["industry_id"] . '" name="industry_ids[]" value="' . $industries[$i]["industry_id"] . '" disabled>';
-                                echo '<label for="' . $industries[$i]["industry_id"] . '">' . $industries[$i]["name"] . '</label><br>';
+                                echo ' <label for="' . $industries[$i]["industry_id"] . '">' . $industries[$i]["name"] . '</label><br>';
                                 $i++;
                             }
                             echo '</div>';

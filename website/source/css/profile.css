@@ -18,6 +18,11 @@ body {
         }
 
         .field {
+
+            .columns {
+                width: inherit;
+            }
+            
             display: flex;
             flex-direction: row;
             width: 100%;
