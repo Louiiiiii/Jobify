@@ -13,12 +13,43 @@
 <body>
 <?php
 include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
+include
+
+if (isset($_SESSION['current_user_id'])){
+    $user_id = $_SESSION['current_user_id'];
+}
+else{
+    $user_id = 1;
+}
+
+if (isset($_SESSION['current_user_email'])){
+    $email = $_SESSION['current_user_email'];
+}
+else{
+    $email = 'testuser@gmail.com';
+}
+
 if (isset($_SESSION['currjob_id'])){
     $currjob_id = $_SESSION['currjob_id'];
 }
 else{
     $currjob_id = 1;
 }
+
+if (isset($_POST["file_submit"])) {
+
+    $filetype_name = $_POST["filetype_name"];
+
+    File::uploadFile($_FILES["fileToUpload"], $filetype_name, $user_id, $email);
+
+    //Unset and delete file from server
+    unset($_POST);
+
+    $fileToUpload = $_FILES['fileToUpload']['tmp_name'];
+
+    unset($_FILES);
+}
+
 $job = Job::getDatabyId($currjob_id);
 $company = Company::getDatabyId($job->company_id);
 ?>
@@ -26,7 +57,7 @@ $company = Company::getDatabyId($job->company_id);
         <div class="column">
             <div class="card">
             <header class="card-header">
-                    <p class="card-header-title">
+                    <p class="card-header-title" style="font-size: xx-large">
                         <?php echo $job->title;?>
                     </p>
                 </header>
@@ -35,34 +66,18 @@ $company = Company::getDatabyId($job->company_id);
                         <div>
                             <?php echo $job->description; ?>
                         </div>
-                        <div>
-                            <br><b>Anforderungen:</b>
-                            <ul>
-                                <li>Fachkenntnisse</li>
-                                <li>Erfahrung</li>
-                                <li>Kreativität</li>
-                                <li>Zuverlässigkeit</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <br><b>Benefits:</b>
-                            <ul>
-                                <li>Flexible Arbeitszeiten</li>
-                                <li>Mitarbeiterbeteiligung</li>
-                                <li>Gesundheitsförderung</li>
-                                <li>Teamarbeit und Zusammenhalt</li>
-                            </ul>
-                        </div>
                         <?php
                         if($job->salary != null) {
                             echo "<div>";
-                            echo "<br><b>Gehalt: ".$job->salary."€ brutto</b>";
+                            echo "<br><b>Gehalt:</b> ".$job->salary."€ brutto";
                             echo "</div>";
                         }
                         ?>
 
+                    </div>
+                    <div class="content">
                         <div class="header">
-                            <b><h4><?php echo $company->name;?></h4></b>
+                            <b><h2><?php echo $company->name;?></h2></b>
                         </div>
                     </div>
                     <div>
@@ -80,59 +95,68 @@ $company = Company::getDatabyId($job->company_id);
                     <div class="row">
                         <label class="label">Choose upload files</label>
                     </div>
-                    <div class="row">
+                    <?php
+                    $files = File::getAllFilesByUser($user_id);
+                    $cnthead = 3;
+                    $cntbottom = 1;
+                    foreach ($files as $file) {
+                        if ($cnthead == 3){
+                            echo '<div class="row">
+';
+                            $cnthead = 1;
+                        }
+                        else{
+                            $cnthead++;
+                        }
+                        ?>
                         <div class="column">
                             <input type="checkbox">
                             <label class="checkbox">
-                                Lebenslauf
+                                <?php echo $file[1]; ?>
                             </label>
                         </div>
-                        <div class="column">
-                            <input type="checkbox">
-                            <label class="checkbox">
-                                Maturazeugnis
-                            </label>
-                        </div>
-                        <div class="column">
-                            <input type="checkbox">
-                            <label class="checkbox">
-                                Dienstzeugnis
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="column">
-                            <input type="checkbox">
-                            <label class="checkbox">
-                                Lebenslauf
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="column">
-                            <input type="checkbox">
-                            <label class="checkbox">
-                                Lebenslauf
-                            </label>
-                        </div>
-                    </div>
+                        <?php
+                        if ($cntbottom == 3){
+                            echo '</div>';
+                            $cntbottom = 1;
+                        }
+                        else{
+                            $cntbottom++;
+                        }
+                    }
+                    if ($cntbottom != 1){
+                        echo '</div>';
+                    }
+                    ?>
+                    <hr>
+                </form>
+                <form method="post" enctype="multipart/form-data">
                     <div class="row">
                         <label class="label">Choose upload files</label>
                     </div>
                     <div class="row">
-                        <div class="file has-name">
-                            <label class="file-label">
-                                <input class="file-input" type="file" name="resume">
-                                <span class="file-cta">
-                                    <span class="file-icon">
-                                        <i class="fas fa-upload"></i>
-                                    </span>
-                                    <span class="file-label">
-                                        Upload a file…
-                                    </span>
-                                </span>
-                            </label>
+                        <input class="button" type="file" name="fileToUpload" id="fileToUpload">
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="label">File Type:</label>
+                    </div>
+                    <div class="row">
+                        <div class="select">
+                            <select name="filetype_name" required>
+                                <?php
+                                $allFileTypes = File::getAllFileTypes();
+
+                                foreach ($allFileTypes as $row) {
+                                    echo '<option value="' . $row["type"] . '">' . $row["type"] . '</option>';
+                                }
+                                ?>
+                            </select>
                         </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <button class="button" type="submit" name="file_submit">Upload File</button>
                     </div>
                 </form>
             </div>
