@@ -13,7 +13,45 @@
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
-<?php require_once '../parts/company_navbar.php'; ?>
+<?php require_once '../parts/company_navbar.php';
+include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
+
+$name = null;
+$place = null;
+$industry = null;
+$education = null;
+
+if (!isset($_SESSION["current_user_id"]))
+{
+    $userid = 1;
+}
+
+if (isset($_POST['filters']))
+{
+    if ($_POST['name'] != "")
+    {
+        $name = '%'.$_POST['name'].'%';
+    }
+
+    if ($_POST['place'] != "")
+    {
+        $name = '%'.$_POST['place'].'%';
+    }
+
+    if ($_POST['industry'] != "--Alle--")
+    {
+        $industry = '%'.$_POST['industry'].'%';
+    }
+
+    if ($_POST['education'] != "--Alle--")
+    {
+        $industry = '%'.$_POST['education'].'%';
+    }
+}
+
+
+?>
+
     <ul class="row" id="treeView">
         <li class="parent">
             <div class="column caret">
