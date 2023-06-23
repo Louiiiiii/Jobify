@@ -195,6 +195,19 @@ class File extends User
         }
     }
 
+    public static function delFile($fileId){
+        $db = new DB();
+        $stmt = $db->pdo->prepare('delete from File where file_id = ?');
+        $stmt->bindParam(1,$fileId,PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt = $db->pdo->prepare('delete from Job_File where file_id = ?');
+        $stmt->bindParam(1,$fileId,PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt = $db->pdo->prepare('delete from Application_File where file_id = ?');
+        $stmt->bindParam(1,$fileId,PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
     public static function getAllFilesByUser($user_id){
         $db = new DB();
         $stmt = $db->pdo->prepare('
