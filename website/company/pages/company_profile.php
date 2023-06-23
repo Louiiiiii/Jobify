@@ -40,12 +40,13 @@
         </div>
         <div class="row">
             <div class="field">
-                <label class="label" >Description</label>
-                <div class="control">
-                    <input name="description" class="input disabling" type="text" placeholder="Company Description" disabled>
+                <div class="field">
+                    <label class="label">Description</label>
+                    <div class="control">
+                        <textarea  name="description" class="textarea input disabling" placeholder="Description of the Company" disabled></textarea>
+                    </div>
                 </div>
             </div>
-            <div class="field"></div>
         </div>
         <hr class="solid">
         <div class="row">
