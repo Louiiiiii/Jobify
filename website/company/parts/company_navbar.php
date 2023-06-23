@@ -55,7 +55,7 @@ switch ($current_page) {
     <div class="card">
         <header class="card-header">
             <p class="card-header-title">Filter Applicants</p>
-            <button class="card-header-icon toggleFilter"  aria-label="more options" onclick="hide_show_something('filter')" >
+            <button class="card-header-icon toggleFilter" type="button" aria-label="more options" onclick="hide_show_something('filter')" >
         <i class="fas fa-angle-down" aria-hidden="true"></i>
       </span>
             </button>
@@ -65,10 +65,10 @@ switch ($current_page) {
                 <div class="content">
                     <div class="columns">
                         <div class="column is-2">
-                            <input class="input" type="text" placeholder="Name">
+                            <input class="input" type="text" placeholder="Name" name="name">
                         </div>
                         <div class="column is-2">
-                            <input class="input" type="place" placeholder="Ort">
+                            <input class="input" type="text" placeholder="Ort" name="place">
                         </div>
                     </div>
                     <div class="columns">
@@ -80,6 +80,7 @@ switch ($current_page) {
                                         <select name="industry">
                                             <?php
                                             $data = Applicant::getIndustry_Data();
+                                            echo '<option>--Alle--</option>';
                                             foreach($data as $item)
                                             {
                                                 echo '<option value="'.$item[0].'">'.$item[1].'</option>';
@@ -98,6 +99,7 @@ switch ($current_page) {
                                         <select name="education">
                                             <?php
                                             $data = Applicant::getEducation_Data();
+                                            echo '<option>--Alle--</option>';
                                             foreach($data as $item)
                                             {
                                                 echo '<option value="'.$item[0].'">'.$item[1].'</option>';
@@ -112,7 +114,7 @@ switch ($current_page) {
                     <div class="columns">
                         <div class="column is-4">
                             <div class="buttons">
-                                <button class="button is-dark is-rounded" name="filter">Speichern</button>
+                                <button class="button is-dark is-rounded" name="filters">Speichern</button>
                                 <button class="button is-light">Filter zurücksetzen</button>
                             </div>
                         </div>
