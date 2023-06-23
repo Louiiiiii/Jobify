@@ -99,7 +99,7 @@ class Applicant extends User
         if ($industry_id == null)
         {
             $db = new DB();
-            $stmt = $db->pdo->prepare('insert into Industry (name, parent_industry) values (?,?)');
+            $stmt = $db->pdo->prepare('insert into Industry (name, parent_industry_id) values (?,?)');
             $stmt->bindParam(1, $industry);
             $stmt->bindParam(2, $parent_id, PDO::PARAM_INT);
             $stmt->execute();
@@ -190,7 +190,7 @@ class Applicant extends User
         return null;
     }
 
-    public function applyForJob($job_id, $text = '',$applicationstatus_id = 1){
+    public function applyForJob($job_id, $text = '',$files = null,$applicationstatus_id = 1){
         $application_id = $this->getApplication_id($job_id);
         if ($application_id == null){
             $stmt = $this->pdo->prepare('insert into Application (text, applicationstatus_id, job_id, applicant_id) values(?,?,?,?)');
@@ -201,8 +201,34 @@ class Applicant extends User
             $stmt->execute();
             $application_id = $this->getApplication_id($job_id);
         }
+		foreach ($files as $file) {
+			self::addApplication_File($file,$application_id);
+		}
         return $application_id;
     }
+
+	private static function addApplication_File($file_id, $application_id){
+		if (self::checkApplication_File($file_id, $application_id)){
+			$db = new DB();
+			$stmt = $db->pdo->prepare('insert into Application_File(application_id, file_id) values(?,?)');
+			$stmt->bindParam(1,$application_id,PDO::PARAM_INT);
+			$stmt->bindParam(2,$file_id,PDO::PARAM_INT);
+			return $stmt->execute();
+		}
+		return false;
+	}
+
+	private static function checkApplication_File($file_id, $application_file):bool{
+		$db = new DB();
+		$stmt = $db->pdo->prepare('select * 
+ 										   from Application_File 
+ 									      where application_id = ? 
+ 									        and file_id = ?');
+		$stmt->bindParam(1,$application_id,PDO::PARAM_INT);
+		$stmt->bindParam(2,$file_id,PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->rowCount() >= 0;
+	}
 
     public function getApplication_id($job_id){
         $stmt = $this->pdo->prepare('select application_id from Application where applicant_id = ? and job_id = ?');
