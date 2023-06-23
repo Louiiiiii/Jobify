@@ -21,12 +21,6 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 </head>
 <body>
 <?php
-$jobtitle = null;
-$salaryfrom = null;
-$salaryto = null;
-$companyname = null;
-$cityname = null;
-
 if (!isset($_SESSION["current_user_id"]))
 {
 	$userid = 1;
@@ -37,22 +31,38 @@ if (isset($_POST['favorite'])){
     $applicant->changeFavoriteStatus($_POST['favorite']);
 }
 
+$jobtitle = null;
+$salaryfrom = null;
+$salaryto = null;
+$companyname = null;
+$cityname = null;
+$industry = null;
+
 if (isset($_POST['filter'])){
-	if (isset($_POST['jobtitle'])){
+
+	if ($_POST['jobtitle'] != ""){
 		$jobtitle = '%'.$_POST['jobtitle'].'%';
 	}
-	if (isset($_POST['salaryfrom'])){
-		$salaryfrom = '%'.$_POST['salaryfrom'].'%';
-	}
-	if (isset($_POST['salaryto'])){
-		$salaryto = '%'.$_POST['salaryto'].'%';
-	}
-	if (isset($_POST['companyname'])){
+
+    if ($_POST['salaryfrom'] != null){
+        $salaryfrom = $_POST['salaryfrom'];
+    }
+
+    $salaryto = $_POST['salaryto'];
+
+	if ($_POST['companyname'] != "--Alle--"){
 		$companyname = '%'.$_POST['companyname'].'%';
 	}
-	if (isset($_POST['cityname'])){
+
+	if ($_POST['cityname'] != null){
 		$cityname = '%'.$_POST['cityname'].'%';
 	}
+
+    if ($_POST['industry'] != "--Alle--"){
+        $industry = '%'.$_POST['industry'].'%';
+    }elseif($_POST['industryname'] != null){
+        $industry = '%'.$_POST['industryname'].'%';
+    }
 }
 
 $db = new DB();
@@ -68,7 +78,9 @@ $filter = $db->pdo->prepare('select j.title,
                                            Company c,
                                            Address ad,
                                            City_Postalcode cp,
-                                           City ci
+                                           City ci,
+                                           Industry i,
+                                           Job_Industry ji
                                      where ap.applicant_id = a.applicant_id
                                        and ap.job_id = j.job_id
                                        and ap.applicationstatus_id = aps.applicationstatus_id
@@ -76,17 +88,21 @@ $filter = $db->pdo->prepare('select j.title,
                                        and c.address_id = ad.address_id
                                        and ad.city_postalcode_id = cp.city_postalcode_id
                                        and cp.city_id = ci.city_id
+                                       and j.job_id = ji.job_id
+                                       and ji.industry_id = i.industry_id
                                        and a.user_id = :userid
-                                       and (lower(j.title) like :jobtitle or :jobtitle is null)
-                                       and (j.salary between :salaryfrom and :salaryfrom or :salaryfrom is null)
-                                       and (lower(c.name) like :companyname or :companyname is null)
-                                       and (lower(ci.city) like :cityname or :cityname is null)');
+                                       and (lower(j.title) like lower(:jobtitle) or :jobtitle is null)
+                                       and (j.salary between :salaryfrom and :salaryto or :salaryfrom is null)
+                                       and (lower(c.name) like lower(:companyname) or :companyname is null)
+                                       and (lower(ci.city) like lower(:cityname) or :cityname is null)
+                                       and (lower(i.name) like lower(:industry) or :industry is null)');
 $filter->bindParam('userid', $userid,PDO::PARAM_INT);
 $filter->bindParam('jobtitle', $jobtitle);
 $filter->bindParam('salaryfrom', $salaryfrom, PDO::PARAM_INT);
 $filter->bindParam('salaryto', $salaryto,PDO::PARAM_INT);
 $filter->bindParam('companyname', $companyname);
 $filter->bindParam('cityname', $cityname);
+$filter->bindParam('industry', $industry);
 $filter->execute();
 ?>
 <div class="row">
