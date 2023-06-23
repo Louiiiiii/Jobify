@@ -93,9 +93,6 @@
                         <div class="column is-2">
                             <input class="input is-dark" type="place" name="cityname" placeholder="Ort">
                         </div>
-                        <div class="column is-2">
-                            <input class="input is-dark" type="text" name="industryname" placeholder="Branche">
-                        </div>
                         <div class="column is-5"></div>
                     </div>
                     <div class="columns">
