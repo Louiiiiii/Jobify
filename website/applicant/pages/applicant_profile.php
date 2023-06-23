@@ -2,6 +2,10 @@
 
     session_start();
 
+    $_SESSION["current_user_email"] = "j.p@g.com";
+    $_SESSION["current_user_pwhash"] = "b7c3bd1e3976deb58236e6fb91da0cd5f4b0c2f6290cdc2b6f17c6da88d000420ec2d5d73b3e1e8ae14cafeabafe117a58060f427a66bdab1b97cf2d52aa0a94";
+    $_SESSION["current_user_id"] = 3;
+
     require_once $_SERVER['DOCUMENT_ROOT'] . '/website/classes/getClasses.php';
 
     $current_user_email = $_SESSION["current_user_email"];
@@ -103,18 +107,14 @@
 
     if (isset($_POST["file_submit"])) {
 
-        File::uploadFile($_FILES["fileToUpload"], $current_user_id);
+        $filetype_name = $_POST["filetype_name"];
+
+        File::uploadFile($_FILES["fileToUpload"], $filetype_name, $current_user_id, $current_user_email);
 
         //Unset and delete file from server
         unset($_POST);
         
         $fileToUpload = $_FILES['fileToUpload']['tmp_name'];
-
-        if (unlink($fileToUpload)) {
-            echo "File deleted successfully.";
-        } else {
-            echo "Failed to delete the file.";
-        }
         
         unset($_FILES);
         
@@ -342,32 +342,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
-                        $files = File::getAllFilesByUser($current_user_id);
+                    <form action="./applicant_profile.php" method="post">
+                        <?php 
+                            $files = File::getAllFilesByUser($current_user_id);
 
-                        foreach($files as $file) {
-                            $filepath = $_SERVER['DOCUMENT_ROOT'] . "/website/uplfiles/" . $current_user_id . "/" . $file["name"];
-                            
-                            $name = pathinfo($filepath, PATHINFO_FILENAME);
-                            $extension = '.' . pathinfo($filepath, PATHINFO_EXTENSION);
+                            foreach($files as $file) {
+                                $filepath = $_SERVER['DOCUMENT_ROOT'] . "/website/uplfiles/" . $current_user_id . "/" . $file["name"];
+                                
+                                $name = pathinfo($filepath, PATHINFO_FILENAME);
+                                $extension = '.' . pathinfo($filepath, PATHINFO_EXTENSION);
 
-                            echo "<tr>";
-                            echo "<th>" . $file["file_id"] . "</th>";
-                            echo "<td>" . $name . "</td>";
-                            echo "<td>" . $extension . "</td>";
-                            echo "<td>" . $file["type"] . "</td>";
-                            echo '
-                                <td>
-                                    <button class="button is-danger is-outlined is-rounded" type="button">
-                                        <span class="icon is-small">
-                                            <i class="fas fa-trash"></i>
-                                        </span>
-                                    </button>
-                                </td>
-                            ';
-                            echo "</tr>";
-                        }
-                    ?>
+                                echo "<tr>";
+                                echo "<th>" . $file["file_id"] . "</th>";
+                                echo "<td>" . $name . "</td>";
+                                echo "<td>" . $extension . "</td>";
+                                echo "<td>" . $file["type"] . "</td>";
+                                echo '
+                                    <td>
+                                        <button class="button is-danger is-outlined is-rounded" type="submit" name="delete-file-btn" value="' . $file["file_id"] . '" type="button">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                                        </button>
+                                    </td>
+                                ';
+                                echo "</tr>";
+                            }
+                        ?>
+                    </form>
                 </tbody>
             </table>
         </div>
@@ -382,12 +384,12 @@
             <div class="column">
                 <label class="label">File Type:</label>
                 <div class="select">
-                    <select class="" name="filetype_id" required>
+                    <select class="" name="filetype_name" required>
                         <?php
                             $allFileTypes = File::getAllFileTypes();
 
                             foreach ($allFileTypes as $row) {
-                                echo '<option value="' . $row["filetype_id"] . '">' . $row["type"] . '</option>';
+                                echo '<option value="' . $row["type"] . '">' . $row["type"] . '</option>';
                             }
                         ?>
                     </select>

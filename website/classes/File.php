@@ -10,7 +10,7 @@ class File extends User
     public $upldate;
     public $filetype_name;
 
-    public function __construct($filetype_name,$name,$date = null, $user_email = null, $user_passwordhash = null)
+    public function __construct($filetype_name, $name, $user_email, $date = null, $user_passwordunhashed = null)
     {
 		if($date == null)
 		{
@@ -19,8 +19,8 @@ class File extends User
         $this->name = $name;
         $this->upldate = $date;
 		$this->filetype_name = $filetype_name;
-		$this->filetype_name = self::getFiletypeId($filetype_name);
-        parent::__construct($user_email, $user_passwordhash);
+        parent::__construct($user_email, $user_passwordunhashed);
+        $this->user_id = $this->getUser_id();
     }
 	public function updateDB()
 	{
@@ -37,8 +37,7 @@ class File extends User
         $stmt->bindParam(1,$filetype);
         $stmt->execute();
         $result = $stmt->fetch();
-        print_r($result);
-		if ($result == null)
+		if ($result != null)
 		{
 			return $result[0];
 		}
@@ -63,7 +62,7 @@ class File extends User
 		$stmt = $this->pdo->prepare('select file_id from File where name = ? and user_id = ?  and filetype_id = ?');
 		$stmt->bindParam(1,$this->name);
         $stmt->bindParam(2,$this->user_id);
-        $stmt->bindParam(2,$filetypeid);
+        $stmt->bindParam(3,$filetypeid);
 		$stmt->execute();
 		$result = $stmt->fetch();
 		if($result)
@@ -78,10 +77,10 @@ class File extends User
 	{
 		$filetype_id = self::addFileType($this->filetype_name);
 		$stmt = $this->pdo->prepare('insert into File (name,upldate,filetype_id,user_id) values (?,?,?,?)');
-		$stmt->bindParam(2, $this->name);
-		$stmt->bindParam(3, $this->upldate);
-		$stmt->bindParam(4, $filetype_id);
-		$stmt->bindParam(5, $this->user_id);
+		$stmt->bindParam(1, $this->name);
+		$stmt->bindParam(2, $this->upldate);
+		$stmt->bindParam(3, $filetype_id);
+		$stmt->bindParam(4, $this->user_id);
 		return $stmt->execute();
 	}
 
@@ -113,7 +112,7 @@ class File extends User
         return $stmt->rowCount() >= 1;
     }
 
-	public static function uploadFile($file, $user_id) {
+	public static function uploadFile($file, $filetype_name, $user_id, $user_email) {
 
         $FileFormat = strtolower(pathinfo($file["name"],PATHINFO_EXTENSION));
         $allowedFileFormats = ["jpg","png","jpeg","pdf","docx","xlsx","txt"];
@@ -148,7 +147,6 @@ class File extends User
         }
 
         // Check if folder already exists
-        echo $folderPath;
         if (!is_dir($folderPath)) {
             mkdir($folderPath);
         }
@@ -161,10 +159,18 @@ class File extends User
 
         if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
 
+            $file = NEW FILE($filetype_name, $file["name"], $user_email);
 
+            if($file->updateDB()) {
+                echo "<script>alert('File upload has worked fine, Bro!');</script>";
+                return true;
+            } else {
+                echo "<script>alert('Sorry, something went wrong by writing in out DB!');</script>";
+                return false;
+            }
 
-            return true;
         } else {
+            echo "<script>alert('Sorry, your file wasn't uploaded!');</script>";
             return false;
         }
     }
