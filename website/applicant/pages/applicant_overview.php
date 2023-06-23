@@ -63,7 +63,6 @@ if (isset($_POST['filter'])){
         $industry = '%'.$_POST['industry'].'%';
     }
 }
-//TODO select um industry und industryname ergänzen
 $db = new DB();
 $filter = $db->pdo->prepare('select   j.title title,
                                             j.description description,
