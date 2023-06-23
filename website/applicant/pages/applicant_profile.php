@@ -120,9 +120,57 @@
         
     }
 
+    if (isset($_POST["delete-file-btn"])) {
+
+        $del_file_id = $_POST["delete-file-btn"];
+        $del_file_nema = FILE::getFileName($del_file_id);
+
+        $spawn_delete_file_modal = '
+            <div class="modal is-active">
+                <div class="modal-background is-active"></div>
+                <div class="modal-content modal-content-delete-file">
+                    <div class="box">
+                        <form action="./applicant_profile.php" method="post">
+                            <h1>Wollen Sie das Dokument "' . $del_file_nema . '" wirklick löschen?</h1>
+                            <input type="number" name="del-file-id" value="'.$del_file_id.'" style="display: none;" readonly>
+                            <br> 
+                            <div class="columns">
+                                <div class="column">
+                                    <button class="button is-dark" type="submit" name="now-delete-file-btn">Delete</button>
+                                </div>                              
+                                <div class="column">
+                                    <button class="button is-danger" type="submit" name="reset-delete-file-btn">Cancel</button>
+                                </div>
+                            </div>  
+                        </form>
+                    </div>
+                </div>
+            </div>
+        ';
+        
+    } else {
+
+        $spawn_delete_file_modal = "";
+
+    }
+    
+    if (isset($_POST["now-delete-file-btn"])) {
+        $spawn_delete_file_modal = "";
+
+        $file_deleted = FILE::delFile($_POST["del-file-id"], $current_user_id);
+
+        if($file_deleted) {
+            echo "<script>alert('Your File was deleted!');</script>";
+        } else {
+            echo "<script>alert('Ahhhh shit something went wrong!');</script>";
+        }
+    }
+
+    if (isset($_POST["reset-delete-file-btn"])) {
+        $spawn_delete_file_modal = "";
+    }
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -136,7 +184,13 @@
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
-    <?php require_once '../parts/applicant_profile_navbar.php'; ?>
+    <?php 
+    
+        require_once '../parts/applicant_profile_navbar.php'; 
+
+        echo $spawn_delete_file_modal;
+    
+    ?>
 
     <form class="form" action="./applicant_profile.php" method="post">
 
@@ -145,10 +199,11 @@
                 <figure class="image is-128x128">
                     <?php 
                         $profile_pic = File::getFile($current_user_id, "Profile Picture");
-                        $profile_pic_path = "/website/uplfiles/" . $current_user_id . "/" . $profile_pic["name"];
-
-                        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . $profile_pic_path)) {
+                        
+                        if (is_null($profile_pic)) {
                             $profile_pic_path = "/website/source/img/user-icon.png";
+                        } else {                            
+                            $profile_pic_path = "/website/uplfiles/" . $current_user_id . "/" . $profile_pic["name"];
                         }
 
                         //The result of file_exists() is cached. Use clearstatcache() to clear the cache.
@@ -170,7 +225,7 @@
                 <label class="label">Password</label>
                 <button type="button" class="button js-modal-trigger" data-target="modal-js-example">Change Password</button>
             </div>
-            </div>
+        </div>
         <div class="row">
             <div class="field">
                 <label class="label">Firstname</label>
@@ -253,61 +308,27 @@
             </div>
             <div class="field"></div>
         </div>
-        <div class="row">
-            <div class="field">
-                <label class="label">Industry</label>
-                
-                <div class="columns">
-                    <?php
-                        //if you have questions about the following, ask Julian 😘
-                        $industries = Applicant::getIndustry_Data();
-                        $count_industries = ceil(count($industries)/3);
-                        $correction = ($count_industries*3)-count($industries);
-
-                        $i = 0;
-
-                        for ($x = 0; $x < 3; $x++) {
-                            if ($x == 2) {
-                                $corrector = $correction;
-                            } else {
-                                $corrector = 0;
-                            }
-
-                            echo '<div class="column is-one-thirds">';                                    
-                            for ($j = 0; $j < $count_industries-$corrector; $j++) {
-                                echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industries[$i]["industry_id"] . '" name="industry_ids[]" value="' . $industries[$i]["industry_id"] . '" disabled>';
-                                echo '<label for="' . $industries[$i]["industry_id"] . '">' . $industries[$i]["name"] . '</label><br>';
-                                $i++;
-                            }
-                            echo '</div>';
-                        }
-                        
-                    ?>
-                </div>
-
-            </div>    
-        </div>
         <br>
         <div class="row">
             <div class="field">
-                <label class="label">Industry test</label>
+                <label class="label">Industry</label>
                 <div class="columns">
-                    <div class="container">
-                        <div class="select is-multiple">
-                            <select multiple size="3">
-                                <?php
-                                $data = Applicant::getIndustry_Data();
-                                foreach ($data as $item)
-                                {
-                                    echo '<option value="'.$item[0].'">'.$item[1].'</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>
+                    <div class="column industries-select">
+                        <?php
+                            $industries = Applicant::getIndustry_Data();
+                            
+                            foreach($industries as $industry) {             
+                                echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" disabled>';
+                                echo '<label for="' . $industry["industry_id"] . '">' . $industry["name"] . '</label><br>';
+                            }
+                            
+                        ?>
                     </div>
                 </div>
-            </div>
+            </div>   
+            <div class="field"></div> 
         </div>
+        <br>
         <div class="row">
             <div class="field">
                 <label class="label">Allow Headhunting</label>
@@ -329,6 +350,13 @@
         
     </form>
 
+    <?php
+        $files = File::getAllFilesByUser($current_user_id);
+
+        if (count($files) > 0) {
+
+    ?>
+
     <div class="row">
         <div class="table-container">
             <table class="table">
@@ -344,7 +372,6 @@
                 <tbody>
                     <form action="./applicant_profile.php" method="post">
                         <?php 
-                            $files = File::getAllFilesByUser($current_user_id);
 
                             foreach($files as $file) {
                                 $filepath = $_SERVER['DOCUMENT_ROOT'] . "/website/uplfiles/" . $current_user_id . "/" . $file["name"];
@@ -374,6 +401,15 @@
             </table>
         </div>
     </div>
+
+    <?php 
+        } else {
+            echo "<br>";
+            echo "<hr>";
+            echo "<h1>Sie haben keine Files hochgeladen</h1>";
+            echo "<br>";
+        }
+    ?>
 
     <form action="./applicant_profile.php" method="post" enctype="multipart/form-data">
         <div class="columns">
@@ -446,6 +482,8 @@
 
         <button class="modal-close is-large" aria-label="close"></button>
     </div>
+        
+
 </body>
 </html>
 
