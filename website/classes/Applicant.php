@@ -197,7 +197,7 @@ class Applicant extends User
             $stmt->bindparam(1, $text);
             $stmt->bindparam(2, $applicationstatus_id, PDO::PARAM_INT);
             $stmt->bindparam(3, $job_id, PDO::PARAM_INT);
-            $stmt->bindparam(4, $application_id, PDO::PARAM_INT);
+            $stmt->bindparam(4, $this->applicant_id, PDO::PARAM_INT);
             $stmt->execute();
             $application_id = $this->getApplication_id($job_id);
         }
@@ -218,7 +218,7 @@ class Applicant extends User
 		return false;
 	}
 
-	private static function checkApplication_File($file_id, $application_file):bool{
+	private static function checkApplication_File($file_id, $application_id):bool{
 		$db = new DB();
 		$stmt = $db->pdo->prepare('select * 
  										   from Application_File 
