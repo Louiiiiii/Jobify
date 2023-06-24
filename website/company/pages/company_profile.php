@@ -8,12 +8,51 @@
     $current_user_pwhash = $_SESSION["current_user_pwhash"];
     $current_user_id = $_SESSION["current_user_id"];
 
+    //Change PW
+        if (isset($_POST["changepw"])) {
+            $current_pw = $_POST["current_pw"]; 
+            $new_pw = $_POST["new_pw"];
+            $repeat_new_pw = $_POST["repeat_new_pw"];
+
+            if (hash('sha512', $current_pw) == $current_user_pwhash) {
+
+                if ($new_pw == $repeat_new_pw) {
+
+                    $user = new User($current_user_email, $current_pw);
+                    $user->updatePW($new_pw);
+
+                    $_SESSION["current_user_pwhash"] = hash('sha512', $new_pw);
+                    
+                    echo "<script>alert('Your new Password is set.');</script>";
+
+                } else {
+                    echo "<script>alert('Your new Password is unequal.');</script>";
+                }
+
+            } else {
+                echo "<script>alert('Current Password is wrong.');</script>";
+            }
+
+
+            unset($_POST["changepw"]);
+            unset($_POST["current_pw"]);
+            unset($_POST["new_pw"]);
+            unset($_POST["repeat_new_pw"]);
+
+
+        }
+    //
+
     //Submit Form
-        if (isset($_POST["file_submit_btn"])) {
+        if (isset($_POST["change_profile_infos"])) {
+            
+            echo "<pr>";
+            print_r($_POST);
+            echo "</pr>";
             
 
-            
         }
+    //
 
     //File upload
         if (isset($_POST["file_submit_btn"])) {
@@ -30,6 +69,7 @@
             unset($_FILES);
             
         }
+    //
 
     //Delete File
         if (isset($_POST["delete-file-btn"])) {
@@ -81,6 +121,7 @@
         if (isset($_POST["reset-delete-file-btn"])) {
             $spawn_delete_file_modal = "";
         }
+    //
 ?>
 
 
@@ -127,7 +168,7 @@
             <div class="field">
                 <label class="label">Company Name</label>
                 <div class="control">
-                    <input name="country" class="input disabling" type="text" placeholder="Company Name" disabled>
+                    <input name="country" class="input disabling" type="text" placeholder="Company Name" required disabled>
                 </div>
             </div>
             <div class="field">
@@ -152,7 +193,7 @@
             <div class="field">
                 <label class="label" for="email">Email</label>
                 <div class="control">
-                    <input name="email" id="email" class="input disabling" type="text" placeholder="$user->email" disabled>
+                    <input name="email" id="email" class="input disabling" type="text" placeholder="$user->email" required disabled>
                 </div>
             </div>
             <div class="field">
@@ -164,13 +205,13 @@
             <div class="field">
                 <label class="label">Country</label>
                 <div class="control">
-                    <input name="country" class="input disabling" type="text" placeholder="Country" disabled>
+                    <input name="country" class="input disabling" type="text" placeholder="Country" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">State</label>
                 <div class="control">
-                    <input name="state" class="input disabling" type="text" placeholder="State" disabled>
+                    <input name="state" class="input disabling" type="text" placeholder="State" required disabled>
                 </div>
             </div>
         </div>
@@ -178,13 +219,13 @@
             <div class="field">
                 <label class="label">Postal Code</label>
                 <div class="control">
-                    <input name="postalcode" class="input disabling" type="text" placeholder="Postal Code" disabled>
+                    <input name="postalcode" class="input disabling" type="text" placeholder="Postal Code" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">City</label>
                 <div class="control">
-                    <input name="city" class="input disabling" type="text" placeholder="City" disabled>
+                    <input name="city" class="input disabling" type="text" placeholder="City" required disabled>
                 </div>
             </div>
         </div>
@@ -192,22 +233,23 @@
             <div class="field">
                 <label class="label">Street</label>
                 <div class="control">
-                    <input name="street" class="input disabling" type="text" placeholder="Street" disabled>
+                    <input name="street" class="input disabling" type="text" placeholder="Street" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Street Num.</label>
                 <div class="control">
-                    <input name="streetnumber" class="input disabling" type="text" placeholder="Street Number" disabled>
+                    <input name="streetnumber" class="input disabling" type="text" placeholder="Street Number" required disabled>
                 </div>
             </div>
         </div>        
+        
         <div class="row edit">
             <button type="button" class="button is-link" onclick="edit()">Edit Profile</button>
         </div>
         <div class="row cancel hide">
-            <button type="button" class="button" onclick="cancel()">Cancel</button>
-            <button class="button is-link">Change</button>
+            <button type="reset" class="button" onclick="cancel()">Cancel</button>
+            <button type="submit" name="change_profile_infos" class="button is-link">Change</button>
         </div>
     
         <hr class="solid">
@@ -314,12 +356,12 @@
         <div class="modal-background"></div>
         <div class="modal-content">
             <div class="box">
-                <form class="form">
+                <form class="form" method="post" action="./company_profile.php">
                     <div class="row">
                         <div class="field">
                             <label class="label">Current Password</label>
                             <div class="control">
-                                <input id="currentpassword" name="currentpassword" class="input" type="password" placeholder="Current Password" required>
+                                <input id="currentpassword" name="current_pw" class="input" type="password" placeholder="Current Password" required>
                             </div>
                         </div>
                     </div>
@@ -327,7 +369,7 @@
                         <div class="field">
                             <label class="label">Password</label>
                             <div class="control">
-                                <input id="password" name="password" class="input" type="password" placeholder="Password" required>
+                                <input id="password" name="new_pw" class="input" type="password" placeholder="Password" required>
                             </div>
                         </div>
                     </div>
@@ -335,7 +377,7 @@
                         <div class="field">
                             <label class="label">Repeat Password</label>
                             <div class="control">
-                                <input id="repeatpassword" name="repeatpassword" class="input" type="password" placeholder="Repeat Password" oninput="checkpw()" required> 
+                                <input id="repeatpassword" name="repeat_new_pw" class="input" type="password" placeholder="Repeat Password" oninput="checkpw()" required> 
                             </div>
                         </div>
                     </div>
@@ -346,7 +388,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <button class="button is-link">Change</button>
+                        <button type="submit" name="changepw" class="button is-link">Change</button>
                     </div>
                 </form>
             </div>
