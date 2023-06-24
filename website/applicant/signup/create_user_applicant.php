@@ -82,6 +82,7 @@
     <title>Create User</title>
     <link rel="stylesheet" href="/website/source/css/bulma.css">
     <link rel="stylesheet" href="/website/source/css/create_user.css">
+    <link rel="stylesheet" href="/website/source/css/switch.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
@@ -156,7 +157,7 @@
                     </div>
                     <div class="row">
                         <div class="field">
-                            <label class="label">Highest Degree</label>
+                            <label class="label">Degree</label>
                             <div class="select">
                                 <select name="education_id" required>
                                     <?php
@@ -193,8 +194,10 @@
 
                                         echo '<div class="column is-one-thirds">';                                    
                                         for ($j = 0; $j < $count_industries-$corrector; $j++) {
+                                            echo '<label class="checkbox" for="' . $industries[$i]["industry_id"] . '">';
                                             echo '<input type="checkbox" id="' . $industries[$i]["industry_id"] . '" name="industry_ids[]" value="' . $industries[$i]["industry_id"] . '">';
-                                            echo ' <label for="' . $industries[$i]["industry_id"] . '">' . $industries[$i]["name"] . '</label><br>';
+                                            echo  ' '.$industries[$i]["name"];
+                                            echo '</label><br>';
                                             $i++;
                                         }
                                         echo '</div>';
@@ -209,9 +212,9 @@
                     <div class="row">
                         <div class="field">
                             <label class="label">Allow Headhunting</label>
-                            <label class="checkbox">
-                                <input name="headhunting" type="checkbox">
-                                Yes
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
                             </label>
                         </div>
                     </div>
