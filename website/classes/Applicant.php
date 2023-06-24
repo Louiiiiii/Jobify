@@ -336,4 +336,63 @@ class Applicant extends User
         }
         return null;
     }
+
+    public static function getProfileDataFromApplicant($user_id) {
+        $db = new DB();
+
+        $stmt_all_infos = $db->pdo->prepare('
+            SELECT 
+                ap.applicant_id,
+                u.email,
+                ap.firstname,
+                ap.lastname,
+                ap.birthdate,
+                cou.country,
+                s.state,
+                p.Postalcode,
+                ci.city,
+                a.street,
+                a.number,
+                e.name AS "education", 
+                ap.allow_headhunting
+            FROM jobify.user u
+            LEFT JOIN jobify.applicant ap ON u.user_id = ap.user_id
+            LEFT JOIN jobify.address a ON ap.address_id = a.address_id
+            LEFT JOIN jobify.city_postalcode cp ON a.City_Postalcode_id = cp.City_Postalcode_id
+            LEFT JOIN jobify.postalcode p ON cp.postalcode_id = p.postalcode_id
+            LEFT JOIN jobify.city ci ON cp.city_id = ci.city_id
+            LEFT JOIN jobify.state s ON p.state_id = s.state_id
+            LEFT JOIN jobify.country cou ON s.country_id = cou.country_id
+            LEFT JOIN jobify.education e ON ap.education_id = e.education_id
+            WHERE u.user_id = ?
+        ;');        
+        $stmt_all_infos->bindParam(1,$user_id, PDO::PARAM_INT);
+        $stmt_all_infos->execute();
+        $result_all_infos = $stmt_all_infos->fetchAll();
+
+        $stmt_all_industries = $db->pdo->prepare('
+            SELECT 
+                i.name
+            FROM jobify.user u
+            LEFT JOIN jobify.applicant ap ON u.user_id = ap.user_id
+            LEFT JOIN jobify.applicant_industry ai ON ap.applicant_id = ai.applicant_id
+            LEFT JOIN jobify.industry i ON ai.industry_id = i.industry_id
+            WHERE u.user_id = ?
+        ;');        
+        $stmt_all_industries->bindParam(1,$user_id, PDO::PARAM_INT);
+        $stmt_all_industries->execute();
+        $result_all_industries = $stmt_all_industries->fetchAll();
+
+        $result = array("infos" => $result_all_infos, "industries" => $result_all_industries);
+
+        if ($result != null)
+        {
+            return $result;
+        }
+        return null;        
+    }
 }
+
+
+            
+            

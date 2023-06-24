@@ -8,6 +8,21 @@
     $current_user_pwhash = $_SESSION["current_user_pwhash"];
     $current_user_id = $_SESSION["current_user_id"];
 
+    //Get Data for prefill form
+        $profile_data = Applicant::getProfileDataFromApplicant($current_user_id);
+
+        $profile_data_all = $profile_data["infos"]["0"];
+        
+        $profile_data_industries = $profile_data["industries"];
+
+        echo "<pre>";
+        print_r($profile_data_all);
+        echo "</pre>";
+        echo "<pre>";
+        print_r($profile_data_industries);
+        echo "</pre>";
+    //
+
     if (isset($_POST["changepw"])) {
         $current_pw = $_POST["current_pw"]; 
         $new_pw = $_POST["new_pw"];
@@ -226,7 +241,7 @@
             <div class="field">
                 <label class="label">E-Mail</label>
                 <div class="control">
-                    <input name="email" class="input disabling" type="email" placeholder="Email" required disabled>
+                    <input name="email" class="input disabling" type="email" value="<?php echo $profile_data_all["email"] ?>" placeholder="Email" required disabled>
                 </div>
             </div>
             <div class="field">
@@ -238,13 +253,13 @@
             <div class="field">
                 <label class="label">Firstname</label>
                 <div class="control">
-                    <input name="firstname" class="input disabling" type="text" placeholder="Firstname" required disabled>
+                    <input name="firstname" class="input disabling" type="text" value="<?php echo $profile_data_all["firstname"] ?>" placeholder="Firstname" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Lastname</label>
                 <div class="control">
-                    <input name="lastname" class="input disabling" type="text" placeholder="Lastname" required disabled>
+                    <input name="lastname" class="input disabling" type="text" value="<?php echo $profile_data_all["lastname"] ?>" placeholder="Lastname" required disabled>
                 </div>
             </div>
         </div>
@@ -252,7 +267,7 @@
             <div class="field">
                 <label class="label">Birthday</label>
                 <div class="control">
-                    <input name="birthday" class="input disabling" type="date" required disabled>
+                    <input name="birthday" class="input disabling" type="date" value="<?php echo $profile_data_all["birthdate"] ?>" required disabled>
                 </div>
             </div>
             <div class="field"></div>
@@ -261,13 +276,13 @@
             <div class="field">
                 <label class="label">Country</label>
                 <div class="control">
-                    <input name="country" class="input disabling" type="text" placeholder="Country" required disabled>
+                    <input name="country" class="input disabling" type="text" value="<?php echo $profile_data_all["country"] ?>" placeholder="Country" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">State</label>
                 <div class="control">
-                    <input name="state" class="input disabling" type="text" placeholder="State" required disabled>
+                    <input name="state" class="input disabling" type="text" value="<?php echo $profile_data_all["state"] ?>" placeholder="State" required disabled>
                 </div>
             </div>
         </div>
@@ -275,13 +290,13 @@
             <div class="field">
                 <label class="label">Postal Code</label>
                 <div class="control">
-                    <input name="postalcode" class="input disabling" type="text" placeholder="Postal Code" required disabled>
+                    <input name="postalcode" class="input disabling" type="text" value="<?php echo $profile_data_all["Postalcode"] ?>" placeholder="Postal Code" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">City</label>
                 <div class="control">
-                    <input name="city" class="input disabling" type="text" placeholder="City" required disabled>
+                    <input name="city" class="input disabling" type="text" value="<?php echo $profile_data_all["city"] ?>" placeholder="City" required disabled>
                 </div>
             </div>
         </div>
@@ -289,13 +304,13 @@
             <div class="field">
                 <label class="label">Street</label>
                 <div class="control">
-                    <input name="street" class="input disabling" type="text" placeholder="Street" required disabled>
+                    <input name="street" class="input disabling" type="text" value="<?php echo $profile_data_all["street"] ?>" placeholder="Street" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Street Num.</label>
                 <div class="control">
-                    <input name="streetnumber" class="input disabling" type="text" placeholder="Street Number" required disabled>
+                    <input name="streetnumber" class="input disabling" type="text" value="<?php echo $profile_data_all["number"] ?>" placeholder="Street Number" required disabled>
                 </div>
             </div>
         </div>
@@ -308,7 +323,11 @@
                             $allEducations = Applicant::getEducation_Data();
 
                             foreach ($allEducations as $row) {
-                                echo '<option value="' . $row["education_id"] . '">' . $row["name"] . '</option>';
+                                if ($profile_data_all["education"] == $row["name"]) {
+                                    echo '<option value="' . $row["education_id"] . '" selected>' . $row["name"] . '</option>';
+                                } else {
+                                    echo '<option value="' . $row["education_id"] . '">' . $row["name"] . '</option>';
+                                }
                             }
                         ?>
                     </select>
@@ -326,9 +345,29 @@
                             <?php
                                 $industries = Applicant::getIndustry_Data();
                                 
-                                foreach($industries as $industry) {             
-                                    echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" disabled>';
-                                    echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+                                foreach($industries as $industry) {   
+                                    echo "<pre>";
+                                    print_r($industry);
+                                    echo "</pre>";
+
+                                    foreach($profile_data_industries as $profile_data_industry) {
+
+                                        echo $profile_data_industry["name"]."<br>";
+
+                                        echo $profile_data_industry["name"]. "-". $industry["name"]."<br>";
+
+                                        if ($profile_data_industry["name"] == $industry["name"]) {
+                                            echo "true <br>";
+                                            echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" checked disabled>';
+                                            echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+                                        } else {
+                                            echo "false <br>";
+                                            echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" disabled>';
+                                            echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+                                        }
+
+                                    }        
+                                    
                                 }
                                 
                             ?>
@@ -343,7 +382,13 @@
             <div class="field">
                 <label class="label">Allow Headhunting</label>
                 <label class="checkbox">
-                    <input class="checkbox-input disabling" name="headhunting" type="checkbox" disabled>
+                    <input class="checkbox-input disabling" name="headhunting" type="checkbox" disabled 
+                        <?php 
+                            if($profile_data_all["allow_headhunting"]==1) {
+                                echo "checked";
+                            }
+                        ?>
+                    >
                     Yes
                 </label>
             </div>  
