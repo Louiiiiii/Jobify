@@ -2,7 +2,7 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
 -- Schema Jobify
@@ -175,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Job` (
   `title` VARCHAR(100) NOT NULL,
   `description` TEXT NULL,
   `salary` DOUBLE NULL,
-  `isvolunteerwork` TINYINT NOT NULL,
+  `isapprenticeship` TINYINT NOT NULL,
   `company_id` INT NOT NULL,
   PRIMARY KEY (`job_id`),
   INDEX `fk_Job_Company1_idx` (`company_id` ASC),
@@ -619,16 +619,16 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `Jobify`;
-INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isvolunteerwork`, `company_id`) VALUES (1, 'Spezialist/in Konzernkommunikation', NULL, NULL, 0, 1);
-INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isvolunteerwork`, `company_id`) VALUES (2, 'Spezialist/in Softwarebetreuung (Personalbereich)', NULL, NULL, 0, 1);
-INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isvolunteerwork`, `company_id`) VALUES (3, 'Full-Stack Entwickler', NULL, NULL, 0, 2);
-INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isvolunteerwork`, `company_id`) VALUES (4, '(Junior) Software Developer C# .Net', NULL, NULL, 0, 2);
-INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isvolunteerwork`, `company_id`) VALUES (5, 'IT Servicedesk Engineer (m/w/i)', NULL, NULL, 0, 3);
-INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isvolunteerwork`, `company_id`) VALUES (6, 'Lagermitarbeiter:in (m/w/i)', NULL, NULL, 0, 3);
-INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isvolunteerwork`, `company_id`) VALUES (7, 'SAP Inhouse Consultant*', NULL, NULL, 0, 5);
-INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isvolunteerwork`, `company_id`) VALUES (8, 'Konstrukteur*', NULL, NULL, 0, 5);
-INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isvolunteerwork`, `company_id`) VALUES (9, 'Chef De Partie', NULL, NULL, 0, 4);
-INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isvolunteerwork`, `company_id`) VALUES (10, 'Mental Performance and Mental Health Specialist', NULL, NULL, 0, 4);
+INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isapprenticeship`, `company_id`) VALUES (1, 'Spezialist/in Konzernkommunikation', NULL, NULL, 0, 1);
+INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isapprenticeship`, `company_id`) VALUES (2, 'Spezialist/in Softwarebetreuung (Personalbereich)', NULL, NULL, 0, 1);
+INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isapprenticeship`, `company_id`) VALUES (3, 'Full-Stack Entwickler', NULL, NULL, 0, 2);
+INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isapprenticeship`, `company_id`) VALUES (4, '(Junior) Software Developer C# .Net', NULL, NULL, 0, 2);
+INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isapprenticeship`, `company_id`) VALUES (5, 'IT Servicedesk Engineer (m/w/i)', 'eins geile job', 3000, 0, 3);
+INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isapprenticeship`, `company_id`) VALUES (6, 'Lagermitarbeiter:in (m/w/i)', 'zwei geile job', NULL, 1, 3);
+INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isapprenticeship`, `company_id`) VALUES (7, 'SAP Inhouse Consultant*', NULL, NULL, 0, 5);
+INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isapprenticeship`, `company_id`) VALUES (8, 'Konstrukteur*', NULL, NULL, 0, 5);
+INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isapprenticeship`, `company_id`) VALUES (9, 'Chef De Partie', NULL, NULL, 0, 4);
+INSERT INTO `Jobify`.`Job` (`job_id`, `title`, `description`, `salary`, `isapprenticeship`, `company_id`) VALUES (10, 'Mental Performance and Mental Health Specialist', NULL, NULL, 0, 4);
 
 COMMIT;
 
