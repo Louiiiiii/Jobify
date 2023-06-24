@@ -115,4 +115,14 @@ class User extends DB
         $stmt->bindParam(2,$id);
         return $stmt->execute();
     }
+
+    public static function updateEMail ($newEmail, $user_id)
+    {
+        $user = new User($newEmail);
+        $stmt = $user->pdo->prepare("update User set email = ?
+                                            where user_id = ?");
+        $stmt->bindParam(1,$newEmail);
+        $stmt->bindParam(2,$user_id);
+        return $stmt->execute();
+    }
 }
