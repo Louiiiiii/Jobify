@@ -78,7 +78,7 @@ foreach ($jobs as $job) {
 				if (is_null($profile_pic)) {
 					$profile_pic_path = "/website/source/img/user-icon.png";
 				} else {
-					$profile_pic_path = $_SERVER['DOCUMENT_ROOT'] .'/website/uplfiles/' . $applicant['user_id'] . "/" . $profile_pic["name"];
+					$profile_pic_path = '/website/uplfiles/' . $applicant['user_id'] . "/" . $profile_pic["name"];
 				}
 
 				if ($cnttop < 2){
