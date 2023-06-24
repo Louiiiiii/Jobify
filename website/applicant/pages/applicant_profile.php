@@ -219,9 +219,6 @@
                         } else {                            
                             $profile_pic_path = "/website/uplfiles/" . $current_user_id . "/" . $profile_pic["name"];
                         }
-
-                        //The result of file_exists() is cached. Use clearstatcache() to clear the cache.
-                        clearstatcache();
                     ?>
                     <img class="is-rounded" src="<?php echo $profile_pic_path ?>">
                 </figure>

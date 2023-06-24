@@ -171,6 +171,9 @@ class File extends User
             return false;
         }
 
+        //The result of file_exists() is cached. Use clearstatcache() to clear the cache.
+        clearstatcache();
+
         if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
 
             $file = NEW FILE($filetype_name, $file["name"], $user_email);
