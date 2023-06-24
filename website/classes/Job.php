@@ -8,16 +8,16 @@ class Job extends DB
 	public $title;
 	public $description;
 	public $salary;
-	public $isvolunteerwork;
+	public $isapprenticeship;
 	public $company_id;
 
 
-	public function __construct($title, $isvolunteerwork, $company_id,$description=null, $salary=null)
+	public function __construct($title, $isapprenticeship, $company_id,$description=null, $salary=null)
 	{
 		$this->title = $title;
 		$this->description = $description;
 		$this->salary = $salary;
-		$this->isvolunteerwork = $isvolunteerwork;
+		$this->isapprenticeship = $isapprenticeship;
 		$this->company_id = $company_id;
 	}
 
@@ -27,7 +27,7 @@ class Job extends DB
 		$stmt->bindParam(1,$job_id);
 		$stmt->execute();
 		$res = $stmt->fetch();
-		$job = new Job($res['title'],$res['isvolunteerwork'],$res['company_id'],$res['description'],$res['salary']);
+		$job = new Job($res['title'],$res['isapprenticeship'],$res['company_id'],$res['description'],$res['salary']);
 		$job->job_id = $job_id;
 		return $job;
 	}
@@ -58,15 +58,15 @@ class Job extends DB
 		return $stmt->fetchAll();
 	}
 
-	public static function insertjob($job_id, $title, $isvolunteerwork, $company_id, $description=null, $salary=null)
+	public static function insertjob($job_id, $title, $isapprenticeship, $company_id, $description=null, $salary=null)
 	{
-		$job = new job($title, $description=null, $salary=null, $isvolunteerwork, $company_id);
-		$stmt = $job->pdo->prepare("insert into Job (job_id, title, description, salary, isvolunteerwork, company_id) values (?,?,?,?,?)");
+		$job = new job($title, $description=null, $salary=null, $isapprenticeship, $company_id);
+		$stmt = $job->pdo->prepare("insert into Job (job_id, title, description, salary, isapprenticeship, company_id) values (?,?,?,?,?)");
 		$stmt->bindParam(1, $job_id, PDO::PARAM_STR);
 		$stmt->bindParam(2, $title, PDO::PARAM_INT);
 		$stmt->bindParam(3, $description, PDO::PARAM_INT);
 		$stmt->bindParam(4, $salary, PDO::PARAM_STR);
-		$stmt->bindParam(5, $isvolunteerwork, PDO::PARAM_STR);
+		$stmt->bindParam(5, $isapprenticeship, PDO::PARAM_STR);
 		$stmt->bindParam(6, $company_id, PDO::PARAM_STR);
 
 		if($stmt->execute())
@@ -79,8 +79,24 @@ class Job extends DB
 		}
 	}
 
+	public static function deleteJobByJobID($job_id)
+	{
+		$db = new DB();
+		$stmt = $db->pdo->prepare("DELETE FROM Job WHERE job_id = ?");
+		$stmt->bindParam(1, $job_id, PDO::PARAM_INT);
 
-	public static function insertorupdjob($job_id, $title, $isvolunteerwork, $company_id,$description=null, $salary=null)
+		if($stmt->execute())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+	public static function insertorupdjob($job_id, $title, $isapprenticeship, $company_id,$description=null, $salary=null)
 	{
 		$db = new DB();
 		$stmt = $db->pdo->prepare("select job_id from Job where job_id = ?");
@@ -99,13 +115,13 @@ class Job extends DB
 
 		}
 
-		$job = new job($title, $isvolunteerwork, $company_id, $description=null, $salary=null);
-		$stmt = $job->pdo->prepare("insert into Job (job_id, title, description, salary, isvolunteerwork, company_id) values (?,?,?,?,?)");
+		$job = new job($title, $isapprenticeship, $company_id, $description=null, $salary=null);
+		$stmt = $job->pdo->prepare("insert into Job (job_id, title, description, salary, isapprenticeship, company_id) values (?,?,?,?,?)");
 		$stmt->bindParam(1, $job_id, PDO::PARAM_STR);
 		$stmt->bindParam(2, $title, PDO::PARAM_INT);
 		$stmt->bindParam(3, $description, PDO::PARAM_INT);
 		$stmt->bindParam(4, $salary, PDO::PARAM_STR);
-		$stmt->bindParam(5, $isvolunteerwork, PDO::PARAM_STR);
+		$stmt->bindParam(5, $isapprenticeship, PDO::PARAM_STR);
 		$stmt->bindParam(6, $company_id, PDO::PARAM_STR);
 
 		if($stmt->execute())
@@ -154,6 +170,27 @@ class Job extends DB
 	public static function getJob_Data(){
 		$db = new DB();
 		$stmt = $db->pdo->prepare('select job_id, title from Job');
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+
+		if ($result != null)
+		{
+			return $result;
+		}
+		return null;
+	}
+
+	public static function getJobIndustries($job_id){
+		$db = new DB();
+		$stmt = $db->pdo->prepare('
+			SELECT 
+				i.industry_id,
+				i.name
+			FROM jobify.job_industry ji
+			LEFT JOIN jobify.industry i ON ji.industry_id = i.industry_id
+			WHERE ji.job_id = ?
+		;');
+		$stmt->bindParam(1, $job_id, PDO::PARAM_INT);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
 
