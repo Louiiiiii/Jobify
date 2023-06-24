@@ -111,5 +111,40 @@ class Company extends User
         }
         return null;
     }
+
+    public static function getProfileDataFromCompany($user_id) {
+        $db = new DB();
+        $stmt = $db->pdo->prepare('
+            SELECT 
+                c.name,
+                c.slogan,
+                c.description,
+                u.email,
+                cou.country,
+                s.state,
+                p.Postalcode,
+                ci.city,
+                a.street,
+                a.number
+            FROM jobify.user u
+            LEFT JOIN jobify.company c ON u.user_id = c.user_id 
+            LEFT JOIN jobify.address a ON c.address_id = a.address_id
+            LEFT JOIN jobify.city_postalcode cp ON a.City_Postalcode_id = cp.City_Postalcode_id
+            LEFT JOIN jobify.postalcode p ON cp.postalcode_id = p.postalcode_id
+            LEFT JOIN jobify.city ci ON cp.city_id = ci.city_id
+            LEFT JOIN jobify.state s ON p.state_id = s.state_id
+            LEFT JOIN jobify.country cou ON s.country_id = cou.country_id
+            WHERE u.user_id = ?
+        ;');        
+        $stmt->bindParam(1,$user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if ($result != null)
+        {
+            return $result;
+        }
+        return null;
+    }
 }
 

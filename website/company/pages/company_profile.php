@@ -8,6 +8,10 @@
     $current_user_pwhash = $_SESSION["current_user_pwhash"];
     $current_user_id = $_SESSION["current_user_id"];
 
+    //Get Data for prefill form
+        $profile_data = Company::getProfileDataFromCompany($current_user_id)[0];
+    //
+
     //Change PW
         if (isset($_POST["changepw"])) {
             $current_pw = $_POST["current_pw"]; 
@@ -203,13 +207,13 @@
             <div class="field">
                 <label class="label">Company Name</label>
                 <div class="control">
-                    <input name="company_name" class="input disabling" type="text" placeholder="Company Name" required disabled>
+                    <input name="company_name" class="input disabling" type="text" value="<?php echo $profile_data["name"] ?>" placeholder="Company Name" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Slogan</label>
                 <div class="control">
-                    <input name="slogan" class="input disabling" type="text" placeholder="Company Slogan" disabled>
+                    <input name="slogan" class="input disabling" type="text" value="<?php echo $profile_data["slogan"] ?>" placeholder="Company Slogan" disabled>
                 </div>
             </div>
         </div>
@@ -218,7 +222,7 @@
                 <div class="field">
                     <label class="label">Description</label>
                     <div class="control">
-                        <textarea  name="description" class="textarea input disabling" placeholder="Description of the Company" disabled></textarea>
+                        <textarea  name="description" class="textarea input disabling" placeholder="Description of the Company" disabled><?php echo $profile_data["description"] ?></textarea>
                     </div>
                 </div>
             </div>
@@ -228,7 +232,7 @@
             <div class="field">
                 <label class="label" for="email">Email</label>
                 <div class="control">
-                    <input name="email" id="email" class="input disabling" type="text" placeholder="$user->email" required disabled>
+                    <input name="email" id="email" class="input disabling" type="text" value="<?php echo $profile_data["email"] ?>" placeholder="$user->email" required disabled>
                 </div>
             </div>
             <div class="field">
@@ -240,13 +244,13 @@
             <div class="field">
                 <label class="label">Country</label>
                 <div class="control">
-                    <input name="country" class="input disabling" type="text" placeholder="Country" required disabled>
+                    <input name="country" class="input disabling" type="text" value="<?php echo $profile_data["country"] ?>" placeholder="Country" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">State</label>
                 <div class="control">
-                    <input name="state" class="input disabling" type="text" placeholder="State" required disabled>
+                    <input name="state" class="input disabling" type="text" value="<?php echo $profile_data["state"] ?>" placeholder="State" required disabled>
                 </div>
             </div>
         </div>
@@ -254,13 +258,13 @@
             <div class="field">
                 <label class="label">Postal Code</label>
                 <div class="control">
-                    <input name="postalcode" class="input disabling" type="text" placeholder="Postal Code" required disabled>
+                    <input name="postalcode" class="input disabling" type="text" value="<?php echo $profile_data["Postalcode"] ?>" placeholder="Postal Code" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">City</label>
                 <div class="control">
-                    <input name="city" class="input disabling" type="text" placeholder="City" required disabled>
+                    <input name="city" class="input disabling" type="text" value="<?php echo $profile_data["city"] ?>" placeholder="City" required disabled>
                 </div>
             </div>
         </div>
@@ -268,13 +272,13 @@
             <div class="field">
                 <label class="label">Street</label>
                 <div class="control">
-                    <input name="street" class="input disabling" type="text" placeholder="Street" required disabled>
+                    <input name="street" class="input disabling" type="text" value="<?php echo $profile_data["street"] ?>" placeholder="Street" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Street Num.</label>
                 <div class="control">
-                    <input name="streetnumber" class="input disabling" type="text" placeholder="Street Number" required disabled>
+                    <input name="streetnumber" class="input disabling" type="text" value="<?php echo $profile_data["number"] ?>" placeholder="Street Number" required disabled>
                 </div>
             </div>
         </div>        
