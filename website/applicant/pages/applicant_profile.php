@@ -350,17 +350,17 @@
             <div class="field"></div>
         </div>
     
-        <diV class="row edit">
+        <div class="row edit">
             <button type="button" class="button is-link" onclick="edit()">Edit Profile</button>
         </div>
-        <diV class="row cancel hide">
+        <div class="row cancel hide">
             <button type="reset" class="button" onclick="cancel()">Cancel</button>
             <button type="submit" name="change_applicant_infos" class="button is-link">Change</button>
-        </diV>
+        </div>
+
+        <hr class="solid">
         
     </form>
-
-    <hr class="solid">
 
     <?php
         $files = File::getAllFilesByUser($current_user_id);

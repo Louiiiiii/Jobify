@@ -204,14 +204,14 @@
         </div>        
         <div class="row edit">
             <button type="button" class="button is-link" onclick="edit()">Edit Profile</button>
-        </diV>
+        </div>
         <div class="row cancel hide">
             <button type="button" class="button" onclick="cancel()">Cancel</button>
             <button class="button is-link">Change</button>
         </div>
-    </form>
     
-    <hr class="solid">
+        <hr class="solid">
+    </form>
 
     <?php
         $files = File::getAllFilesByUser($current_user_id);
