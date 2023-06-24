@@ -13,7 +13,10 @@
 <body>
 <?php
 include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
-include
+
+$skipfilter = true;
+
+include '../parts/applicant_navbar.php';
 
 if (isset($_SESSION['current_user_id'])){
     $user_id = $_SESSION['current_user_id'];
@@ -50,6 +53,37 @@ if (isset($_POST["file_submit"])) {
     unset($_FILES);
 }
 
+if (isset($_POST['apply']))
+{
+    $applicant = Applicant::getApplicantByUserId($user_id);
+    $applicant->applyForJob($currjob_id,$_POST['text'],$_POST['files']);
+    $fileids = str_repeat('?,', count($_POST['files']) - 1) . '?';
+
+    $db = new DB();
+	$stmt = $db->pdo->prepare('select name 
+                                       from File
+                                      where file_id in('.$fileids.')');
+    $stmt->execute($_POST['files']);
+    echo '        
+        <div class="modal is-active">
+            <div class="modal-background is-active"></div>
+            <div class="modal-content">
+                <div class="box">
+                    <div class="row">
+                        <h2 class="title is-4">Succesfully sent Application with Files:</h2>
+                    </div>';
+    while ($res =$stmt->fetch()){
+		echo '<div class="row">';
+		echo '<p class="content">'.$res[0].'</p>';
+		echo '</div>';
+    }
+    echo '
+                </div>
+            </div>
+            <button class="modal-close is-large" aria-label="close"></button>
+        </div>';
+}
+
 $job = Job::getDatabyId($currjob_id);
 $company = Company::getDatabyId($job->company_id);
 ?>
@@ -75,13 +109,17 @@ $company = Company::getDatabyId($job->company_id);
                         ?>
 
                     </div>
+                    <hr>
                     <div class="content">
                         <div class="header">
                             <b><h2><?php echo $company->name;?></h2></b>
                         </div>
+                        <div class="body">
+                            <?php echo $company->description;?>
+                        </div>
                     </div>
                     <div>
-                        <button class="button is-black js-modal-trigger" data-target="modal-js-example">Apply</button>
+                        <button class="button is-black js-modal-trigger" data-target="modal-js-example">Bewerben</button>
                     </div>
                 </div>
             </div>
@@ -110,8 +148,8 @@ $company = Company::getDatabyId($job->company_id);
                         }
                         ?>
                         <div class="column">
-                            <input type="checkbox">
-                            <label class="checkbox">
+                            <input type="checkbox" name="files[]" id=<?php echo $file[0].$file[1]; ?> value=<?php echo $file[0];?>>
+                            <label class="checkbox" for=<?php echo $file[0].$file[1]; ?>>
                                 <?php echo $file[1]; ?>
                             </label>
                         </div>
@@ -128,14 +166,38 @@ $company = Company::getDatabyId($job->company_id);
                         echo '</div>';
                     }
                     ?>
+                    <br>
+                    <div class="row">
+                        <label class="label" for="textid">Send optional text to Company</label>
+                    </div>
+                    <div class="row">
+                        <textarea name="text" id="textid" rows="7" style="min-width: 100%"></textarea>
+                    </div>
+                    <br>
+                    <div class="buttons is-right row">
+                        <button class="button is-info" type="submit" name="apply">Bewerbung Absenden</button>
+                    </div>
                     <hr>
                 </form>
                 <form method="post" enctype="multipart/form-data">
                     <div class="row">
                         <label class="label">Choose upload files</label>
                     </div>
-                    <div class="row">
-                        <input class="button" type="file" name="fileToUpload" id="fileToUpload">
+                    <div id="file-js-example" class="file has-name row">
+                        <label class="file-label">
+                            <input class="file-input" type="file" name="resume">
+                            <span class="file-cta">
+                              <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                              </span>
+                              <span class="file-label">
+                                Choose a file…
+                              </span>
+                            </span>
+                            <span class="file-name">
+                              -nothing selected-
+                            </span>
+                        </label>
                     </div>
                     <br>
                     <div class="row">
