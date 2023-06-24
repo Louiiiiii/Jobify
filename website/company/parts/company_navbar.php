@@ -65,7 +65,7 @@ switch ($current_page) {
                 <div class="content">
                     <div class="columns">
                         <div class="column is-2">
-                            <input class="input" type="text" placeholder="Name" name="name">
+                            <input class="input" type="text" placeholder="Name" name="employee">
                         </div>
                         <div class="column is-2">
                             <input class="input" type="text" placeholder="Ort" name="place">
