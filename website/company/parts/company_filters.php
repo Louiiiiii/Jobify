@@ -63,7 +63,7 @@
                         <div class="column is-4">
                             <div class="buttons">
                                 <button class="button is-dark is-rounded" name="filters">Speichern</button>
-                                <button class="button is-light">Filter zurücksetzen</button>
+                                <button class="button is-outlined-light">Filter zurücksetzen</button>
                             </div>
                         </div>
                     </div>
