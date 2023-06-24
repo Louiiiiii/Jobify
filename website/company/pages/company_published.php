@@ -11,7 +11,10 @@
     <script src="../../source/js/favourites.js"></script>
 </head>
 <body>
-<?php include '../parts/company_navbar.php'; ?>
+    <?php 
+        include '../parts/company_navbar.php'; 
+    ?>
+
     <div class="search-row">
         <div class="field">
             <p class="control has-icons-left">
@@ -33,122 +36,58 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="column">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">
-                        Jobtitle
-                    </p>
-                </header>
-                <div class="card-content">
-                    <div class="content">
-                        <div>
-                            Some Content. Don't know which content!
-                        </div>
-                        <div class="content__button">
-                            <button class="button is-danger is-outlined is-rounded" type="button">
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                            <button class="button is-info is-rounded">
-                                <span class="icon is-small">
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="column">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">
-                        Jobtitle
-                    </p>
-                </header>
-                <div class="card-content">
-                    <div class="content">
-                        <div>
-                            Some Content. Don't know which content!
-                        </div>
-                        <div class="content__button">
-                            <button class="button is-danger is-outlined is-rounded" type="button">
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                            <button class="button is-info is-rounded">
-                                <span class="icon is-small">
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                            </button>
+        <?php 
+
+        $counter = 0;
+        
+        for ($i = 0; $i < 10; $i++) {
+
+            if ($counter % 2 == 0) { 
+                echo '<div class="row">';
+            }
+            
+            ?>
+
+            <div class="column">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            Jobtitle
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            <div>
+                                Some Content. Don't know which content!
+                            </div>
+                            <div class="content__button">
+                                <button class="button is-danger is-outlined is-rounded" type="button">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                </button>
+                                <button class="button is-info is-rounded">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="column">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">
-                        Jobtitle
-                    </p>
-                </header>
-                <div class="card-content">
-                    <div class="content">
-                        <div>
-                            Some Content. Don't know which content!
-                        </div>
-                        <div class="content__button">
-                            <button class="button is-danger is-outlined is-rounded" type="button">
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                            <button class="button is-info is-rounded">
-                                <span class="icon is-small">
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="column">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">
-                        Jobtitle
-                    </p>
-                </header>
-                <div class="card-content">
-                    <div class="content">
-                        <div>
-                            Some Content. Don't know which content!
-                        </div>
-                        <div class="content__button">
-                            <button class="button is-danger is-outlined is-rounded" type="button">
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                            <button class="button is-info is-rounded">
-                                <span class="icon is-small">
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            
+            <?php
+
+            if ($counter % 2 != 0) { 
+                echo '</div>';
+            }
+
+            $counter++;
+
+        }
+
+        ?>
+        
 </body>
 </html>
