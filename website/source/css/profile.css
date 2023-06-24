@@ -93,3 +93,17 @@ body {
         }
     }
 }
+
+.modal-content-delete-file {
+    background-color: white;
+    border-radius: 20px;
+}
+
+.industries-select {
+    height: 110px;
+    overflow-y: scroll;
+}
+
+.profile-input-area {
+    margin: 30px;
+}

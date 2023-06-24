@@ -1,7 +1,7 @@
 <nav class="navbar is-black has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
-            <img src="../../source/img/jobify_slogan.png">
+            <img src="../../source/img/jobify_slogan_white.png">
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
@@ -13,7 +13,7 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href="/website/applicant/pages/applicant_overview.php" class="button is-white">
+                    <a href="applicant_overview.php" class="button is-white">
                         <!--Link Default Homepage here-->
                         <strong>Home</strong>
                     </a>

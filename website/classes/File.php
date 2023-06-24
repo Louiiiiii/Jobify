@@ -104,6 +104,19 @@ class File extends User
         }
     }
 
+    public static function getFileName($fileid){
+        $db = new DB();
+        $stmt = $db->pdo->prepare("Select name from File where file_id = ?");
+        $stmt->bindParam(1,$fileid);
+        $stmt->execute();
+        $result = $stmt->fetch();
+		if ($result != null)
+		{
+			return $result[0];
+		}
+		return null;
+    }
+
     private function checkJob($job_id){
         $stmt = $this->pdo->prepare('select * from Job_File where job_id = ? and file_id = ?');
         $stmt->bindParam(1,$job_id,PDO::PARAM_INT);
@@ -153,9 +166,13 @@ class File extends User
 
         // Check if file already exists
         if (file_exists($targetFilePath)) {
+            echo "<script>alert('".$targetFilePath."');</script>";
             echo "<script>alert('Sorry, a file with this name is already exsisting!');</script>";
             return false;
         }
+
+        //The result of file_exists() is cached. Use clearstatcache() to clear the cache.
+        clearstatcache();
 
         if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
 
@@ -195,17 +212,41 @@ class File extends User
         }
     }
 
-    public static function delFile($fileId){
+    public static function delFile($file_id, $user_id){
+        $File = false;
+        $Job_File = false;
+        $Application_File = false;
+        $file_nema = FILE::getFileName($file_id);
+        $file_path = $_SERVER['DOCUMENT_ROOT'] . "/website/uplfiles/" . $user_id . "/" . $file_nema;
+
         $db = new DB();
         $stmt = $db->pdo->prepare('delete from File where file_id = ?');
-        $stmt->bindParam(1,$fileId,PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt->bindParam(1,$file_id,PDO::PARAM_INT);
+        if($stmt->execute()) {
+            $File = true;
+        }
         $stmt = $db->pdo->prepare('delete from Job_File where file_id = ?');
-        $stmt->bindParam(1,$fileId,PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt->bindParam(1,$file_id,PDO::PARAM_INT);
+        if($stmt->execute()) {
+            $Job_File = true;
+        }
         $stmt = $db->pdo->prepare('delete from Application_File where file_id = ?');
-        $stmt->bindParam(1,$fileId,PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt->bindParam(1,$file_id,PDO::PARAM_INT);
+        if($stmt->execute()) {
+            $Application_File = true;
+        }
+
+        if (unlink($file_path)) {
+            $file_nema = true;
+        } else {
+            $file_nema = false;
+        }
+
+        if($File && $Job_File && $Application_File && $file_path) {
+            return true;
+        }
+
+        return false;
     }
 
     public static function getAllFilesByUser($user_id){

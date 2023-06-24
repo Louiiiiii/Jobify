@@ -175,38 +175,21 @@
                     <div class="row">
                         <div class="field">
                             <label class="label">Industry</label>
-                            
+
                             <div class="columns">
-                                <?php
-                                    //if you have questions about the following, ask Julian 😘
-                                    $industries = Applicant::getIndustry_Data();
-                                    $count_industries = ceil(count($industries)/3);
-                                    $correction = ($count_industries*3)-count($industries);
-
-                                    $i = 0;
-
-                                    for ($x = 0; $x < 3; $x++) {
-                                        if ($x == 2) {
-                                            $corrector = $correction;
-                                        } else {
-                                            $corrector = 0;
+                                <div class="column industries-select">
+                                    <?php
+                                        $industries = Applicant::getIndustry_Data();
+                                        
+                                        foreach($industries as $industry) {             
+                                            echo '<input class="checkbox" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '">';
+                                            echo '<label for="' . $industry["industry_id"] . '">' . $industry["name"] . '</label><br>';
                                         }
-
-                                        echo '<div class="column is-one-thirds">';                                    
-                                        for ($j = 0; $j < $count_industries-$corrector; $j++) {
-                                            echo '<label class="checkbox" for="' . $industries[$i]["industry_id"] . '">';
-                                            echo '<input type="checkbox" id="' . $industries[$i]["industry_id"] . '" name="industry_ids[]" value="' . $industries[$i]["industry_id"] . '">';
-                                            echo  ' '.$industries[$i]["name"];
-                                            echo '</label><br>';
-                                            $i++;
-                                        }
-                                        echo '</div>';
-                                    }
-                                    
-                                ?>
+                                        
+                                    ?>
+                                </div>
                             </div>
-
-                        </div>    
+                        </div>   
                     </div>
                     
                     <div class="row">

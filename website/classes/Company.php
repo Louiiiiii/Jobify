@@ -20,6 +20,30 @@ class Company extends User
         parent::__construct($email, $passwordnothashed, $user_id);
     }
 
+    public function updateDB()
+    {
+        $this->company_id = $this->getCompany_id();
+        if ($this->company_id == null) {
+            $success = $this->insertCompany();
+        }
+        elseif ($this->company_id != null)
+        {
+            $success = $this->updateCompany();
+        }
+        return $success;
+    }
+
+    private function updateCompany()
+    {
+        $stmt = $this->pdo->prepare('update Company set name = ?, slogan = ?, description = ?, address_id = ? where company_id = ?');
+        $stmt->bindParam(1, $this->name);
+        $stmt->bindParam(2, $this->slogan);
+        $stmt->bindParam(3, $this->description);
+        $stmt->bindParam(4, $this->address_id);
+        $stmt->bindParam(5, $this->company_id);
+        return $stmt->execute();
+    }
+
     public static function getDatabyId($company_id):Company{
         $db = new DB();
         $stmt = $db->pdo->prepare('select * 
@@ -78,6 +102,41 @@ class Company extends User
     public static function getCompany_Data(){
         $db = new DB();
         $stmt = $db->pdo->prepare('select company_id, name from Company');
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if ($result != null)
+        {
+            return $result;
+        }
+        return null;
+    }
+
+    public static function getProfileDataFromCompany($user_id) {
+        $db = new DB();
+        $stmt = $db->pdo->prepare('
+            SELECT 
+                c.name,
+                c.slogan,
+                c.description,
+                u.email,
+                cou.country,
+                s.state,
+                p.Postalcode,
+                ci.city,
+                a.street,
+                a.number
+            FROM jobify.user u
+            LEFT JOIN jobify.company c ON u.user_id = c.user_id 
+            LEFT JOIN jobify.address a ON c.address_id = a.address_id
+            LEFT JOIN jobify.city_postalcode cp ON a.City_Postalcode_id = cp.City_Postalcode_id
+            LEFT JOIN jobify.postalcode p ON cp.postalcode_id = p.postalcode_id
+            LEFT JOIN jobify.city ci ON cp.city_id = ci.city_id
+            LEFT JOIN jobify.state s ON p.state_id = s.state_id
+            LEFT JOIN jobify.country cou ON s.country_id = cou.country_id
+            WHERE u.user_id = ?
+        ;');        
+        $stmt->bindParam(1,$user_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetchAll();
 

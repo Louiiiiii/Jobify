@@ -2,7 +2,7 @@
 <nav class="navbar is-black has-shadow" id="comNavProfile" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
-            <img src="../../source/img/jobify_slogan.png">
+            <img src="../../source/img/jobify_slogan_white.png">
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>

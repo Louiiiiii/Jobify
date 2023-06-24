@@ -14,9 +14,11 @@
         case "applicant_favourite.php":
             $favourite = "navbar-current-page";
             break;
-        case "applicant_requested.php":
-            $requested = "navbar-current-page";
-            break;
+		case "applicant_requested.php":
+			$requested = "navbar-current-page";
+			break;
+		case "applicant_job.php":
+			break;
         default:
             echo "Invalid header option";
     }
@@ -26,7 +28,7 @@
 <nav class="navbar is-black has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
-            <img src="/website/source/img/jobify_slogan.png">
+            <img src="/website/source/img/jobify_slogan_white.png">
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
@@ -60,7 +62,7 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href="/website/applicant/pages/applicant_profile.php" class="button is-white">
+                    <a href="applicant_profile.php" class="button is-white">
                         <!--Link profile page here-->
                         <strong>Profile</strong>
                     </a>
@@ -69,6 +71,7 @@
         </div>
     </div>
 </nav>
+<?php if(!isset($skipfilter)){?>
 <!--Filter -->
 <form method="post">
     <div class="card">
@@ -89,9 +92,6 @@
                         </div>
                         <div class="column is-2">
                             <input class="input is-dark" type="place" name="cityname" placeholder="Ort">
-                        </div>
-                        <div class="column is-2">
-                            <input class="input is-dark" type="text" name="industryname" placeholder="Branche">
                         </div>
                         <div class="column is-5"></div>
                     </div>
@@ -156,5 +156,8 @@
         </div>
     </div>
 </form>
+<?php
+}
+?>
 
 <script src="../../source/js/navbar.js"></script>

@@ -24,7 +24,10 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 
 if (!isset($_SESSION["current_user_id"]))
 {
-	$userid = 1;
+	$userid = 6;
+}
+else{
+	$userid = $_SESSION["current_user_id"];
 }
 
 if (isset($_POST['favorite'])){
@@ -64,43 +67,39 @@ if (isset($_POST['filter'])){
         $industry = '%'.$_POST['industry'].'%';
     }
 }
-
+$applicant = Applicant::getApplicantByUserId($userid);
 $db = new DB();
 $filter = $db->pdo->prepare('select   j.title title,
                                             j.description description,
                                             j.job_id job_id,
                                             case when 1 = (select 1 
                                                              from Favorite 
-                                                            where applicant_id = :userid 
+                                                            where applicant_id = :applicant
                                                               and job_id = j.job_id)
                                                  then 1
                                                  else 0 end favorite
-                                      from Application ap,
-                                           Applicant a,
-                                           Job j,
-                                           Applicationstatus aps,
+                                      from Job j,
                                            Company c,
                                            Address ad,
                                            City_Postalcode cp,
                                            City ci,
                                            Industry i,
-                                           Job_Industry ji
-                                     where ap.applicant_id = a.applicant_id
-                                       and ap.job_id = j.job_id
-                                       and ap.applicationstatus_id = aps.applicationstatus_id
-                                       and j.company_id = c.company_id
+                                           Job_Industry ji,
+                                           Headhunt h
+                                     where j.job_id = c.company_id
                                        and c.address_id = ad.address_id
                                        and ad.city_postalcode_id = cp.city_postalcode_id
                                        and cp.city_id = ci.city_id
                                        and j.job_id = ji.job_id
                                        and ji.industry_id = i.industry_id
-                                       and a.user_id = :userid
+                                       and h.job_id = j.job_id
+                                       and h.applicant_id = :applicant
                                        and (lower(j.title) like lower(:jobtitle) or :jobtitle is null)
                                        and (j.salary between :salaryfrom and :salaryto or :salaryfrom is null)
                                        and (lower(c.name) like lower(:companyname) or :companyname is null)
                                        and (lower(ci.city) like lower(:cityname) or :cityname is null)
                                        and (lower(i.name) like lower(:industry) or :industry is null)');
-$filter->bindParam('userid', $userid,PDO::PARAM_INT);
+$filter->bindParam('applicant', $applicant->applicant_id,PDO::PARAM_INT);
 $filter->bindParam('jobtitle', $jobtitle);
 $filter->bindParam('salaryfrom', $salaryfrom, PDO::PARAM_INT);
 $filter->bindParam('salaryto', $salaryto,PDO::PARAM_INT);
@@ -139,7 +138,7 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
 								?>
                             <div class="like">
                                 <form method="post">
-                                    <button type="submit" name="favorite" value=1 style="background: transparent; border: transparent">
+                                    <button type="submit" name="favorite" value=<?php echo $res['job_id'] ?> style="background: transparent; border: transparent">
                                     <span class="icon is-small">
                                         <i class="fas fa-heart <?php if($res['favorite'] == 1){echo 'liked';}?>"></i>
                                     </span>

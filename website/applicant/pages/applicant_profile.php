@@ -2,15 +2,26 @@
 
     session_start();
 
-    $_SESSION["current_user_email"] = "j.p@g.com";
-    $_SESSION["current_user_pwhash"] = "b7c3bd1e3976deb58236e6fb91da0cd5f4b0c2f6290cdc2b6f17c6da88d000420ec2d5d73b3e1e8ae14cafeabafe117a58060f427a66bdab1b97cf2d52aa0a94";
-    $_SESSION["current_user_id"] = 3;
-
     require_once $_SERVER['DOCUMENT_ROOT'] . '/website/classes/getClasses.php';
-
+    
     $current_user_email = $_SESSION["current_user_email"];
     $current_user_pwhash = $_SESSION["current_user_pwhash"];
     $current_user_id = $_SESSION["current_user_id"];
+
+    //Get Data for prefill form
+        $profile_data = Applicant::getProfileDataFromApplicant($current_user_id);
+
+        $profile_data_all = $profile_data["infos"]["0"];
+        
+        $profile_data_industries = $profile_data["industries"];
+
+        echo "<pre>";
+        print_r($profile_data_all);
+        echo "</pre>";
+        echo "<pre>";
+        print_r($profile_data_industries);
+        echo "</pre>";
+    //
 
     if (isset($_POST["changepw"])) {
         $current_pw = $_POST["current_pw"]; 
@@ -45,9 +56,9 @@
 
     }
     
-    if (isset($_POST["change_applicant_infos"])) {
+    if (isset($_POST["change_profile_infos"])) {
         //from Form
-        $firstname = $_POST["email"];
+        $email = $_POST["email"];
         $firstname = $_POST["firstname"];
         $lastname = $_POST["lastname"];
         $birthday = $_POST["birthday"];
@@ -57,10 +68,14 @@
         $city = $_POST["city"];
         $street = $_POST["street"];
         $streetnumber = $_POST["streetnumber"];
-        $education_id = $_POST["education_id"];        
-        $industry_ids = $_POST["industry_ids"];     
+        $education_id = $_POST["education_id"]; 
 
-        //pleas ignore this it is working and i dont want to change it 😘
+        if (isset($_POST["industry_ids"])) {
+            $industry_ids = $_POST["industry_ids"];
+        } else {
+            $industry_ids = NULL;
+        }       
+        
         if (isset($_POST["headhunting"])) {
             $headhunting = $_POST["headhunting"];
         } else {
@@ -68,6 +83,10 @@
         }
         
         //Inserts
+
+        //E-Mail
+        User::updateEMail($email, $current_user_id);
+        $_SESSION["current_user_email"] = $email;
 
         //Address
         $address = new Address($street, $streetnumber, $state, $country, $postalcode, $city);
@@ -95,10 +114,15 @@
         );
 
         $applicant->updateDB();
+        $applicant_id = $applicant->getApplicant_id();
         
         //Industry
-        foreach ($industry_ids as $industry_id) {
-            $applicant->addApplicant_Industry($industry_id);
+        Applicant::deleteAllIndustriesFromApplicant($applicant_id);
+
+        if (!is_null($industry_ids)) {
+            foreach ($industry_ids as $industry_id) {
+                $applicant->addApplicant_Industry($industry_id);
+            }
         }
         
         //Unset $_POST
@@ -120,9 +144,57 @@
         
     }
 
+    if (isset($_POST["delete-file-btn"])) {
+
+        $del_file_id = $_POST["delete-file-btn"];
+        $del_file_nema = FILE::getFileName($del_file_id);
+
+        $spawn_delete_file_modal = '
+            <div class="modal is-active">
+                <div class="modal-background is-active"></div>
+                <div class="modal-content modal-content-delete-file">
+                    <div class="box">
+                        <form action="./applicant_profile.php" method="post">
+                            <h1>Wollen Sie das Dokument "' . $del_file_nema . '" wirklick löschen?</h1>
+                            <input type="number" name="del-file-id" value="'.$del_file_id.'" style="display: none;" readonly>
+                            <br> 
+                            <div class="columns">
+                                <div class="column">
+                                    <button class="button is-dark" type="submit" name="now-delete-file-btn">Delete</button>
+                                </div>                              
+                                <div class="column">
+                                    <button class="button is-danger" type="submit" name="reset-delete-file-btn">Cancel</button>
+                                </div>
+                            </div>  
+                        </form>
+                    </div>
+                </div>
+            </div>
+        ';
+        
+    } else {
+
+        $spawn_delete_file_modal = "";
+
+    }
+    
+    if (isset($_POST["now-delete-file-btn"])) {
+        $spawn_delete_file_modal = "";
+
+        $file_deleted = FILE::delFile($_POST["del-file-id"], $current_user_id);
+
+        if($file_deleted) {
+            echo "<script>alert('Your File was deleted!');</script>";
+        } else {
+            echo "<script>alert('Ahhhh shit something went wrong!');</script>";
+        }
+    }
+
+    if (isset($_POST["reset-delete-file-btn"])) {
+        $spawn_delete_file_modal = "";
+    }
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -136,7 +208,13 @@
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
-    <?php require_once '../parts/applicant_profile_navbar.php'; ?>
+    <?php 
+    
+        require_once '../parts/applicant_profile_navbar.php'; 
+
+        echo $spawn_delete_file_modal;
+    
+    ?>
 
     <form class="form" action="./applicant_profile.php" method="post">
 
@@ -145,43 +223,43 @@
                 <figure class="image is-128x128">
                     <?php 
                         $profile_pic = File::getFile($current_user_id, "Profile Picture");
-                        $profile_pic_path = "/website/uplfiles/" . $current_user_id . "/" . $profile_pic["name"];
-
-                        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . $profile_pic_path)) {
+                        
+                        if (is_null($profile_pic)) {
                             $profile_pic_path = "/website/source/img/user-icon.png";
+                        } else {                            
+                            $profile_pic_path = "/website/uplfiles/" . $current_user_id . "/" . $profile_pic["name"];
                         }
-
-                        //The result of file_exists() is cached. Use clearstatcache() to clear the cache.
-                        clearstatcache();
                     ?>
                     <img class="is-rounded" src="<?php echo $profile_pic_path ?>">
                 </figure>
             </div>
         </div>
         
+        <hr class="solid">
+
         <div class="row">
             <div class="field">
                 <label class="label">E-Mail</label>
                 <div class="control">
-                    <input name="email" class="input disabling" type="email" placeholder="Email" required disabled>
+                    <input name="email" class="input disabling" type="email" value="<?php echo $profile_data_all["email"] ?>" placeholder="Email" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Password</label>
                 <button type="button" class="button js-modal-trigger" data-target="modal-js-example">Change Password</button>
             </div>
-            </div>
+        </div>
         <div class="row">
             <div class="field">
                 <label class="label">Firstname</label>
                 <div class="control">
-                    <input name="firstname" class="input disabling" type="text" placeholder="Firstname" required disabled>
+                    <input name="firstname" class="input disabling" type="text" value="<?php echo $profile_data_all["firstname"] ?>" placeholder="Firstname" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Lastname</label>
                 <div class="control">
-                    <input name="lastname" class="input disabling" type="text" placeholder="Lastname" required disabled>
+                    <input name="lastname" class="input disabling" type="text" value="<?php echo $profile_data_all["lastname"] ?>" placeholder="Lastname" required disabled>
                 </div>
             </div>
         </div>
@@ -189,7 +267,7 @@
             <div class="field">
                 <label class="label">Birthday</label>
                 <div class="control">
-                    <input style="width: 204.4px" name="birthday" class="input disabling" type="date" required disabled>
+                    <input name="birthday" class="input disabling" type="date" value="<?php echo $profile_data_all["birthdate"] ?>" required disabled>
                 </div>
             </div>
             <div class="field"></div>
@@ -198,13 +276,13 @@
             <div class="field">
                 <label class="label">Country</label>
                 <div class="control">
-                    <input name="country" class="input disabling" type="text" placeholder="Country" required disabled>
+                    <input name="country" class="input disabling" type="text" value="<?php echo $profile_data_all["country"] ?>" placeholder="Country" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">State</label>
                 <div class="control">
-                    <input name="state" class="input disabling" type="text" placeholder="State" required disabled>
+                    <input name="state" class="input disabling" type="text" value="<?php echo $profile_data_all["state"] ?>" placeholder="State" required disabled>
                 </div>
             </div>
         </div>
@@ -212,13 +290,13 @@
             <div class="field">
                 <label class="label">Postal Code</label>
                 <div class="control">
-                    <input name="postalcode" class="input disabling" type="text" placeholder="Postal Code" required disabled>
+                    <input name="postalcode" class="input disabling" type="text" value="<?php echo $profile_data_all["Postalcode"] ?>" placeholder="Postal Code" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">City</label>
                 <div class="control">
-                    <input name="city" class="input disabling" type="text" placeholder="City" required disabled>
+                    <input name="city" class="input disabling" type="text" value="<?php echo $profile_data_all["city"] ?>" placeholder="City" required disabled>
                 </div>
             </div>
         </div>
@@ -226,13 +304,13 @@
             <div class="field">
                 <label class="label">Street</label>
                 <div class="control">
-                    <input name="street" class="input disabling" type="text" placeholder="Street" required disabled>
+                    <input name="street" class="input disabling" type="text" value="<?php echo $profile_data_all["street"] ?>" placeholder="Street" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Street Num.</label>
                 <div class="control">
-                    <input name="streetnumber" class="input disabling" type="text" placeholder="Street Number" required disabled>
+                    <input name="streetnumber" class="input disabling" type="text" value="<?php echo $profile_data_all["number"] ?>" placeholder="Street Number" required disabled>
                 </div>
             </div>
         </div>
@@ -245,7 +323,11 @@
                             $allEducations = Applicant::getEducation_Data();
 
                             foreach ($allEducations as $row) {
-                                echo '<option value="' . $row["education_id"] . '">' . $row["name"] . '</option>';
+                                if ($profile_data_all["education"] == $row["name"]) {
+                                    echo '<option value="' . $row["education_id"] . '" selected>' . $row["name"] . '</option>';
+                                } else {
+                                    echo '<option value="' . $row["education_id"] . '">' . $row["name"] . '</option>';
+                                }
                             }
                         ?>
                     </select>
@@ -253,83 +335,86 @@
             </div>
             <div class="field"></div>
         </div>
+        <br>
         <div class="row">
             <div class="field">
-                <label style="width: 20%" class="label">Industry</label>
-                
-                <div class="columns">
-                    <?php
-                        //if you have questions about the following, ask Julian 😘
-                        $industries = Applicant::getIndustry_Data();
-                        $count_industries = ceil(count($industries)/3);
-                        $correction = ($count_industries*3)-count($industries);
+                <label class="label">Industry</label>
+                <div>
+                    <div class="columns">
+                        <div class="column industries-select">
+                            <?php
+                                $industries = Applicant::getIndustry_Data();
+                                
+                                foreach($industries as $industry) {   
+                                    echo "<pre>";
+                                    print_r($industry);
+                                    echo "</pre>";
 
-                        $i = 0;
+                                    foreach($profile_data_industries as $profile_data_industry) {
 
-                        for ($x = 0; $x < 3; $x++) {
-                            if ($x == 2) {
-                                $corrector = $correction;
-                            } else {
-                                $corrector = 0;
-                            }
+                                        echo $profile_data_industry["name"]."<br>";
 
-                            echo '<div class="column is-one-thirds">';                                    
-                            for ($j = 0; $j < $count_industries-$corrector; $j++) {
-                                echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industries[$i]["industry_id"] . '" name="industry_ids[]" value="' . $industries[$i]["industry_id"] . '" disabled>';
-                                echo ' <label for="' . $industries[$i]["industry_id"] . '">' . $industries[$i]["name"] . '</label><br>';
-                                $i++;
-                            }
-                            echo '</div>';
-                        }
-                        
-                    ?>
+                                        echo $profile_data_industry["name"]. "-". $industry["name"]."<br>";
+
+                                        if ($profile_data_industry["name"] == $industry["name"]) {
+                                            echo "true <br>";
+                                            echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" checked disabled>';
+                                            echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+                                        } else {
+                                            echo "false <br>";
+                                            echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" disabled>';
+                                            echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+                                        }
+
+                                    }        
+                                    
+                                }
+                                
+                            ?>
+                        </div>
+                    </div>
                 </div>
-
-            </div>    
+            </div>   
+            <div class="field"></div>
         </div>
         <br>
         <div class="row">
             <div class="field">
-                <label class="label">Industry test</label>
-                <div class="columns">
-                    <div class="container">
-                        <div class="select is-multiple">
-                            <select multiple size="3">
-                                <?php
-                                $data = Applicant::getIndustry_Data();
-                                foreach ($data as $item)
-                                {
-                                    echo '<option value="'.$item[0].'">'.$item[1].'</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="field">
                 <label class="label">Allow Headhunting</label>
                 <label class="checkbox">
-                    <input class="checkbox-input disabling" name="headhunting" type="checkbox" disabled>
+                    <input class="checkbox-input disabling" name="headhunting" type="checkbox" disabled 
+                        <?php 
+                            if($profile_data_all["allow_headhunting"]==1) {
+                                echo "checked";
+                            }
+                        ?>
+                    >
                     Yes
                 </label>
             </div>  
             <div class="field"></div>
         </div>
     
-        <diV class="row edit">
+        <div class="row edit">
             <button type="button" class="button is-link" onclick="edit()">Edit Profile</button>
         </div>
-        <diV class="row cancel hide">
+        <div class="row cancel hide">
             <button type="reset" class="button" onclick="cancel()">Cancel</button>
-            <button type="submit" name="change_applicant_infos" class="button is-link">Change</button>
-        </diV>
+            <button type="submit" name="change_profile_infos" class="button is-link">Change</button>
+        </div>
+
+        <hr class="solid">
         
     </form>
 
-    <div class="row">
+    <?php
+        $files = File::getAllFilesByUser($current_user_id);
+
+        if (count($files) > 0) {
+
+    ?>
+
+    <div class="row profile-input-area">
         <div class="table-container">
             <table class="table">
                 <thead>
@@ -344,7 +429,6 @@
                 <tbody>
                     <form action="./applicant_profile.php" method="post">
                         <?php 
-                            $files = File::getAllFilesByUser($current_user_id);
 
                             foreach($files as $file) {
                                 $filepath = $_SERVER['DOCUMENT_ROOT'] . "/website/uplfiles/" . $current_user_id . "/" . $file["name"];
@@ -375,31 +459,49 @@
         </div>
     </div>
 
-    <form action="./applicant_profile.php" method="post" enctype="multipart/form-data">
+    <?php 
+        } else {
+            echo "<br>";
+            echo "<hr>";
+            echo "<h1>Sie haben keine Files hochgeladen</h1>";
+            echo "<br>";
+        }
+    ?>
+
+    <form class="form" action="./company_profile.php" method="post" enctype="multipart/form-data">
         <div class="columns">
             <div class="column">
-                <label class="label" for="fileToUpload">Choose a file:</label>
-                <input class="button" type="file" name="fileToUpload" id="fileToUpload">        
+                <label class="label">Choose upload files</label>
+                <div id="file-js-example" class="file has-name">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="fileToUpload">
+                        <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">Choose a file…</span>
+                        </span>
+                        <span class="file-name">Nothing selected</span>
+                    </label>
+                </div>
             </div>
             <div class="column">
                 <label class="label">File Type:</label>
                 <div class="select">
-                    <select class="" name="filetype_name" required>
+                    <select name="filetype_name" required>
                         <?php
-                            $allFileTypes = File::getAllFileTypes();
+                        $allFileTypes = File::getAllFileTypes();
 
-                            foreach ($allFileTypes as $row) {
-                                echo '<option value="' . $row["type"] . '">' . $row["type"] . '</option>';
-                            }
+                        foreach ($allFileTypes as $row) {
+                            echo '<option value="' . $row["type"] . '">' . $row["type"] . '</option>';
+                        }
                         ?>
                     </select>
                 </div>
             </div>
-            <div class="column is-4"></div>
-        </div>        
+        </div>
 
         <button class="button" type="submit" name="file_submit">Upload File</button>
-
     </form>
 
     <div id="modal-js-example" class="modal">
@@ -446,9 +548,22 @@
 
         <button class="modal-close is-large" aria-label="close"></button>
     </div>
+        
+
 </body>
 </html>
+
+<script>
+    const fileInput = document.querySelector('#file-js-example input[type=file]');
+    fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+            const fileName = document.querySelector('#file-js-example .file-name');
+            fileName.textContent = fileInput.files[0].name;
+        }
+    }
+</script>
 
 <script src="/website/source/js/hideButton.js"></script>
 <script src="/website/source/js/modal.js"></script>
 <script src="/website/source/js/checkpassword.js"></script>
+
