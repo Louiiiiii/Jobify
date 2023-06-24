@@ -6,14 +6,12 @@
         $email = $_POST["email"];
         $pw = $_POST["password"];
 
-        $hashedpw = hash('sha512', $pw);
-
         if (User::doesemailexist($email) == false) {
             echo "<script>alert('E-Mail does not exist, please sign up first.');</script>";
             echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/view/login/signup.php");</script>';
             exit;
         } else {
-            if(User::validateCredentials($email, $hashedpw) == true) {
+            if(User::validateCredentials($email, $pw) == true) {
                 $user = new User($email, $pw);
                 $pwhash = $user->passwordhash;
                 $user_id = $user->getUser_id();
