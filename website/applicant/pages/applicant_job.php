@@ -22,7 +22,7 @@ if (isset($_SESSION['current_user_id'])){
     $user_id = $_SESSION['current_user_id'];
 }
 else{
-    $user_id = 1;
+    $user_id = 6;
 }
 
 if (isset($_SESSION['current_user_email'])){
