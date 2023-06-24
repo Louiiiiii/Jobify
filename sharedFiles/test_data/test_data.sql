@@ -13,15 +13,6 @@ DROP SCHEMA IF EXISTS `Jobify` ;
 -- Schema Jobify
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `Jobify` DEFAULT CHARACTER SET utf8 ;
--- -----------------------------------------------------
--- Schema jobify
--- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `jobify` ;
-
--- -----------------------------------------------------
--- Schema jobify
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `jobify` ;
 USE `Jobify` ;
 
 -- -----------------------------------------------------
@@ -46,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Country` (
   `country_id` INT NOT NULL AUTO_INCREMENT,
   `country` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`country_id`),
-  UNIQUE INDEX `country_UNIQUE` (`country` ASC) VISIBLE)
+  UNIQUE INDEX `country_UNIQUE` (`country` ASC))
 ENGINE = InnoDB;
 
 
@@ -60,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`State` (
   `state` VARCHAR(100) NOT NULL,
   `country_id` INT NOT NULL,
   PRIMARY KEY (`state_id`),
-  INDEX `fk_State_Country1_idx` (`country_id` ASC) VISIBLE,
+  INDEX `fk_State_Country1_idx` (`country_id` ASC),
   CONSTRAINT `fk_State_Country1`
     FOREIGN KEY (`country_id`)
     REFERENCES `Jobify`.`Country` (`country_id`)
@@ -79,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Postalcode` (
   `Postalcode` VARCHAR(100) NOT NULL,
   `state_id` INT NOT NULL,
   PRIMARY KEY (`postalcode_id`),
-  INDEX `fk_Postalcode_State1_idx` (`state_id` ASC) VISIBLE,
+  INDEX `fk_Postalcode_State1_idx` (`state_id` ASC),
   CONSTRAINT `fk_Postalcode_State1`
     FOREIGN KEY (`state_id`)
     REFERENCES `Jobify`.`State` (`state_id`)
@@ -110,8 +101,8 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`City_Postalcode` (
   `postalcode_id` INT NOT NULL,
   `city_id` INT NOT NULL,
   PRIMARY KEY (`City_Postalcode_id`),
-  INDEX `fk_Postalcode_has_City_City1_idx` (`city_id` ASC) VISIBLE,
-  INDEX `fk_Postalcode_has_City_Postalcode1_idx` (`postalcode_id` ASC) VISIBLE,
+  INDEX `fk_Postalcode_has_City_City1_idx` (`city_id` ASC),
+  INDEX `fk_Postalcode_has_City_Postalcode1_idx` (`postalcode_id` ASC),
   CONSTRAINT `fk_Postalcode_has_City_Postalcode1`
     FOREIGN KEY (`postalcode_id`)
     REFERENCES `Jobify`.`Postalcode` (`postalcode_id`)
@@ -137,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Address` (
   `additionalinfo` VARCHAR(100) NULL,
   `City_Postalcode_id` INT NOT NULL,
   PRIMARY KEY (`address_id`),
-  INDEX `fk_Street_City_Postalcode1_idx` (`City_Postalcode_id` ASC) VISIBLE,
+  INDEX `fk_Street_City_Postalcode1_idx` (`City_Postalcode_id` ASC),
   CONSTRAINT `fk_Street_City_Postalcode1`
     FOREIGN KEY (`City_Postalcode_id`)
     REFERENCES `Jobify`.`City_Postalcode` (`City_Postalcode_id`)
@@ -159,8 +150,8 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Company` (
   `description` TEXT NULL,
   `address_id` INT NOT NULL,
   PRIMARY KEY (`company_id`),
-  INDEX `fk_Company_User1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_Company_Street1_idx` (`address_id` ASC) VISIBLE,
+  INDEX `fk_Company_User1_idx` (`user_id` ASC),
+  INDEX `fk_Company_Street1_idx` (`address_id` ASC),
   CONSTRAINT `fk_Company_User1`
     FOREIGN KEY (`user_id`)
     REFERENCES `Jobify`.`User` (`user_id`)
@@ -187,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Job` (
   `isvolunteerwork` TINYINT NOT NULL,
   `company_id` INT NOT NULL,
   PRIMARY KEY (`job_id`),
-  INDEX `fk_Job_Company1_idx` (`company_id` ASC) VISIBLE,
+  INDEX `fk_Job_Company1_idx` (`company_id` ASC),
   CONSTRAINT `fk_Job_Company1`
     FOREIGN KEY (`company_id`)
     REFERENCES `Jobify`.`Company` (`company_id`)
@@ -206,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Industry` (
   `name` VARCHAR(45) NOT NULL,
   `parent_industry_id` INT NULL,
   PRIMARY KEY (`industry_id`),
-  INDEX `fk_category_category_idx` (`parent_industry_id` ASC) VISIBLE,
+  INDEX `fk_category_category_idx` (`parent_industry_id` ASC),
   CONSTRAINT `fk_category_category`
     FOREIGN KEY (`parent_industry_id`)
     REFERENCES `Jobify`.`Industry` (`industry_id`)
@@ -243,9 +234,9 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Applicant` (
   `address_id` INT NOT NULL,
   `education_id` INT NULL,
   PRIMARY KEY (`applicant_id`),
-  INDEX `fk_Applicant_User1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_Applicant_Street1_idx` (`address_id` ASC) VISIBLE,
-  INDEX `fk_Applicant_Education1_idx` (`education_id` ASC) VISIBLE,
+  INDEX `fk_Applicant_User1_idx` (`user_id` ASC),
+  INDEX `fk_Applicant_Street1_idx` (`address_id` ASC),
+  INDEX `fk_Applicant_Education1_idx` (`education_id` ASC),
   CONSTRAINT `fk_Applicant_User1`
     FOREIGN KEY (`user_id`)
     REFERENCES `Jobify`.`User` (`user_id`)
@@ -288,9 +279,9 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`File` (
   `user_id` INT NOT NULL,
   `filetype_id` INT NOT NULL,
   PRIMARY KEY (`file_id`),
-  INDEX `fk_File_User1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_File_Filetype1_idx` (`filetype_id` ASC) VISIBLE,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC, `user_id` ASC, `filetype_id` ASC) VISIBLE,
+  INDEX `fk_File_User1_idx` (`user_id` ASC),
+  INDEX `fk_File_Filetype1_idx` (`filetype_id` ASC),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC, `user_id` ASC, `filetype_id` ASC),
   CONSTRAINT `fk_File_User1`
     FOREIGN KEY (`user_id`)
     REFERENCES `Jobify`.`User` (`user_id`)
@@ -314,8 +305,8 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Applicant_Industry` (
   `applicant_id` INT NOT NULL,
   `industry_id` INT NOT NULL,
   PRIMARY KEY (`applicant_industry_id`),
-  INDEX `fk_Applicant_has_Industry_Industry1_idx` (`industry_id` ASC) VISIBLE,
-  INDEX `fk_Applicant_has_Industry_Applicant1_idx` (`applicant_id` ASC) VISIBLE,
+  INDEX `fk_Applicant_has_Industry_Industry1_idx` (`industry_id` ASC),
+  INDEX `fk_Applicant_has_Industry_Applicant1_idx` (`applicant_id` ASC),
   CONSTRAINT `fk_Applicant_has_Industry_Applicant1`
     FOREIGN KEY (`applicant_id`)
     REFERENCES `Jobify`.`Applicant` (`applicant_id`)
@@ -353,9 +344,9 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Application` (
   `job_id` INT NOT NULL,
   `applicant_id` INT NOT NULL,
   PRIMARY KEY (`application_id`),
-  INDEX `fk_application_ApplicationStatus1_idx` (`applicationstatus_id` ASC) VISIBLE,
-  INDEX `fk_application_Job1_idx` (`job_id` ASC) VISIBLE,
-  INDEX `fk_application_Applicant1_idx` (`applicant_id` ASC) VISIBLE,
+  INDEX `fk_application_ApplicationStatus1_idx` (`applicationstatus_id` ASC),
+  INDEX `fk_application_Job1_idx` (`job_id` ASC),
+  INDEX `fk_application_Applicant1_idx` (`applicant_id` ASC),
   CONSTRAINT `fk_application_ApplicationStatus1`
     FOREIGN KEY (`applicationstatus_id`)
     REFERENCES `Jobify`.`ApplicationStatus` (`applicationstatus_id`)
@@ -384,9 +375,9 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Application_File` (
   `application_id` INT NOT NULL,
   `file_id` INT NOT NULL,
   PRIMARY KEY (`Application_File_id`),
-  INDEX `fk_application_has_File_File1_idx` (`file_id` ASC) VISIBLE,
-  INDEX `fk_application_has_File_application1_idx` (`application_id` ASC) VISIBLE,
-  UNIQUE INDEX `application_id_UNIQUE` (`application_id` ASC, `file_id` ASC) VISIBLE,
+  INDEX `fk_application_has_File_File1_idx` (`file_id` ASC),
+  INDEX `fk_application_has_File_application1_idx` (`application_id` ASC),
+  UNIQUE INDEX `application_id_UNIQUE` (`application_id` ASC, `file_id` ASC),
   CONSTRAINT `fk_application_has_File_application1`
     FOREIGN KEY (`application_id`)
     REFERENCES `Jobify`.`Application` (`application_id`)
@@ -411,8 +402,8 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Headhunt` (
   `job_id` INT NOT NULL,
   `applicant_id` INT NOT NULL,
   PRIMARY KEY (`headhunt_id`),
-  INDEX `fk_Headhunt_Job1_idx` (`job_id` ASC) VISIBLE,
-  INDEX `fk_Headhunt_Applicant1_idx` (`applicant_id` ASC) VISIBLE,
+  INDEX `fk_Headhunt_Job1_idx` (`job_id` ASC),
+  INDEX `fk_Headhunt_Applicant1_idx` (`applicant_id` ASC),
   CONSTRAINT `fk_Headhunt_Job1`
     FOREIGN KEY (`job_id`)
     REFERENCES `Jobify`.`Job` (`job_id`)
@@ -436,8 +427,8 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Favorite` (
   `applicant_id` INT NOT NULL,
   `job_id` INT NOT NULL,
   PRIMARY KEY (`applicant_job_id`),
-  INDEX `fk_Job_Applicant_Applicant1_idx` (`applicant_id` ASC) VISIBLE,
-  INDEX `fk_Job_Applicant_Job1_idx` (`job_id` ASC) VISIBLE,
+  INDEX `fk_Job_Applicant_Applicant1_idx` (`applicant_id` ASC),
+  INDEX `fk_Job_Applicant_Job1_idx` (`job_id` ASC),
   CONSTRAINT `fk_Job_Applicant_Job1`
     FOREIGN KEY (`job_id`)
     REFERENCES `Jobify`.`Job` (`job_id`)
@@ -461,9 +452,9 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Job_File` (
   `job_id` INT NOT NULL,
   `file_id` INT NOT NULL,
   PRIMARY KEY (`job_file_id`),
-  INDEX `fk_Job_File_File1_idx` (`file_id` ASC) VISIBLE,
-  INDEX `fk_Job_File_Job1_idx` (`job_id` ASC) VISIBLE,
-  UNIQUE INDEX `job_id_UNIQUE` (`job_id` ASC, `file_id` ASC) VISIBLE,
+  INDEX `fk_Job_File_File1_idx` (`file_id` ASC),
+  INDEX `fk_Job_File_Job1_idx` (`job_id` ASC),
+  UNIQUE INDEX `job_id_UNIQUE` (`job_id` ASC, `file_id` ASC),
   CONSTRAINT `fk_Job_File_Job1`
     FOREIGN KEY (`job_id`)
     REFERENCES `Jobify`.`Job` (`job_id`)
@@ -487,8 +478,8 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Job_Industry` (
   `job_id` INT NOT NULL,
   `industry_id` INT NOT NULL,
   PRIMARY KEY (`Job_Industry_id`),
-  INDEX `fk_Job_Industry_Industry1_idx` (`industry_id` ASC) VISIBLE,
-  INDEX `fk_Job_Industry_Job1_idx` (`job_id` ASC) VISIBLE,
+  INDEX `fk_Job_Industry_Industry1_idx` (`industry_id` ASC),
+  INDEX `fk_Job_Industry_Job1_idx` (`job_id` ASC),
   CONSTRAINT `fk_Job_Industry_Job1`
     FOREIGN KEY (`job_id`)
     REFERENCES `Jobify`.`Job` (`job_id`)
@@ -497,506 +488,6 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Job_Industry` (
   CONSTRAINT `fk_Job_Industry_Industry1`
     FOREIGN KEY (`industry_id`)
     REFERENCES `Jobify`.`Industry` (`industry_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-USE `jobify` ;
-
--- -----------------------------------------------------
--- Table `jobify`.`city`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`city` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`city` (
-  `city_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `city` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`city_id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 2;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`country`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`country` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`country` (
-  `country_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `country` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`country_id`),
-  UNIQUE INDEX `country_UNIQUE` (`country` ASC) VISIBLE)
-ENGINE = InnoDB
-AUTO_INCREMENT = 2;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`state`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`state` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`state` (
-  `state_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `state` VARCHAR(100) NOT NULL,
-  `country_id` INT(11) NOT NULL,
-  PRIMARY KEY (`state_id`),
-  INDEX `fk_State_Country1_idx` (`country_id` ASC) VISIBLE,
-  CONSTRAINT `fk_State_Country1`
-    FOREIGN KEY (`country_id`)
-    REFERENCES `jobify`.`country` (`country_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 2;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`postalcode`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`postalcode` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`postalcode` (
-  `postalcode_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `Postalcode` VARCHAR(100) NOT NULL,
-  `state_id` INT(11) NOT NULL,
-  PRIMARY KEY (`postalcode_id`),
-  INDEX `fk_Postalcode_State1_idx` (`state_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Postalcode_State1`
-    FOREIGN KEY (`state_id`)
-    REFERENCES `jobify`.`state` (`state_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 2;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`city_postalcode`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`city_postalcode` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`city_postalcode` (
-  `City_Postalcode_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `postalcode_id` INT(11) NOT NULL,
-  `city_id` INT(11) NOT NULL,
-  PRIMARY KEY (`City_Postalcode_id`),
-  INDEX `fk_Postalcode_has_City_City1_idx` (`city_id` ASC) VISIBLE,
-  INDEX `fk_Postalcode_has_City_Postalcode1_idx` (`postalcode_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Postalcode_has_City_City1`
-    FOREIGN KEY (`city_id`)
-    REFERENCES `jobify`.`city` (`city_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Postalcode_has_City_Postalcode1`
-    FOREIGN KEY (`postalcode_id`)
-    REFERENCES `jobify`.`postalcode` (`postalcode_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 2;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`address`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`address` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`address` (
-  `address_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `street` VARCHAR(100) NOT NULL,
-  `number` VARCHAR(100) NOT NULL,
-  `additionalinfo` VARCHAR(100) NULL DEFAULT NULL,
-  `City_Postalcode_id` INT(11) NOT NULL,
-  PRIMARY KEY (`address_id`),
-  INDEX `fk_Street_City_Postalcode1_idx` (`City_Postalcode_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Street_City_Postalcode1`
-    FOREIGN KEY (`City_Postalcode_id`)
-    REFERENCES `jobify`.`city_postalcode` (`City_Postalcode_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 3;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`education`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`education` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`education` (
-  `education_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`education_id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 10;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`user` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`user` (
-  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `passwordhash` VARCHAR(128) NOT NULL,
-  `email` VARCHAR(320) NOT NULL,
-  PRIMARY KEY (`user_id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 4;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`applicant`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`applicant` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`applicant` (
-  `applicant_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `firstname` VARCHAR(100) NOT NULL,
-  `lastname` VARCHAR(100) NOT NULL,
-  `birthdate` DATE NOT NULL,
-  `description` TEXT NULL DEFAULT NULL,
-  `allow_headhunting` TINYINT(4) NOT NULL,
-  `user_id` INT(11) NOT NULL,
-  `address_id` INT(11) NOT NULL,
-  `education_id` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`applicant_id`),
-  INDEX `fk_Applicant_User1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_Applicant_Street1_idx` (`address_id` ASC) VISIBLE,
-  INDEX `fk_Applicant_Education1_idx` (`education_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Applicant_Education1`
-    FOREIGN KEY (`education_id`)
-    REFERENCES `jobify`.`education` (`education_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Applicant_Street1`
-    FOREIGN KEY (`address_id`)
-    REFERENCES `jobify`.`address` (`address_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Applicant_User1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `jobify`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 2;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`industry`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`industry` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`industry` (
-  `industry_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `parent_industry_id` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`industry_id`),
-  INDEX `fk_category_category_idx` (`parent_industry_id` ASC) VISIBLE,
-  CONSTRAINT `fk_category_category`
-    FOREIGN KEY (`parent_industry_id`)
-    REFERENCES `jobify`.`industry` (`industry_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 37;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`applicant_industry`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`applicant_industry` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`applicant_industry` (
-  `applicant_industry_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `applicant_id` INT(11) NOT NULL,
-  `industry_id` INT(11) NOT NULL,
-  PRIMARY KEY (`applicant_industry_id`),
-  INDEX `fk_Applicant_has_Industry_Industry1_idx` (`industry_id` ASC) VISIBLE,
-  INDEX `fk_Applicant_has_Industry_Applicant1_idx` (`applicant_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Applicant_has_Industry_Applicant1`
-    FOREIGN KEY (`applicant_id`)
-    REFERENCES `jobify`.`applicant` (`applicant_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Applicant_has_Industry_Industry1`
-    FOREIGN KEY (`industry_id`)
-    REFERENCES `jobify`.`industry` (`industry_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 4;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`applicationstatus`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`applicationstatus` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`applicationstatus` (
-  `applicationstatus_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `status` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`applicationstatus_id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 4;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`company`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`company` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`company` (
-  `company_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `user_id` INT(11) NOT NULL,
-  `name` VARCHAR(100) NOT NULL,
-  `slogan` VARCHAR(1000) NULL DEFAULT NULL,
-  `description` TEXT NULL DEFAULT NULL,
-  `address_id` INT(11) NOT NULL,
-  PRIMARY KEY (`company_id`),
-  INDEX `fk_Company_User1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_Company_Street1_idx` (`address_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Company_Street1`
-    FOREIGN KEY (`address_id`)
-    REFERENCES `jobify`.`address` (`address_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Company_User1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `jobify`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 7;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`job`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`job` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`job` (
-  `job_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(100) NOT NULL,
-  `description` TEXT NULL DEFAULT NULL,
-  `salary` DOUBLE NULL DEFAULT NULL,
-  `isvolunteerwork` TINYINT(4) NOT NULL,
-  `company_id` INT(11) NOT NULL,
-  PRIMARY KEY (`job_id`),
-  INDEX `fk_Job_Company1_idx` (`company_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Job_Company1`
-    FOREIGN KEY (`company_id`)
-    REFERENCES `jobify`.`company` (`company_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 9;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`application`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`application` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`application` (
-  `application_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `text` TEXT NULL DEFAULT NULL,
-  `applicationstatus_id` INT(11) NOT NULL,
-  `job_id` INT(11) NOT NULL,
-  `applicant_id` INT(11) NOT NULL,
-  PRIMARY KEY (`application_id`),
-  INDEX `fk_application_ApplicationStatus1_idx` (`applicationstatus_id` ASC) VISIBLE,
-  INDEX `fk_application_Job1_idx` (`job_id` ASC) VISIBLE,
-  INDEX `fk_application_Applicant1_idx` (`applicant_id` ASC) VISIBLE,
-  CONSTRAINT `fk_application_Applicant1`
-    FOREIGN KEY (`applicant_id`)
-    REFERENCES `jobify`.`applicant` (`applicant_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_application_ApplicationStatus1`
-    FOREIGN KEY (`applicationstatus_id`)
-    REFERENCES `jobify`.`applicationstatus` (`applicationstatus_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_application_Job1`
-    FOREIGN KEY (`job_id`)
-    REFERENCES `jobify`.`job` (`job_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 2;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`filetype`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`filetype` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`filetype` (
-  `filetype_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `type` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`filetype_id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 4;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`file`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`file` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`file` (
-  `file_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
-  `upldate` TIMESTAMP NOT NULL,
-  `user_id` INT(11) NOT NULL,
-  `filetype_id` INT(11) NOT NULL,
-  PRIMARY KEY (`file_id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC, `user_id` ASC, `filetype_id` ASC) VISIBLE,
-  INDEX `fk_File_User1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_File_Filetype1_idx` (`filetype_id` ASC) VISIBLE,
-  CONSTRAINT `fk_File_Filetype1`
-    FOREIGN KEY (`filetype_id`)
-    REFERENCES `jobify`.`filetype` (`filetype_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_File_User1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `jobify`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 5;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`application_file`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`application_file` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`application_file` (
-  `Application_File_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `application_id` INT(11) NOT NULL,
-  `file_id` INT(11) NOT NULL,
-  PRIMARY KEY (`Application_File_id`),
-  UNIQUE INDEX `application_id_UNIQUE` (`application_id` ASC, `file_id` ASC) VISIBLE,
-  INDEX `fk_application_has_File_File1_idx` (`file_id` ASC) VISIBLE,
-  INDEX `fk_application_has_File_application1_idx` (`application_id` ASC) VISIBLE,
-  CONSTRAINT `fk_application_has_File_File1`
-    FOREIGN KEY (`file_id`)
-    REFERENCES `jobify`.`file` (`file_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_application_has_File_application1`
-    FOREIGN KEY (`application_id`)
-    REFERENCES `jobify`.`application` (`application_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 2;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`favorite`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`favorite` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`favorite` (
-  `applicant_job_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `applicant_id` INT(11) NOT NULL,
-  `job_id` INT(11) NOT NULL,
-  PRIMARY KEY (`applicant_job_id`),
-  INDEX `fk_Job_Applicant_Applicant1_idx` (`applicant_id` ASC) VISIBLE,
-  INDEX `fk_Job_Applicant_Job1_idx` (`job_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Job_Applicant_Applicant1`
-    FOREIGN KEY (`applicant_id`)
-    REFERENCES `jobify`.`applicant` (`applicant_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Job_Applicant_Job1`
-    FOREIGN KEY (`job_id`)
-    REFERENCES `jobify`.`job` (`job_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 2;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`headhunt`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`headhunt` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`headhunt` (
-  `headhunt_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `text` TEXT NULL DEFAULT NULL,
-  `job_id` INT(11) NOT NULL,
-  `applicant_id` INT(11) NOT NULL,
-  PRIMARY KEY (`headhunt_id`),
-  INDEX `fk_Headhunt_Job1_idx` (`job_id` ASC) VISIBLE,
-  INDEX `fk_Headhunt_Applicant1_idx` (`applicant_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Headhunt_Applicant1`
-    FOREIGN KEY (`applicant_id`)
-    REFERENCES `jobify`.`applicant` (`applicant_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Headhunt_Job1`
-    FOREIGN KEY (`job_id`)
-    REFERENCES `jobify`.`job` (`job_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 2;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`job_file`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`job_file` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`job_file` (
-  `job_file_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `job_id` INT(11) NOT NULL,
-  `file_id` INT(11) NOT NULL,
-  PRIMARY KEY (`job_file_id`),
-  UNIQUE INDEX `job_id_UNIQUE` (`job_id` ASC, `file_id` ASC) VISIBLE,
-  INDEX `fk_Job_File_File1_idx` (`file_id` ASC) VISIBLE,
-  INDEX `fk_Job_File_Job1_idx` (`job_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Job_File_File1`
-    FOREIGN KEY (`file_id`)
-    REFERENCES `jobify`.`file` (`file_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Job_File_Job1`
-    FOREIGN KEY (`job_id`)
-    REFERENCES `jobify`.`job` (`job_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 2;
-
-
--- -----------------------------------------------------
--- Table `jobify`.`job_industry`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jobify`.`job_industry` ;
-
-CREATE TABLE IF NOT EXISTS `jobify`.`job_industry` (
-  `Job_Industry_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `job_id` INT(11) NOT NULL,
-  `industry_id` INT(11) NOT NULL,
-  PRIMARY KEY (`Job_Industry_id`),
-  INDEX `fk_Job_Industry_Industry1_idx` (`industry_id` ASC) VISIBLE,
-  INDEX `fk_Job_Industry_Job1_idx` (`job_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Job_Industry_Industry1`
-    FOREIGN KEY (`industry_id`)
-    REFERENCES `jobify`.`industry` (`industry_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Job_Industry_Job1`
-    FOREIGN KEY (`job_id`)
-    REFERENCES `jobify`.`job` (`job_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -1011,17 +502,17 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `Jobify`;
-INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (1, 'test', 'swie@jobify.com');
-INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (2, 'test', 'tgw@jobfiy.com');
-INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (3, 'test', 'bwt@jobify.com');
-INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (4, 'test', 'rb@jobify.com');
-INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (5, 'test', 'ktm@jobify.com');
-INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (6, 'test', 'wule@jobify.com');
-INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (7, 'test', 'kada@jobify.com');
-INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (8, 'test', 'oble@jobify.com');
-INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (9, 'test', 'best@jobify.com');
-INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (10, 'test', 'pijui@jobify.com');
-INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (11, 'test', 'wini@jobify.com');
+INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (1, 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', 'swie@jobify.com');
+INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (2, 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', 'tgw@jobfiy.com');
+INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (3, 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', 'bwt@jobify.com');
+INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (4, 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', 'rb@jobify.com');
+INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (5, 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', 'ktm@jobify.com');
+INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (6, 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', 'wule@jobify.com');
+INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (7, 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', 'kada@jobify.com');
+INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (8, 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', 'oble@jobify.com');
+INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (9, 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', 'best@jobify.com');
+INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (10, 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', 'pijui@jobify.com');
+INSERT INTO `Jobify`.`User` (`user_id`, `passwordhash`, `email`) VALUES (11, 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', 'wini@jobify.com');
 
 COMMIT;
 
@@ -1226,9 +717,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `Jobify`;
-INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (1, 'CV');
+INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (1, 'Resume');
 INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (2, 'Profile Picture');
-INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (3, 'Job Description');
+INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (3, 'Motivation letter');
+INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (4, 'Application');
+INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (5, 'Job description');
 
 COMMIT;
 
@@ -1248,6 +741,7 @@ INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_
 INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (8, 'rb_2', '2023-01-01 00:00:00', 4, 3);
 INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (9, 'ktm_1', '2023-01-01 00:00:00', 5, 3);
 INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (10, 'ktm_2', '2023-01-01 00:00:00', 5, 3);
+INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (11, 'bwt_logo', '2023-01-01 00:00:00', 3, 2);
 
 COMMIT;
 
