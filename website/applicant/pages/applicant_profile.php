@@ -416,31 +416,35 @@
         }
     ?>
 
-    <form action="./applicant_profile.php" method="post" enctype="multipart/form-data">
-        <div class="columns">
-            <div class="column">
-                <label class="label" for="fileToUpload">Choose a file:</label>
-                <input class="button" type="file" name="fileToUpload" id="fileToUpload">        
+    <form method="post" enctype="multipart/form-data">
+            <label class="label">Choose upload files</label>
+        <div id="file-js-example" class="file has-name">
+            <label class="file-label">
+                <input class="file-input" type="file" name="fileToUpload">
+                <span class="file-cta">
+                  <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                  </span>
+                  <span class="file-label">Choose a file…</span>
+                </span>
+                <span class="file-name">-nothing selected-</span>
+            </label>
+        </div>
+        <br>
+            <label class="label">File Type:</label>
+            <div class="select">
+                <select name="filetype_name" required>
+					<?php
+					$allFileTypes = File::getAllFileTypes();
+
+					foreach ($allFileTypes as $row) {
+						echo '<option value="' . $row["type"] . '">' . $row["type"] . '</option>';
+					}
+					?>
+                </select>
             </div>
-            <div class="column">
-                <label class="label">File Type:</label>
-                <div class="select">
-                    <select class="" name="filetype_name" required>
-                        <?php
-                            $allFileTypes = File::getAllFileTypes();
-
-                            foreach ($allFileTypes as $row) {
-                                echo '<option value="' . $row["type"] . '">' . $row["type"] . '</option>';
-                            }
-                        ?>
-                    </select>
-                </div>
-            </div>
-            <div class="column is-4"></div>
-        </div>        
-
-        <button class="button" type="submit" name="file_submit">Upload File</button>
-
+        <br>
+            <button class="button" type="submit" name="file_submit">Upload File</button>
     </form>
 
     <div id="modal-js-example" class="modal">
@@ -492,6 +496,16 @@
 </body>
 </html>
 
+<script>
+    const fileInput = document.querySelector('#file-js-example input[type=file]');
+    fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+            const fileName = document.querySelector('#file-js-example .file-name');
+            fileName.textContent = fileInput.files[0].name;
+        }
+    }
+</script>
 <script src="/website/source/js/hideButton.js"></script>
 <script src="/website/source/js/modal.js"></script>
 <script src="/website/source/js/checkpassword.js"></script>
+
