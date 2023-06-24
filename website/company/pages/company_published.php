@@ -36,6 +36,11 @@
                             Some Content. Don't know which content!
                         </div>
                         <div class="content__button">
+                            <button class="button is-danger is-outlined is-rounded" type="button">
+                                <span class="icon is-small">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </button>
                             <button class="button is-info is-rounded">
                                 <span class="icon is-small">
                                     <i class="fas fa-edit"></i>
@@ -59,6 +64,11 @@
                             Some Content. Don't know which content!
                         </div>
                         <div class="content__button">
+                            <button class="button is-danger is-outlined is-rounded" type="button">
+                                <span class="icon is-small">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </button>
                             <button class="button is-info is-rounded">
                                 <span class="icon is-small">
                                     <i class="fas fa-edit"></i>
@@ -84,6 +94,11 @@
                             Some Content. Don't know which content!
                         </div>
                         <div class="content__button">
+                            <button class="button is-danger is-outlined is-rounded" type="button">
+                                <span class="icon is-small">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </button>
                             <button class="button is-info is-rounded">
                                 <span class="icon is-small">
                                     <i class="fas fa-edit"></i>
@@ -107,6 +122,11 @@
                             Some Content. Don't know which content!
                         </div>
                         <div class="content__button">
+                            <button class="button is-danger is-outlined is-rounded" type="button">
+                                <span class="icon is-small">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </button>
                             <button class="button is-info is-rounded">
                                 <span class="icon is-small">
                                     <i class="fas fa-edit"></i>

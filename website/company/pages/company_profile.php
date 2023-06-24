@@ -64,6 +64,7 @@
                     </div>
                 </div>
             </div>
+            <div class="field"></div>
         </div>
         <hr class="solid">
         <div class="row">
@@ -120,66 +121,8 @@
                     <input name="streetnumber" class="input disabling" type="text" placeholder="Street Number" disabled>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Job</th>
-                        <th>Description</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>$job->title</td>
-                        <td>$jb->description</td>
-                        <td>
-                            <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>$job->title</td>
-                        <td>$jb->description</td>
-                        <td>
-                            <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>$job->title</td>
-                        <td>$jb->description</td>
-                        <td>
-                            <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>$job->title</td>
-                        <td>$jb->description</td>
-                        <td>
-                            <button class="button is-danger is-outlined is-rounded disabling" type="button" disabled>
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </div>        
+        <hr class="solid">
         <diV class="row edit">
             <button type="button" class="button is-link" onclick="edit()">Edit Profile</button>
         </diV>
@@ -189,6 +132,7 @@
         </div>
     </div>
     </form>
+
     <div id="modal-js-example" class="modal">
         <div class="modal-background"></div>
         <div class="modal-content">
