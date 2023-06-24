@@ -13,7 +13,64 @@
     <script src="../../source/js/favourites.js"></script>
 </head>
 <body>
-<?php require_once '../parts/company_navbar.php'; ?>
+<?php
+
+require_once '../parts/company_navbar.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/website/classes/getClasses.php';
+
+$name = null;
+$place = null;
+$industry = null;
+$education = null;
+
+if (!isset($_SESSION["current_user_id"])) {
+    $userid = 1;
+}
+
+if (isset($_POST['filters'])) {
+
+    if ($_POST['employee'] != "") {
+        $name = '%' . $_POST['employee'] . '%';
+    }
+
+    if ($_POST['place'] != "") {
+        $place = '%' . $_POST['place'] . '%';
+    }
+
+    if ($_POST['industry'] != "--Alle--") {
+        $industry = '%' . $_POST['industry'] . '%';
+    }
+
+    if ($_POST['education'] != "--Alle--") {
+        $education = '%' . $_POST['education'] . '%';
+    }
+}
+$db = new DB();
+$filter = $db->pdo->prepare( 'select a.firstname, a.lastname, a.birthdate, ad.street, ad.number, c.city, p.Postalcode, e.name
+                                      from applicant a, education e, address ad, city_postalcode cp, city c, postalcode p, applicant_industry ap, industry i
+                                     where a.education_id = e.education_id
+                                       and a.address_id = ad.address_id
+                                       and ad.City_Postalcode_id = cp.City_Postalcode_id
+                                       and cp.city_id = c.city_id
+                                       and cp.postalcode_id = p.postalcode_id
+                                       and a.applicant_id = ap.applicant_id
+                                       and ap.industry_id = i.industry_id
+                                       and (lower(concat_ws(" ", a.firstname, a.lastname)) like lower(:employee) or :employee is null)
+                                       and (lower(c.city) like lower(:city) or :city is null)
+                                       and (lower(i.name) like lower(:industry) or :industry is null)
+                                       and (lower(e.name) like lower(:education) or :education is null)');
+$filter->bindParam('userid', $userid,PDO::PARAM_INT);
+$filter->bindParam('employee', $employee);
+$filter->bindParam('city', $city);
+$filter->bindParam('industry', $industry);
+$filter->bindParam('education', $education);
+
+?>
+<div class="box">
+    <?php
+    echo $filter->rowCount().' applicants currently available';
+    ?>
+</div>
     <div class="row">
         <div class="column">
             <div class="card">
