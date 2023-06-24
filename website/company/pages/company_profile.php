@@ -1,5 +1,12 @@
 <?php 
 
+    session_start();
+
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/website/classes/getClasses.php';
+
+    $current_user_email = $_SESSION["current_user_email"];
+    $current_user_pwhash = $_SESSION["current_user_pwhash"];
+    $current_user_id = $_SESSION["current_user_id"];
 
 ?>
 
@@ -20,14 +27,18 @@
     <form class="form">
         <div class="row">
             <div class="field">
-                <div class="file" >
-                    <label class="file-label">
-                        <input class="file-input" type="file" name="profilePic" disabled>
-                        <figure class="image is-128x128">
-                            <img class="is-rounded" src="../../source/img/user-icon.png">
-                        </figure>
-                    </label>
-                </div>
+                <figure class="image is-128x128">
+                    <?php 
+                        $profile_pic = File::getFile($current_user_id, "Profile Picture");
+                        
+                        if (is_null($profile_pic)) {
+                            $profile_pic_path = "/website/source/img/user-icon.png";
+                        } else {                            
+                            $profile_pic_path = "/website/uplfiles/" . $current_user_id . "/" . $profile_pic["name"];
+                        }
+                    ?>
+                    <img class="is-rounded" src="<?php echo $profile_pic_path ?>">
+                </figure>
             </div>
         </div>
         <div class="row">

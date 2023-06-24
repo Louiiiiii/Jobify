@@ -741,7 +741,7 @@ INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_
 INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (8, 'rb_2', '2023-01-01 00:00:00', 4, 3);
 INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (9, 'ktm_1', '2023-01-01 00:00:00', 5, 3);
 INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (10, 'ktm_2', '2023-01-01 00:00:00', 5, 3);
-INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (11, 'bwt_logo', '2023-01-01 00:00:00', 3, 2);
+INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (11, 'bwt_logo.jpg', '2023-01-01 00:00:00', 3, 2);
 INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (12, 'girl.png', '2023-01-01 00:00:00', 9, 2);
 
 COMMIT;
@@ -770,6 +770,18 @@ USE `Jobify`;
 INSERT INTO `Jobify`.`ApplicationStatus` (`applicationstatus_id`, `status`) VALUES (1, 'Sent');
 INSERT INTO `Jobify`.`ApplicationStatus` (`applicationstatus_id`, `status`) VALUES (2, 'Reviewing');
 INSERT INTO `Jobify`.`ApplicationStatus` (`applicationstatus_id`, `status`) VALUES (3, 'Interview');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Jobify`.`Application`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Jobify`;
+INSERT INTO `Jobify`.`Application` (`application_id`, `text`, `applicationstatus_id`, `job_id`, `applicant_id`) VALUES (1, NULL, 1, 1, 1);
+INSERT INTO `Jobify`.`Application` (`application_id`, `text`, `applicationstatus_id`, `job_id`, `applicant_id`) VALUES (2, NULL, 1, 1, 2);
+INSERT INTO `Jobify`.`Application` (`application_id`, `text`, `applicationstatus_id`, `job_id`, `applicant_id`) VALUES (3, NULL, 1, 1, 4);
 
 COMMIT;
 
