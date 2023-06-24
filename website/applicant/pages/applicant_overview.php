@@ -134,7 +134,7 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
                                 ?>
                             <div class="like">
                                 <form method="post">
-                                    <button type="submit" name="favorite" value=<?php echo $res['job_id'] ?> style="background: transparent; border: transparent">
+                                    <button type="submit" name="favorite" value=<?php echo $res['job_id'] ?> style="background:transparent;border:transparent">
                                     <span class="icon is-small">
                                         <i class="fas fa-heart <?php if($res['favorite'] == 1){echo 'liked';}?>"></i>
                                     </span>
