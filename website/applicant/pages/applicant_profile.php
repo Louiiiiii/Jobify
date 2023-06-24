@@ -2,10 +2,6 @@
 
     session_start();
 
-    $_SESSION["current_user_email"] = "j.p@g.com";
-    $_SESSION["current_user_pwhash"] = "b7c3bd1e3976deb58236e6fb91da0cd5f4b0c2f6290cdc2b6f17c6da88d000420ec2d5d73b3e1e8ae14cafeabafe117a58060f427a66bdab1b97cf2d52aa0a94";
-    $_SESSION["current_user_id"] = 3;
-
     require_once $_SERVER['DOCUMENT_ROOT'] . '/website/classes/getClasses.php';
 
     $current_user_email = $_SESSION["current_user_email"];
@@ -95,8 +91,13 @@
         );
 
         $applicant->updateDB();
+        $applicant_id = $applicant->getApplicant_id();
+
+        echo $address_id;
         
         //Industry
+        Applicant::deleteAllIndustriesFromApplicant($applicant_id);
+
         foreach ($industry_ids as $industry_id) {
             $applicant->addApplicant_Industry($industry_id);
         }
@@ -326,7 +327,6 @@
                     </div>
                 </div>
             </div>   
-            <div class="field"></div> 
         </div>
         <br>
         <div class="row">

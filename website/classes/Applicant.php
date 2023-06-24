@@ -112,6 +112,33 @@ class Applicant extends User
         return $industry_id;
     }
 
+    public static function deleteAllIndustriesFromApplicant($applicant_id){
+        $db = new DB;
+        $stmt = $db->pdo->prepare('DELETE FROM Applicant_industry WHERE applicant_id = ?');
+        $stmt->bindParam(1,$applicant_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        if(is_null(Applicant::countIndustriesFromApplicant($applicant_id))) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function countIndustriesFromApplicant($applicant_id){
+        $db = new DB;
+        $stmt = $db->pdo->prepare('SELECT COUNT(*) FROM Applicant_industry WHERE applicant_id = ?');
+        $stmt->bindParam(1,$applicant_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if ($result != null)
+        {
+            return $result;
+        }
+        return null;        
+    }
+
     public function getIndustry_id($industry, $parent = null){
         if($parent != null){
             $parent_id = $this->getIndustry_id($parent);
