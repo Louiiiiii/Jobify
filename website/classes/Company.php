@@ -20,6 +20,30 @@ class Company extends User
         parent::__construct($email, $passwordnothashed, $user_id);
     }
 
+    public function updateDB()
+    {
+        $this->company_id = $this->getCompany_id();
+        if ($this->company_id == null) {
+            $success = $this->insertCompany();
+        }
+        elseif ($this->company_id != null)
+        {
+            $success = $this->updateCompany();
+        }
+        return $success;
+    }
+
+    private function updateCompany()
+    {
+        $stmt = $this->pdo->prepare('update Company set name = ?, slogan = ?, description = ?, address_id = ? where company_id = ?');
+        $stmt->bindParam(1, $this->name);
+        $stmt->bindParam(2, $this->slogan);
+        $stmt->bindParam(3, $this->description);
+        $stmt->bindParam(4, $this->address_id);
+        $stmt->bindParam(5, $this->company_id);
+        return $stmt->execute();
+    }
+
     public static function getDatabyId($company_id):Company{
         $db = new DB();
         $stmt = $db->pdo->prepare('select * 

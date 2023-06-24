@@ -46,10 +46,45 @@
     //Submit Form
         if (isset($_POST["change_profile_infos"])) {
             
-            echo "<pr>";
-            print_r($_POST);
-            echo "</pr>";
-            
+            //get Data
+                $company_name = $_POST['company_name'];
+                $slogan = $_POST['slogan'];
+                $description = $_POST['description'];
+                $email = $_POST['email'];
+                $country = $_POST['country'];
+                $state = $_POST['state'];
+                $postalcode = $_POST['postalcode'];
+                $city = $_POST['city'];
+                $street = $_POST['street'];
+                $streetnumber = $_POST['streetnumber'];
+            //
+
+            //Insert
+
+                //Email
+                    User::updateEMail($email, $current_user_id);
+                    $_SESSION["current_user_email"] = $email;
+                //
+
+                //Address
+                    $address = new Address($street, $streetnumber, $state, $country, $postalcode, $city);
+                    $address->addToDB();
+                //
+
+                //Company
+                    $address_id = $address->address_id;
+                    $company = new Company(
+                        $company_name, 
+                        $address_id, 
+                        $slogan, 
+                        $description,
+                        $current_user_id
+                    );
+        
+                $company->updateDB();
+                //
+
+            //
 
         }
     //
@@ -146,7 +181,7 @@
 
     ?>
 
-    <form class="form" action="./company_profile.php" >
+    <form class="form" action="./company_profile.php" method="post">
         <div class="row">
             <div class="field">
                 <figure class="image is-128x128">
@@ -168,13 +203,13 @@
             <div class="field">
                 <label class="label">Company Name</label>
                 <div class="control">
-                    <input name="country" class="input disabling" type="text" placeholder="Company Name" required disabled>
+                    <input name="company_name" class="input disabling" type="text" placeholder="Company Name" required disabled>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Slogan</label>
                 <div class="control">
-                    <input name="state" class="input disabling" type="text" placeholder="Company Slogan" disabled>
+                    <input name="slogan" class="input disabling" type="text" placeholder="Company Slogan" disabled>
                 </div>
             </div>
         </div>
