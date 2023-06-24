@@ -161,8 +161,8 @@
             $spawn_delete_file_modal = "";
         }
     //
-?>
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">

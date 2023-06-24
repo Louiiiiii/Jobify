@@ -14,185 +14,181 @@
         $profile_data_all = $profile_data["infos"]["0"];
         
         $profile_data_industries = $profile_data["industries"];
-
-        echo "<pre>";
-        print_r($profile_data_all);
-        echo "</pre>";
-        echo "<pre>";
-        print_r($profile_data_industries);
-        echo "</pre>";
     //
 
-    if (isset($_POST["changepw"])) {
-        $current_pw = $_POST["current_pw"]; 
-        $new_pw = $_POST["new_pw"];
-        $repeat_new_pw = $_POST["repeat_new_pw"];
+    //Change PW
+        if (isset($_POST["changepw"])) {
+            $current_pw = $_POST["current_pw"]; 
+            $new_pw = $_POST["new_pw"];
+            $repeat_new_pw = $_POST["repeat_new_pw"];
 
-        if (hash('sha512', $current_pw) == $current_user_pwhash) {
+            if (hash('sha512', $current_pw) == $current_user_pwhash) {
 
-            if ($new_pw == $repeat_new_pw) {
+                if ($new_pw == $repeat_new_pw) {
 
-                $user = new User($current_user_email, $current_pw);
-                $user->updatePW($new_pw);
+                    $user = new User($current_user_email, $current_pw);
+                    $user->updatePW($new_pw);
 
-                $_SESSION["current_user_pwhash"] = hash('sha512', $new_pw);
-                
-                echo "<script>alert('Your new Password is set.');</script>";
+                    $_SESSION["current_user_pwhash"] = hash('sha512', $new_pw);
+                    
+                    echo "<script>alert('Your new Password is set.');</script>";
+
+                } else {
+                    echo "<script>alert('Your new Password is unequal.');</script>";
+                }
 
             } else {
-                echo "<script>alert('Your new Password is unequal.');</script>";
+                echo "<script>alert('Current Password is wrong.');</script>";
             }
 
-        } else {
-            echo "<script>alert('Current Password is wrong.');</script>";
+
+            unset($_POST);
         }
-
-
-        unset($_POST["changepw"]);
-        unset($_POST["current_pw"]);
-        unset($_POST["new_pw"]);
-        unset($_POST["repeat_new_pw"]);
-
-
-    }
+    //
     
-    if (isset($_POST["change_profile_infos"])) {
-        //from Form
-        $email = $_POST["email"];
-        $firstname = $_POST["firstname"];
-        $lastname = $_POST["lastname"];
-        $birthday = $_POST["birthday"];
-        $country = $_POST["country"];
-        $state = $_POST["state"];
-        $postalcode = $_POST["postalcode"];
-        $city = $_POST["city"];
-        $street = $_POST["street"];
-        $streetnumber = $_POST["streetnumber"];
-        $education_id = $_POST["education_id"]; 
+    //Submit Form
+        if (isset($_POST["change_profile_infos"])) {
+            //from Form
+            $email = $_POST["email"];
+            $firstname = $_POST["firstname"];
+            $lastname = $_POST["lastname"];
+            $birthday = $_POST["birthday"];
+            $country = $_POST["country"];
+            $state = $_POST["state"];
+            $postalcode = $_POST["postalcode"];
+            $city = $_POST["city"];
+            $street = $_POST["street"];
+            $streetnumber = $_POST["streetnumber"];
+            $education_id = $_POST["education_id"]; 
 
-        if (isset($_POST["industry_ids"])) {
-            $industry_ids = $_POST["industry_ids"];
-        } else {
-            $industry_ids = NULL;
-        }       
-        
-        if (isset($_POST["headhunting"])) {
-            $headhunting = $_POST["headhunting"];
-        } else {
-            $headhunting = "off";
-        }
-        
-        //Inserts
-
-        //E-Mail
-        User::updateEMail($email, $current_user_id);
-        $_SESSION["current_user_email"] = $email;
-
-        //Address
-        $address = new Address($street, $streetnumber, $state, $country, $postalcode, $city);
-        $address->addToDB();
-        $address_id = $address->address_id;
-        
-        //Applicant
-        if ($headhunting == "on") {
-            $allow_headhunting = 1;
-        } else {
-            $allow_headhunting = 0;
-        }
-
-        $applicant = new Applicant(
-                $firstname, 
-                $lastname, 
-                $birthday, 
-                null, 
-                $allow_headhunting, 
-                $current_user_id, 
-                $address_id, 
-                $education_id, 
-                $current_user_email, 
-                null
-        );
-
-        $applicant->updateDB();
-        $applicant_id = $applicant->getApplicant_id();
-        
-        //Industry
-        Applicant::deleteAllIndustriesFromApplicant($applicant_id);
-
-        if (!is_null($industry_ids)) {
-            foreach ($industry_ids as $industry_id) {
-                $applicant->addApplicant_Industry($industry_id);
+            if (isset($_POST["industry_ids"])) {
+                $industry_ids = $_POST["industry_ids"];
+            } else {
+                $industry_ids = NULL;
+            }       
+            
+            if (isset($_POST["headhunting"])) {
+                $headhunting = $_POST["headhunting"];
+            } else {
+                $headhunting = "off";
             }
+            
+            //Inserts
+
+            //E-Mail
+            User::updateEMail($email, $current_user_id);
+            $_SESSION["current_user_email"] = $email;
+
+            //Address
+            $address = new Address($street, $streetnumber, $state, $country, $postalcode, $city);
+            $address->addToDB();
+            $address_id = $address->address_id;
+            
+            //Applicant
+            if ($headhunting == "on") {
+                $allow_headhunting = 1;
+            } else {
+                $allow_headhunting = 0;
+            }
+
+            $applicant = new Applicant(
+                    $firstname, 
+                    $lastname, 
+                    $birthday, 
+                    null, 
+                    $allow_headhunting, 
+                    $current_user_id, 
+                    $address_id, 
+                    $education_id, 
+                    $current_user_email, 
+                    null
+            );
+
+            $applicant->updateDB();
+            $applicant_id = $applicant->getApplicant_id();
+            
+            //Industry
+            Applicant::deleteAllIndustriesFromApplicant($applicant_id);
+
+            if (!is_null($industry_ids)) {
+                foreach ($industry_ids as $industry_id) {
+                    $applicant->addApplicant_Industry($industry_id);
+                }
+            }
+            
+            //Unset $_POST
+            unset($_POST);
+        } 
+    //
+
+    //File upload
+        if (isset($_POST["file_submit"])) {
+
+            $filetype_name = $_POST["filetype_name"];
+
+            File::uploadFile($_FILES["fileToUpload"], $filetype_name, $current_user_id, $current_user_email);
+
+            //Unset and delete file from server
+            unset($_POST);
+            
+            $fileToUpload = $_FILES['fileToUpload']['tmp_name'];
+            
+            unset($_FILES);
+            
         }
-        
-        //Unset $_POST
-        unset($_POST);
-    } 
+    //
 
-    if (isset($_POST["file_submit"])) {
+    //Delete File
+        if (isset($_POST["delete-file-btn"])) {
 
-        $filetype_name = $_POST["filetype_name"];
+            $del_file_id = $_POST["delete-file-btn"];
+            $del_file_nema = FILE::getFileName($del_file_id);
 
-        File::uploadFile($_FILES["fileToUpload"], $filetype_name, $current_user_id, $current_user_email);
-
-        //Unset and delete file from server
-        unset($_POST);
-        
-        $fileToUpload = $_FILES['fileToUpload']['tmp_name'];
-        
-        unset($_FILES);
-        
-    }
-
-    if (isset($_POST["delete-file-btn"])) {
-
-        $del_file_id = $_POST["delete-file-btn"];
-        $del_file_nema = FILE::getFileName($del_file_id);
-
-        $spawn_delete_file_modal = '
-            <div class="modal is-active">
-                <div class="modal-background is-active"></div>
-                <div class="modal-content modal-content-delete-file">
-                    <div class="box">
-                        <form action="./applicant_profile.php" method="post">
-                            <h1>Wollen Sie das Dokument "' . $del_file_nema . '" wirklick löschen?</h1>
-                            <input type="number" name="del-file-id" value="'.$del_file_id.'" style="display: none;" readonly>
-                            <br> 
-                            <div class="columns">
-                                <div class="column">
-                                    <button class="button is-dark" type="submit" name="now-delete-file-btn">Delete</button>
-                                </div>                              
-                                <div class="column">
-                                    <button class="button is-danger" type="submit" name="reset-delete-file-btn">Cancel</button>
-                                </div>
-                            </div>  
-                        </form>
+            $spawn_delete_file_modal = '
+                <div class="modal is-active">
+                    <div class="modal-background is-active"></div>
+                    <div class="modal-content modal-content-delete-file">
+                        <div class="box">
+                            <form action="./applicant_profile.php" method="post">
+                                <h1>Wollen Sie das Dokument "' . $del_file_nema . '" wirklick löschen?</h1>
+                                <input type="number" name="del-file-id" value="'.$del_file_id.'" style="display: none;" readonly>
+                                <br> 
+                                <div class="columns">
+                                    <div class="column">
+                                        <button class="button is-dark" type="submit" name="now-delete-file-btn">Delete</button>
+                                    </div>                              
+                                    <div class="column">
+                                        <button class="button is-danger" type="submit" name="reset-delete-file-btn">Cancel</button>
+                                    </div>
+                                </div>  
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        ';
-        
-    } else {
-
-        $spawn_delete_file_modal = "";
-
-    }
-    
-    if (isset($_POST["now-delete-file-btn"])) {
-        $spawn_delete_file_modal = "";
-
-        $file_deleted = FILE::delFile($_POST["del-file-id"], $current_user_id);
-
-        if($file_deleted) {
-            echo "<script>alert('Your File was deleted!');</script>";
+            ';
+            
         } else {
-            echo "<script>alert('Ahhhh shit something went wrong!');</script>";
-        }
-    }
 
-    if (isset($_POST["reset-delete-file-btn"])) {
-        $spawn_delete_file_modal = "";
-    }
+            $spawn_delete_file_modal = "";
+
+        }
+        
+        if (isset($_POST["now-delete-file-btn"])) {
+            $spawn_delete_file_modal = "";
+
+            $file_deleted = FILE::delFile($_POST["del-file-id"], $current_user_id);
+
+            if($file_deleted) {
+                echo "<script>alert('Your File was deleted!');</script>";
+            } else {
+                echo "<script>alert('Ahhhh shit something went wrong!');</script>";
+            }
+        }
+
+        if (isset($_POST["reset-delete-file-btn"])) {
+            $spawn_delete_file_modal = "";
+        }
+    //
 
 ?>
 
@@ -215,6 +211,7 @@
         echo $spawn_delete_file_modal;
     
     ?>
+  
 
     <form class="form" action="./applicant_profile.php" method="post">
 
@@ -346,28 +343,18 @@
                                 $industries = Applicant::getIndustry_Data();
                                 
                                 foreach($industries as $industry) {   
-                                    echo "<pre>";
-                                    print_r($industry);
-                                    echo "</pre>";
+
+                                    $checked = "";
 
                                     foreach($profile_data_industries as $profile_data_industry) {
-
-                                        echo $profile_data_industry["name"]."<br>";
-
-                                        echo $profile_data_industry["name"]. "-". $industry["name"]."<br>";
-
                                         if ($profile_data_industry["name"] == $industry["name"]) {
-                                            echo "true <br>";
-                                            echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" checked disabled>';
-                                            echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
-                                        } else {
-                                            echo "false <br>";
-                                            echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" disabled>';
-                                            echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+                                            $checked = "checked";
                                         }
+                                    }
 
-                                    }        
-                                    
+                                    echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" ' . $checked . ' disabled>';
+                                    echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+
                                 }
                                 
                             ?>
