@@ -220,6 +220,8 @@
             </div>
         </div>
         
+        <hr class="solid">
+
         <div class="row">
             <div class="field">
                 <label class="label">E-Mail</label>
@@ -318,20 +320,23 @@
         <div class="row">
             <div class="field">
                 <label class="label">Industry</label>
-                <div class="columns">
-                    <div class="column industries-select">
-                        <?php
-                            $industries = Applicant::getIndustry_Data();
-                            
-                            foreach($industries as $industry) {             
-                                echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" disabled>';
-                                echo '<label for="' . $industry["industry_id"] . '">' . $industry["name"] . '</label><br>';
-                            }
-                            
-                        ?>
+                <div>
+                    <div class="columns">
+                        <div class="column industries-select">
+                            <?php
+                                $industries = Applicant::getIndustry_Data();
+                                
+                                foreach($industries as $industry) {             
+                                    echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" disabled>';
+                                    echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+                                }
+                                
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>   
+            <div class="field"></div>
         </div>
         <br>
         <div class="row">
@@ -355,6 +360,8 @@
         
     </form>
 
+    <hr class="solid">
+
     <?php
         $files = File::getAllFilesByUser($current_user_id);
 
@@ -362,7 +369,7 @@
 
     ?>
 
-    <div class="row">
+    <div class="row profile-input-area">
         <div class="table-container">
             <table class="table">
                 <thead>
@@ -416,7 +423,7 @@
         }
     ?>
 
-    <form action="./company_profile.php" method="post" enctype="multipart/form-data">
+    <form class="form" action="./company_profile.php" method="post" enctype="multipart/form-data">
         <div class="columns">
             <div class="column">
                 <label class="label">Choose upload files</label>

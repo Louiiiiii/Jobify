@@ -121,7 +121,8 @@
                     <img class="is-rounded" src="<?php echo $profile_pic_path ?>">
                 </figure>
             </div>
-        </div>
+        </div>        
+        <hr class="solid">
         <div class="row">
             <div class="field">
                 <label class="label">Company Name</label>
@@ -147,7 +148,6 @@
             </div>
             <div class="field"></div>
         </div>
-        <hr class="solid">
         <div class="row">
             <div class="field">
                 <label class="label" for="email">Email</label>
@@ -160,7 +160,6 @@
                 <button type="button" class="button js-modal-trigger" data-target="modal-js-example">Change Password</button>
             </div>
         </div>
-        <hr class="solid">
         <div class="row">
             <div class="field">
                 <label class="label">Country</label>
@@ -203,16 +202,16 @@
                 </div>
             </div>
         </div>        
-        <hr class="solid">
-        <diV class="row edit">
+        <div class="row edit">
             <button type="button" class="button is-link" onclick="edit()">Edit Profile</button>
         </diV>
         <div class="row cancel hide">
             <button type="button" class="button" onclick="cancel()">Cancel</button>
             <button class="button is-link">Change</button>
         </div>
-    </div>
     </form>
+    
+    <hr class="solid">
 
     <?php
         $files = File::getAllFilesByUser($current_user_id);
@@ -221,7 +220,7 @@
 
     ?>
 
-    <div class="row">
+    <div class="row profile-input-area">
         <div class="table-container">
             <table class="table">
                 <thead>
@@ -275,7 +274,7 @@
         }
     ?>
 
-    <form action="./company_profile.php" method="post" enctype="multipart/form-data">
+    <form class="form" action="./company_profile.php" method="post" enctype="multipart/form-data">
         <div class="columns">
             <div class="column">
                 <label class="label">Choose upload files</label>

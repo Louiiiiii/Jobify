@@ -103,3 +103,7 @@ body {
     height: 110px;
     overflow-y: scroll;
 }
+
+.profile-input-area {
+    margin: 30px;
+}
