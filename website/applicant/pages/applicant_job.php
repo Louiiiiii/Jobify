@@ -185,7 +185,7 @@ $company = Company::getDatabyId($job->company_id);
                     </div>
                     <div id="file-js-example" class="file has-name row">
                         <label class="file-label">
-                            <input class="file-input" type="file" name="resume">
+                            <input class="file-input" type="file" name="fileToUpload">
                             <span class="file-cta">
                               <span class="file-icon">
                                 <i class="fas fa-upload"></i>
@@ -229,3 +229,12 @@ $company = Company::getDatabyId($job->company_id);
 </html>
 
 <script src="/website/source/js/modal.js"></script>
+<script>
+    const fileInput = document.querySelector('#file-js-example input[type=file]');
+    fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+            const fileName = document.querySelector('#file-js-example .file-name');
+            fileName.textContent = fileInput.files[0].name;
+        }
+    }
+</script>
