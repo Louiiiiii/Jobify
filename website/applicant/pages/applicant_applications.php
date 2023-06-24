@@ -4,23 +4,10 @@ if (isset($_POST['jobinfo'])){
     header("Location: applicant_job.php");
     die();
 }
+
 include '../parts/applicant_navbar.php';
 include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applications</title>
-    <link rel="stylesheet" href="../../source/css/bulma.css">
-    <link rel="stylesheet" href="../../source/css/applicant.css">
-    <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
-    <script src="../../source/js/favourites.js"></script>
-</head>
-<body>
-<?php
+
 if (!isset($_SESSION["current_user_id"]))
 {
 	$userid = 6;
@@ -30,8 +17,36 @@ else{
 }
 
 if (isset($_POST['favorite'])){
-    $applicant = Applicant::getApplicantByUserId($userid);
-    $applicant->changeFavoriteStatus($_POST['favorite']);
+	$applicant = Applicant::getApplicantByUserId($userid);
+	$applicant->changeFavoriteStatus($_POST['favorite']);
+}
+
+$modal = '';
+if (isset($_POST['delete-application-btn'])){
+	$modal= '<div class="modal is-active">
+                <div class="modal-background is-active"></div>
+                <div class="modal-content">
+                    <div class="box">
+                            <h1 class="title is-">Do you really want to delete this Application?</h1>
+                            <h2 class="subtitle">This will also delete it for the Company!</h2>
+                        <form method="post">
+                            <button class="button is-danger" name="reject">Remove</button>
+                            <button class="button is-Info" name="cancel">Cancel</button>
+                            <input type="text" hidden name="application_id" value="'.$_POST['application_id'].'">
+                        </form>
+                    </div>
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+             </div>';
+}
+if (isset($_POST['reject'])){
+    $db = new DB();
+	$stmt = $db->pdo->prepare('delete from Application_File where application_id = ?');
+	$stmt->bindParam(1,$_POST['application_id'],PDO::PARAM_INT);
+	$stmt->execute();
+    $stmt = $db->pdo->prepare('delete from Application where application_id = ?');
+    $stmt->bindParam(1,$_POST['application_id'],PDO::PARAM_INT);
+    $stmt->execute();
 }
 
 $jobtitle = null;
@@ -47,11 +62,11 @@ if (isset($_POST['filter'])){
 		$jobtitle = '%'.$_POST['jobtitle'].'%';
 	}
 
-    if ($_POST['salaryfrom'] != null){
-        $salaryfrom = $_POST['salaryfrom'];
-    }
+	if ($_POST['salaryfrom'] != null){
+		$salaryfrom = $_POST['salaryfrom'];
+	}
 
-    $salaryto = $_POST['salaryto'];
+	$salaryto = $_POST['salaryto'];
 
 	if ($_POST['companyname'] != "--Alle--"){
 		$companyname = '%'.$_POST['companyname'].'%';
@@ -61,11 +76,11 @@ if (isset($_POST['filter'])){
 		$cityname = '%'.$_POST['cityname'].'%';
 	}
 
-    if ($_POST['industry'] != "--Alle--"){
-        $industry = '%'.$_POST['industry'].'%';
-    }elseif($_POST['industryname'] != null){
-        $industry = '%'.$_POST['industryname'].'%';
-    }
+	if ($_POST['industry'] != "--Alle--"){
+		$industry = '%'.$_POST['industry'].'%';
+	}elseif($_POST['industryname'] != null){
+		$industry = '%'.$_POST['industryname'].'%';
+	}
 }
 $applicant = Applicant::getApplicantByUserId($userid);
 $db = new DB();
@@ -73,7 +88,8 @@ $filter = $db->pdo->prepare('select j.title,
                                            j.description,
                                            j.job_id,
                                            ap.text,
-                                           aps.status
+                                           aps.status,
+                                           ap.application_id
                                       from Application ap,
                                            Applicant a,
                                            Job j,
@@ -108,6 +124,22 @@ $filter->bindParam('cityname', $cityname);
 $filter->bindParam('industry', $industry);
 $filter->execute();
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications</title>
+    <link rel="stylesheet" href="../../source/css/bulma.css">
+    <link rel="stylesheet" href="../../source/css/applicant.css">
+    <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
+    <script src="../../source/js/favourites.js"></script>
+</head>
+<body>
+<?php
+    echo $modal;
+?>
 <div class="row">
     <div class="column">
         <div class="card">
@@ -135,28 +167,55 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
                             <p class="card-header-title">
 								<?php
 								echo $res['title'];
-								?>
-                            <div class="like">
-                                <?php echo $res['status']?>
-                            </div>
+                                ?>
                             </p>
+                            <div class="like field is-grouped">
+                                <button style="pointer-events: none" class="button
+                                    <?php
+                                    switch ($res['status']){
+                                        case 'New';
+                                            echo 'is-info';
+                                            break;
+                                        case 'In Progress';
+                                            echo 'is-warning';
+                                            break;
+                                        case 'Rejected';
+                                            echo 'is-danger';
+                                            break;
+                                        case 'Accepted';
+                                            echo 'is-success';
+                                            break;
+                                    }
+                                    ?>">
+                                <?php echo $res['status'];?>
+                                </button>
+                            </div>
                         </header>
                         <div class="card-content">
                             <div class="content">
-                                <div>
-									<?php
-									echo $res['description']
-									?>
+                                <div style="float: right">
+                                    <div >
+										<?php
+										echo $res['description'];
+										?>
+                                    </div>
+                                    <div>
+                                        <form method="post">
+                                            <input type="text" hidden name="application_id" value=<?php echo $res['application_id']; ?>>
+                                            <button class="button is-info " type="submit" value=<?php echo $res['job_id']?> name="jobinfo">
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-info"></i>
+                                                </span>
+                                            </button>
+                                            <button class="button is-danger is-outlined" type="submit" name="delete-application-btn" value=<?php echo $res['application_id']; ?>>
+                                            <span class="icon is-small">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div>
-                                    <form method="post">
-                                        <button class="button is-info is-rounded" type="submit" value=<?php echo $res['job_id']?> name="jobinfo">
-                                    <span class="icon is-small">
-                                        <i class="fas fa-info"></i>
-                                    </span>
-                                        </button>
-                                    </form>
-                                </div>
+                                <div class="spacer" style="clear: both;"></div>
                             </div>
                         </div>
                     </div>
