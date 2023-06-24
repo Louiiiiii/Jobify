@@ -416,35 +416,40 @@
         }
     ?>
 
-    <form method="post" enctype="multipart/form-data">
-            <label class="label">Choose upload files</label>
-        <div id="file-js-example" class="file has-name">
-            <label class="file-label">
-                <input class="file-input" type="file" name="fileToUpload">
-                <span class="file-cta">
-                  <span class="file-icon">
-                      <i class="fas fa-upload"></i>
-                  </span>
-                  <span class="file-label">Choose a file…</span>
-                </span>
-                <span class="file-name">-nothing selected-</span>
-            </label>
-        </div>
-        <br>
-            <label class="label">File Type:</label>
-            <div class="select">
-                <select name="filetype_name" required>
-					<?php
-					$allFileTypes = File::getAllFileTypes();
-
-					foreach ($allFileTypes as $row) {
-						echo '<option value="' . $row["type"] . '">' . $row["type"] . '</option>';
-					}
-					?>
-                </select>
+    <form action="./company_profile.php" method="post" enctype="multipart/form-data">
+        <div class="columns">
+            <div class="column">
+                <label class="label">Choose upload files</label>
+                <div id="file-js-example" class="file has-name">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="fileToUpload">
+                        <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">Choose a file…</span>
+                        </span>
+                        <span class="file-name">Nothing selected</span>
+                    </label>
+                </div>
             </div>
-        <br>
-            <button class="button" type="submit" name="file_submit">Upload File</button>
+            <div class="column">
+                <label class="label">File Type:</label>
+                <div class="select">
+                    <select name="filetype_name" required>
+                        <?php
+                        $allFileTypes = File::getAllFileTypes();
+
+                        foreach ($allFileTypes as $row) {
+                            echo '<option value="' . $row["type"] . '">' . $row["type"] . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button class="button" type="submit" name="file_submit">Upload File</button>
     </form>
 
     <div id="modal-js-example" class="modal">
@@ -505,6 +510,7 @@
         }
     }
 </script>
+
 <script src="/website/source/js/hideButton.js"></script>
 <script src="/website/source/js/modal.js"></script>
 <script src="/website/source/js/checkpassword.js"></script>
