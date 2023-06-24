@@ -443,32 +443,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Jobify`.`Job_File`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `Jobify`.`Job_File` ;
-
-CREATE TABLE IF NOT EXISTS `Jobify`.`Job_File` (
-  `job_file_id` INT NOT NULL AUTO_INCREMENT,
-  `job_id` INT NOT NULL,
-  `file_id` INT NOT NULL,
-  PRIMARY KEY (`job_file_id`),
-  INDEX `fk_Job_File_File1_idx` (`file_id` ASC),
-  INDEX `fk_Job_File_Job1_idx` (`job_id` ASC),
-  UNIQUE INDEX `job_id_UNIQUE` (`job_id` ASC, `file_id` ASC),
-  CONSTRAINT `fk_Job_File_Job1`
-    FOREIGN KEY (`job_id`)
-    REFERENCES `Jobify`.`Job` (`job_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Job_File_File1`
-    FOREIGN KEY (`file_id`)
-    REFERENCES `Jobify`.`File` (`file_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `Jobify`.`Job_Industry`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Jobify`.`Job_Industry` ;
@@ -721,7 +695,6 @@ INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (1, 'Resume');
 INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (2, 'Profile Picture');
 INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (3, 'Motivation letter');
 INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (4, 'Application');
-INSERT INTO `Jobify`.`Filetype` (`filetype_id`, `type`) VALUES (5, 'Job description');
 
 COMMIT;
 
@@ -793,25 +766,6 @@ COMMIT;
 START TRANSACTION;
 USE `Jobify`;
 INSERT INTO `Jobify`.`Favorite` (`applicant_job_id`, `applicant_id`, `job_id`) VALUES (1, 1, 1);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `Jobify`.`Job_File`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `Jobify`;
-INSERT INTO `Jobify`.`Job_File` (`job_file_id`, `job_id`, `file_id`) VALUES (1, 1, 1);
-INSERT INTO `Jobify`.`Job_File` (`job_file_id`, `job_id`, `file_id`) VALUES (2, 2, 2);
-INSERT INTO `Jobify`.`Job_File` (`job_file_id`, `job_id`, `file_id`) VALUES (3, 3, 3);
-INSERT INTO `Jobify`.`Job_File` (`job_file_id`, `job_id`, `file_id`) VALUES (4, 4, 4);
-INSERT INTO `Jobify`.`Job_File` (`job_file_id`, `job_id`, `file_id`) VALUES (5, 5, 5);
-INSERT INTO `Jobify`.`Job_File` (`job_file_id`, `job_id`, `file_id`) VALUES (6, 6, 6);
-INSERT INTO `Jobify`.`Job_File` (`job_file_id`, `job_id`, `file_id`) VALUES (7, 9, 7);
-INSERT INTO `Jobify`.`Job_File` (`job_file_id`, `job_id`, `file_id`) VALUES (8, 10, 8);
-INSERT INTO `Jobify`.`Job_File` (`job_file_id`, `job_id`, `file_id`) VALUES (9, 7, 9);
-INSERT INTO `Jobify`.`Job_File` (`job_file_id`, `job_id`, `file_id`) VALUES (10, 8, 10);
 
 COMMIT;
 
