@@ -8,6 +8,71 @@
     $current_user_pwhash = $_SESSION["current_user_pwhash"];
     $current_user_id = $_SESSION["current_user_id"];
 
+
+    if (isset($_POST["file_submit_btn"])) {
+
+        $filetype_name = $_POST["filetype_name"];
+
+        File::uploadFile($_FILES["fileToUpload"], $filetype_name, $current_user_id, $current_user_email);
+
+        //Unset and delete file from server
+        unset($_POST);
+        
+        $fileToUpload = $_FILES['fileToUpload']['tmp_name'];
+        
+        unset($_FILES);
+        
+    }
+
+    if (isset($_POST["delete-file-btn"])) {
+
+        $del_file_id = $_POST["delete-file-btn"];
+        $del_file_nema = FILE::getFileName($del_file_id);
+
+        $spawn_delete_file_modal = '
+            <div class="modal is-active">
+                <div class="modal-background is-active"></div>
+                <div class="modal-content modal-content-delete-file">
+                    <div class="box">
+                        <form action="./company_profile.php" method="post">
+                            <h1>Wollen Sie das Dokument "' . $del_file_nema . '" wirklick löschen?</h1>
+                            <input type="number" name="del-file-id" value="'.$del_file_id.'" style="display: none;" readonly>
+                            <br> 
+                            <div class="columns">
+                                <div class="column">
+                                    <button class="button is-dark" type="submit" name="now-delete-file-btn">Delete</button>
+                                </div>                              
+                                <div class="column">
+                                    <button class="button is-danger" type="submit" name="reset-delete-file-btn">Cancel</button>
+                                </div>
+                            </div>  
+                        </form>
+                    </div>
+                </div>
+            </div>
+        ';
+        
+    } else {
+
+        $spawn_delete_file_modal = "";
+
+    }
+    
+    if (isset($_POST["now-delete-file-btn"])) {
+        $spawn_delete_file_modal = "";
+
+        $file_deleted = FILE::delFile($_POST["del-file-id"], $current_user_id);
+
+        if($file_deleted) {
+            echo "<script>alert('Your File was deleted!');</script>";
+        } else {
+            echo "<script>alert('Ahhhh shit something went wrong!');</script>";
+        }
+    }
+
+    if (isset($_POST["reset-delete-file-btn"])) {
+        $spawn_delete_file_modal = "";
+    }
 ?>
 
 
@@ -23,7 +88,15 @@
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
-<?php require_once '../parts/company_profile_navbar.php'; ?>
+
+    <?php 
+
+        require_once '../parts/company_profile_navbar.php'; 
+
+        echo $spawn_delete_file_modal;
+
+    ?>
+
     <form class="form">
         <div class="row">
             <div class="field">
@@ -131,6 +204,94 @@
             <button class="button is-link">Change</button>
         </div>
     </div>
+    </form>
+
+    <?php
+        $files = File::getAllFilesByUser($current_user_id);
+
+        if (count($files) > 0) {
+
+    ?>
+
+    <div class="row">
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Extension</th>
+                        <th>Type</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <form action="./company_profile.php" method="post">
+                        <?php 
+
+                            foreach($files as $file) {
+                                $filepath = $_SERVER['DOCUMENT_ROOT'] . "/website/uplfiles/" . $current_user_id . "/" . $file["name"];
+                                
+                                $name = pathinfo($filepath, PATHINFO_FILENAME);
+                                $extension = '.' . pathinfo($filepath, PATHINFO_EXTENSION);
+
+                                echo "<tr>";
+                                echo "<th>" . $file["file_id"] . "</th>";
+                                echo "<td>" . $name . "</td>";
+                                echo "<td>" . $extension . "</td>";
+                                echo "<td>" . $file["type"] . "</td>";
+                                echo '
+                                    <td>
+                                        <button class="button is-danger is-outlined is-rounded" type="submit" name="delete-file-btn" value="' . $file["file_id"] . '" type="button">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                                        </button>
+                                    </td>
+                                ';
+                                echo "</tr>";
+                            }
+                        ?>
+                    </form>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <?php 
+        } else {
+            echo "<br>";
+            echo "<hr>";
+            echo "<h1>Sie haben keine Files hochgeladen</h1>";
+            echo "<br>";
+        }
+    ?>
+
+    <form action="./company_profile.php" method="post" enctype="multipart/form-data">
+        <div class="columns">
+            <div class="column">
+                <label class="label" for="fileToUpload">Choose a file:</label>
+                <input class="button" type="file" name="fileToUpload" id="fileToUpload">        
+            </div>
+            <div class="column">
+                <label class="label">File Type:</label>
+                <div class="select">
+                    <select class="" name="filetype_name" required>
+                        <?php
+                            $allFileTypes = File::getAllFileTypes();
+
+                            foreach ($allFileTypes as $row) {
+                                echo '<option value="' . $row["type"] . '">' . $row["type"] . '</option>';
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="column is-4"></div>
+        </div>        
+
+        <button class="button" type="submit" name="file_submit_btn">Upload File</button>
+
     </form>
 
     <div id="modal-js-example" class="modal">
