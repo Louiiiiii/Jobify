@@ -44,10 +44,12 @@ class Applicant extends User
         $stmt = $db->pdo->prepare('select * from Applicant where user_id = ?');
         $stmt->bindParam(1,$user_id, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_BOTH);
-        $applicant = new Applicant($result['firstname'],$result['lastname'],$result['birthdate'],$result['description'],$result['allow_headhunting'],$result['user_id'],$result['address_id'],$result['education_id']);
-        $applicant->getApplicant_id();
-        return $applicant;
+        while($result = $stmt->fetch(PDO::FETCH_BOTH)){
+			$applicant = new Applicant($result['firstname'],$result['lastname'],$result['birthdate'],$result['description'],$result['allow_headhunting'],$result['user_id'],$result['address_id'],$result['education_id']);
+			$applicant->getApplicant_id();
+			return $applicant;
+		}
+		return null;
     }
 
     public function addEducation($education){
@@ -74,6 +76,17 @@ class Applicant extends User
         }
         return null;
     }
+
+	public function getEducation(){
+		$stmt = $this->pdo->prepare('select e.* 
+											 from Education e,
+												  Applicant a
+											where e.education_id = a.education_id
+											  and a.applicant_id = ?');
+		$stmt->bindParam(1,$this->applicant_id,PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetch();
+	}
 
     public static function getEducation_Data(){
         $db = new DB();

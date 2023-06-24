@@ -81,10 +81,12 @@ class Company extends User
         $stmt = $db->pdo->prepare('select * from Company where user_id = ?');
         $stmt->bindParam(1,$user_id, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_BOTH);
-        $company = new Company($result['name'],$result['address_id'],$result['slogan'],$result['description'],$result['user_id']);
-        $company->getCompany_id();
-        return $company;
+        while($result = $stmt->fetch(PDO::FETCH_BOTH)) {
+			$company = new Company($result['name'], $result['address_id'], $result['slogan'], $result['description'], $result['user_id']);
+			$company->getCompany_id();
+			return $company;
+		}
+		return null;
     }
 
     public function getCompany_id(){

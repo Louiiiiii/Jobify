@@ -204,12 +204,12 @@ class Address extends DB
          $db = new DB();
          $applicant = Applicant::getApplicantByUserId($user_id);
          $company = Company::getCompanyByUserId($user_id);
-         if ($applicant->applicant_id != null){
+         if ($applicant != null){
             $stmt = $db->pdo->prepare('select address_id from Applicant where user_id = ?');
             $stmt->bindParam(1,$user_id,PDO::PARAM_INT);
             $stmt->execute();
             $address_id = $stmt->fetch();
-         }elseif($company->company_id != null){
+         }elseif($company != null){
             $stmt = $db->pdo->prepare('select address_id from Company where user_id = ?');
             $stmt->bindParam(1,$user_id,PDO::PARAM_INT);
             $stmt->execute();
@@ -228,7 +228,7 @@ class Address extends DB
                                                 LEFT JOIN State s ON pc.state_id = s.state_id
                                                 LEFT JOIN Country co ON s.country_id = co.country_id
                                                 WHERE a.address_id = ?');
-         $stmt->bindParam(1,$address_id);
+         $stmt->bindParam(1,$address_id['address_id']);
          $stmt->execute();
          return $stmt->fetch();
     }

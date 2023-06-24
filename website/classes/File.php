@@ -286,6 +286,17 @@ class File extends User
                  * */
     }
 
+	public static function getAllFilesByApplication($application_id){
+		$db = new DB();
+		$stmt = $db->pdo->prepare('select f.* 
+		 								   from File f,
+		 								        Application_File af
+		 								  where af.application_id = ?
+		 								    and af.file_id = f.file_id');
+		$stmt->bindParam(1,$application_id,PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll();
+	}
     public static function getAllFileTypes(){
         $db = new DB();
         $stmt = $db->pdo->prepare('
