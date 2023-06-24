@@ -41,7 +41,7 @@
 
     }
     
-    if (isset($_POST["change_applicant_infos"])) {
+    if (isset($_POST["change_profile_infos"])) {
         //from Form
         $email = $_POST["email"];
         $firstname = $_POST["firstname"];
@@ -355,7 +355,7 @@
         </div>
         <div class="row cancel hide">
             <button type="reset" class="button" onclick="cancel()">Cancel</button>
-            <button type="submit" name="change_applicant_infos" class="button is-link">Change</button>
+            <button type="submit" name="change_profile_infos" class="button is-link">Change</button>
         </div>
 
         <hr class="solid">
