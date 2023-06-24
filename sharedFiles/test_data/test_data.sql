@@ -742,6 +742,7 @@ INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_
 INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (9, 'ktm_1', '2023-01-01 00:00:00', 5, 3);
 INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (10, 'ktm_2', '2023-01-01 00:00:00', 5, 3);
 INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (11, 'bwt_logo', '2023-01-01 00:00:00', 3, 2);
+INSERT INTO `Jobify`.`File` (`file_id`, `name`, `upldate`, `user_id`, `filetype_id`) VALUES (12, 'girl.png', '2023-01-01 00:00:00', 9, 2);
 
 COMMIT;
 
