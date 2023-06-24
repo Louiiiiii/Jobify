@@ -2,7 +2,7 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
 -- Schema Jobify
@@ -767,9 +767,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `Jobify`;
-INSERT INTO `Jobify`.`ApplicationStatus` (`applicationstatus_id`, `status`) VALUES (1, 'Sent');
-INSERT INTO `Jobify`.`ApplicationStatus` (`applicationstatus_id`, `status`) VALUES (2, 'Reviewing');
-INSERT INTO `Jobify`.`ApplicationStatus` (`applicationstatus_id`, `status`) VALUES (3, 'Interview');
+INSERT INTO `Jobify`.`ApplicationStatus` (`applicationstatus_id`, `status`) VALUES (1, 'New');
+INSERT INTO `Jobify`.`ApplicationStatus` (`applicationstatus_id`, `status`) VALUES (2, 'In Progress');
+INSERT INTO `Jobify`.`ApplicationStatus` (`applicationstatus_id`, `status`) VALUES (3, 'Rejected');
+INSERT INTO `Jobify`.`ApplicationStatus` (`applicationstatus_id`, `status`) VALUES (4, 'Accepted');
 
 COMMIT;
 
