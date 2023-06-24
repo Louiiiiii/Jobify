@@ -28,9 +28,9 @@ if (!isset($_SESSION["current_user_id"]))
 
 if (isset($_POST['filters']))
 {
-    if ($_POST['name'] != "")
+    if ($_POST['employee'] != "")
     {
-        $name = '%'.$_POST['name'].'%';
+        $name = '%'.$_POST['employee'].'%';
     }
 
     if ($_POST['place'] != "")
