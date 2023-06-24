@@ -23,7 +23,10 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 <?php
 if (!isset($_SESSION["current_user_id"]))
 {
-	$userid = 1;
+	$userid = 6;
+}
+else{
+	$userid = $_SESSION["current_user_id"];
 }
 
 if (isset($_POST['favorite'])){
@@ -64,7 +67,7 @@ if (isset($_POST['filter'])){
         $industry = '%'.$_POST['industryname'].'%';
     }
 }
-
+$applicant = Applicant::getApplicantByUserId($userid);
 $db = new DB();
 $filter = $db->pdo->prepare('select j.title,
                                            j.description,

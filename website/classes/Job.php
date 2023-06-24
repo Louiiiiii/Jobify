@@ -32,6 +32,16 @@ class Job extends DB
         return $job;
     }
 
+	public static function getAllJobsByCompany($company_id){
+		$db = new DB();
+		$stmt = $db->pdo->prepare('select * 
+  										   from Job 
+  									      where company_id = ?');
+		$stmt->bindParam(1,$company_id);
+		$stmt->execute();
+		return $stmt->fetchAll();
+	}
+
     public static function insertjob($job_id, $title, $isvolunteerwork, $company_id, $description=null, $salary=null)
     {
         $job = new job($title, $description=null, $salary=null, $isvolunteerwork, $company_id);
