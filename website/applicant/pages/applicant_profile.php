@@ -43,7 +43,7 @@
     
     if (isset($_POST["change_applicant_infos"])) {
         //from Form
-        $firstname = $_POST["email"];
+        $email = $_POST["email"];
         $firstname = $_POST["firstname"];
         $lastname = $_POST["lastname"];
         $birthday = $_POST["birthday"];
@@ -53,10 +53,14 @@
         $city = $_POST["city"];
         $street = $_POST["street"];
         $streetnumber = $_POST["streetnumber"];
-        $education_id = $_POST["education_id"];        
-        $industry_ids = $_POST["industry_ids"];     
+        $education_id = $_POST["education_id"]; 
 
-        //pleas ignore this it is working and i dont want to change it 😘
+        if (isset($_POST["industry_ids"])) {
+            $industry_ids = $_POST["industry_ids"];
+        } else {
+            $industry_ids = NULL;
+        }       
+        
         if (isset($_POST["headhunting"])) {
             $headhunting = $_POST["headhunting"];
         } else {
@@ -64,6 +68,10 @@
         }
         
         //Inserts
+
+        //E-Mail
+        User::updateEMail($email, $current_user_id);
+        $_SESSION["current_user_email"] = $email;
 
         //Address
         $address = new Address($street, $streetnumber, $state, $country, $postalcode, $city);
@@ -92,14 +100,14 @@
 
         $applicant->updateDB();
         $applicant_id = $applicant->getApplicant_id();
-
-        echo $address_id;
         
         //Industry
         Applicant::deleteAllIndustriesFromApplicant($applicant_id);
 
-        foreach ($industry_ids as $industry_id) {
-            $applicant->addApplicant_Industry($industry_id);
+        if (!is_null($industry_ids)) {
+            foreach ($industry_ids as $industry_id) {
+                $applicant->addApplicant_Industry($industry_id);
+            }
         }
         
         //Unset $_POST
