@@ -42,14 +42,17 @@ class Job extends DB
 		return $stmt->fetchAll();
 	}
 
-	public static function getAllAplicantsforJob($job_id){
+	public static function getAllAplicantsforJobNotRejected($job_id){
 		$db = new DB();
 		$stmt = $db->pdo->prepare('select a.text applicationtext,
+												a.applicationstatus_id status,
+												a.application_id,
        											ap.*
   										   from Application a,
   										        Applicant ap
   									      where a.applicant_id = ap.applicant_id
-  									        and a.job_id = ?');
+  									        and a.job_id = ?
+  									        and a.applicationstatus_id != 3');
 		$stmt->bindParam(1,$job_id);
 		$stmt->execute();
 		return $stmt->fetchAll();

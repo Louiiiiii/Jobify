@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overview</title>
-    <link rel="stylesheet" href="../../source/css/company.css">
-    <link rel="stylesheet" href="../../source/css/bulma.css">
-    <link rel="stylesheet" href="../../source/css/applicant.css">
-    <link rel="stylesheet" href="../../source/css/treeView.css">
-    <link rel="stylesheet" href="../../source/css/person_card.css">
-    <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
-</head>
-<body>
 <?php require_once '../parts/company_navbar.php';
 include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 
@@ -51,11 +36,70 @@ if (isset($_POST['filters']))
 		$industry = '%'.$_POST['education'].'%';
 	}
 }
+$modal = '';
+if (isset($_POST['applicationstatus'])){
+    if ($_POST['applicationstatus'] == 3) {
+		$modal= '        
+            <div class="modal is-active">
+                <div class="modal-background is-active"></div>
+                <div class="modal-content">
+                    <div class="box">
+                            <h1 class="title is-">Do you realy want to Reject the Applicant</h1>
+                            <h2 class="subtitle">The Applicant will Disappear from the View!</h2>
+                        <form method="post">
+                            <button class="button is-danger" name="reject">Reject and Remove</button>
+                            <button class="button is-Info" name="cancel">Cancel</button>
+                            <input type="text" name="application_id" hidden value='.$_POST['application_id'].'>
+                            <input type="text" name="job_id" hidden value='.$_POST['job_id'].'>
+                            <input type="text" name="curr_status" hidden value='.$_POST['curr_status'].'>
+                            <input type="text" name="new_status" hidden value='.$_POST['applicationstatus'].'>
+                        </form>
+                    </div>
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>';
+	}
+    else{
+        $db = new DB();
+        $stmt = $db->pdo->prepare('update Application set applicationstatus_id = ? where application_id = ?');
+        $stmt->bindParam(1,$_POST['applicationstatus'],PDO::PARAM_INT);
+        $stmt->bindParam(2,$_POST['application_id'],PDO::PARAM_INT);
+        $stmt->execute();
+    }
+}
+
+if (isset($_POST['reject'])){
+	$db = new DB();
+	$stmt = $db->pdo->prepare('update Application set applicationstatus_id = ? where application_id = ?');
+	$stmt->bindParam(1,$_POST['new_status'],PDO::PARAM_INT);
+	$stmt->bindParam(2,$_POST['application_id'],PDO::PARAM_INT);
+	$stmt->execute();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overview</title>
+    <link rel="stylesheet" href="../../source/css/company.css">
+    <link rel="stylesheet" href="../../source/css/bulma.css">
+    <link rel="stylesheet" href="../../source/css/applicant.css">
+    <link rel="stylesheet" href="../../source/css/treeView.css">
+    <link rel="stylesheet" href="../../source/css/person_card.css">
+    <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
+</head>
+<body>
+<?php
+
+echo $modal;
 
 $company = Company::getCompanyByUserId($userid);
 $jobs = Job::getAllJobsByCompany($company->company_id);
 foreach ($jobs as $job) {
-	$applicants = Job::getAllAplicantsforJob($job[0]);
+	$applicants = Job::getAllAplicantsforJobNotRejected($job[0]);
 	$cnttop = 2;
 	$cntbot = 1;
 	?>
@@ -64,10 +108,16 @@ foreach ($jobs as $job) {
             <div class="column caret">
                 <div class="card">
                     <header class="card-header">
-                        <p class="card-header-title">
-                            <span class="triangle"></span>
-							<?php echo $job[1] ?>
-                        </p>
+                            <div class="column is-three-quarters">
+                                <p class="card-header-title">
+                                <span class="triangle"></span><?php echo $job[1] ?>
+                                </p>
+                            </div>
+                            <div class="column is-right">
+                                <p class="card-header-title">
+                                    <?php echo  count($applicants).' Applicants'?>
+                                </p>
+                            </div>
                     </header>
                 </div>
             </div>
@@ -87,7 +137,7 @@ foreach ($jobs as $job) {
 				else{
 					$cnttop = 1;
 					?>
-                    <ul class="row nested">
+                    <ul class="row nested <?php echo isset($_POST['job_id']) ? 'active' : '';?>" >
 					<?php
 				}
 				?>
@@ -103,11 +153,34 @@ foreach ($jobs as $job) {
                                         </figure>
                                     </div>
                                     <div class="content__button">
-                                        <button class="button is-info is-rounded">
-                                            <span class="icon is-small">
-                                                <i class="fas fa-envelope-open-text"></i>
-                                            </span>
-                                        </button>
+                                        <form method="post">
+                                            <div class="select is-rounded">
+                                                <select name="applicationstatus"  <?php
+                                                    switch ($applicant['status']){
+														case 1:
+															echo 'style="background-color: #6699cc"';
+															break;
+														case 2:
+															echo 'style="background-color: #ffcc66"';
+															break;
+														case 3:
+															echo 'style="background-color: #cc9999"';
+															break;
+														case 4:
+															echo 'style="background-color: #99cc99"';
+															break;
+													}
+                                                ?>  onchange="this.form.submit()">
+                                                    <option value="1" style="background-color: #6699cc" <?php echo $applicant['status'] == 1 ? 'selected': '';?>>New</option>
+                                                    <option value="2" style="background-color: #ffcc66" <?php echo $applicant['status'] == 2 ? 'selected': '';?>>In Progress</option>
+                                                    <option value="3" style="background-color: #cc9999" <?php echo $applicant['status'] == 3 ? 'selected': '';?>>Rejected</option>
+                                                    <option value="4" style="background-color: #99cc99" <?php echo $applicant['status'] == 4 ? 'selected': '';?>>Accepted</option>
+                                                </select>
+                                                <input type="text" name="application_id" hidden value=<?php echo $applicant['application_id'];?>>
+                                                <input type="text" name="job_id" hidden value=<?php echo $job['job_id'];?>>
+                                                <input type="text" name="curr_status" hidden value=<?php echo $applicant['status'];?>>
+                                            </div>
+                                        </form>
                                         <button class="button is-info is-rounded">
                                             <span class="icon is-small">
                                                 <i class="fas fa-info"></i>
@@ -119,6 +192,7 @@ foreach ($jobs as $job) {
                         </div>
                     </div>
                 </li>
+                </button>
 				<?php
 				if ($cntbot < 2){
 					$cntbot++;
