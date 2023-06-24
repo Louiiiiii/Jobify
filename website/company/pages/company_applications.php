@@ -92,6 +92,16 @@ if (isset($_POST['reject'])){
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
+    <div class="search-row">
+        <div class="field">
+            <p class="control has-icons-left">
+                <input class="input" placeholder="Search">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-search"></i>
+                </span>
+            </p>
+        </div>
+    </div>
 <?php
 
 echo $modal;
@@ -103,113 +113,117 @@ foreach ($jobs as $job) {
 	$cnttop = 2;
 	$cntbot = 1;
 	?>
-    <ul class="row" id="treeView">
-        <li class="parent">
-            <div class="column caret">
-                <div class="card">
-                    <header class="card-header">
-                            <div class="column is-three-quarters">
-                                <p class="card-header-title">
-                                <span class="triangle"></span><?php echo $job[1] ?>
-                                </p>
-                            </div>
-                            <div class="column is-right">
-                                <p class="card-header-title">
-                                    <?php echo  count($applicants).' Applicants'?>
-                                </p>
-                            </div>
-                    </header>
+    
+    <div class="row">
+        <ul class="row" id="treeView">
+            <li class="parent">
+                <div class="column caret">
+                    <div class="card">
+                        <header class="card-header">
+                                <div class="column is-three-quarters">
+                                    <p class="card-header-title">
+                                    <span class="triangle"></span><?php echo $job[1] ?>
+                                    </p>
+                                </div>
+                                <div class="column is-right">
+                                    <p class="card-header-title">
+                                        <?php echo  count($applicants).' Applicants'?>
+                                    </p>
+                                </div>
+                        </header>
+                    </div>
                 </div>
-            </div>
-			<?php
-			foreach ($applicants as $applicant) {
+                <?php
+                foreach ($applicants as $applicant) {
 
-				$profile_pic = File::getFile($applicant['user_id'], "Profile Picture");
-				if (is_null($profile_pic)) {
-					$profile_pic_path = "/website/source/img/user-icon.png";
-				} else {
-					$profile_pic_path = '/website/uplfiles/' . $applicant['user_id'] . "/" . $profile_pic["name"];
-				}
+                    $profile_pic = File::getFile($applicant['user_id'], "Profile Picture");
+                    if (is_null($profile_pic)) {
+                        $profile_pic_path = "/website/source/img/user-icon.png";
+                    } else {
+                        $profile_pic_path = '/website/uplfiles/' . $applicant['user_id'] . "/" . $profile_pic["name"];
+                    }
 
-				if ($cnttop < 2){
-					$cnttop++;
-				}
-				else{
-					$cnttop = 1;
-					?>
-                    <ul class="row nested <?php echo isset($_POST['job_id']) ? 'active' : '';?>" >
-					<?php
-				}
-				?>
-                <li class="child">
-                    <div class="column">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="content">
-                                    <div class="left-content">
-                                        <div><?php echo $applicant['firstname'].' '.$applicant['lastname']; ?></div>
-                                        <figure class="image is-64x64 is-rounded">
-                                            <img class="is-rounded" src=<?php echo $profile_pic_path;?>>
-                                        </figure>
-                                    </div>
-                                    <div class="content__button">
-                                        <form method="post">
-                                            <div class="select is-rounded">
-                                                <select name="applicationstatus"  <?php
-                                                    switch ($applicant['status']){
-														case 1:
-															echo 'style="background-color: #6699cc"';
-															break;
-														case 2:
-															echo 'style="background-color: #ffcc66"';
-															break;
-														case 3:
-															echo 'style="background-color: #cc9999"';
-															break;
-														case 4:
-															echo 'style="background-color: #99cc99"';
-															break;
-													}
-                                                ?>  onchange="this.form.submit()">
-                                                    <option value="1" style="background-color: #6699cc" <?php echo $applicant['status'] == 1 ? 'selected': '';?>>New</option>
-                                                    <option value="2" style="background-color: #ffcc66" <?php echo $applicant['status'] == 2 ? 'selected': '';?>>In Progress</option>
-                                                    <option value="3" style="background-color: #cc9999" <?php echo $applicant['status'] == 3 ? 'selected': '';?>>Rejected</option>
-                                                    <option value="4" style="background-color: #99cc99" <?php echo $applicant['status'] == 4 ? 'selected': '';?>>Accepted</option>
-                                                </select>
-                                                <input type="text" name="application_id" hidden value=<?php echo $applicant['application_id'];?>>
-                                                <input type="text" name="job_id" hidden value=<?php echo $job['job_id'];?>>
-                                                <input type="text" name="curr_status" hidden value=<?php echo $applicant['status'];?>>
-                                            </div>
-                                        </form>
-                                        <button class="button is-info is-rounded">
-                                            <span class="icon is-small">
-                                                <i class="fas fa-info"></i>
-                                            </span>
-                                        </button>
+                    if ($cnttop < 2){
+                        $cnttop++;
+                    }
+                    else{
+                        $cnttop = 1;
+                        ?>
+                        <ul class="row nested <?php echo isset($_POST['job_id']) ? 'active' : '';?>" >
+                        <?php
+                    }
+                    ?>
+                    <li class="child">
+                        <div class="column">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="content">
+                                        <div class="left-content">
+                                            <div><?php echo $applicant['firstname'].' '.$applicant['lastname']; ?></div>
+                                            <figure class="image is-64x64 is-rounded">
+                                                <img class="is-rounded" src=<?php echo $profile_pic_path;?>>
+                                            </figure>
+                                        </div>
+                                        <div class="content__button">
+                                            <form method="post">
+                                                <div class="select is-rounded">
+                                                    <select name="applicationstatus"  <?php
+                                                        switch ($applicant['status']){
+                                                            case 1:
+                                                                echo 'style="background-color: #6699cc"';
+                                                                break;
+                                                            case 2:
+                                                                echo 'style="background-color: #ffcc66"';
+                                                                break;
+                                                            case 3:
+                                                                echo 'style="background-color: #cc9999"';
+                                                                break;
+                                                            case 4:
+                                                                echo 'style="background-color: #99cc99"';
+                                                                break;
+                                                        }
+                                                    ?>  onchange="this.form.submit()">
+                                                        <option value="1" style="background-color: #6699cc" <?php echo $applicant['status'] == 1 ? 'selected': '';?>>New</option>
+                                                        <option value="2" style="background-color: #ffcc66" <?php echo $applicant['status'] == 2 ? 'selected': '';?>>In Progress</option>
+                                                        <option value="3" style="background-color: #cc9999" <?php echo $applicant['status'] == 3 ? 'selected': '';?>>Rejected</option>
+                                                        <option value="4" style="background-color: #99cc99" <?php echo $applicant['status'] == 4 ? 'selected': '';?>>Accepted</option>
+                                                    </select>
+                                                    <input type="text" name="application_id" hidden value=<?php echo $applicant['application_id'];?>>
+                                                    <input type="text" name="job_id" hidden value=<?php echo $job['job_id'];?>>
+                                                    <input type="text" name="curr_status" hidden value=<?php echo $applicant['status'];?>>
+                                                </div>
+                                            </form>
+                                            <button class="button is-info is-rounded">
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-info"></i>
+                                                </span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-                </button>
-				<?php
-				if ($cntbot < 2){
-					$cntbot++;
-				}
-				else{
-					$cntbot = 1;
-					?>
-                    </ul>
-					<?php
-				}
-			}
-			?>
-        </li>
-    </ul>
+                    </li>
+                    </button>
+                    <?php
+                    if ($cntbot < 2){
+                        $cntbot++;
+                    }
+                    else{
+                        $cntbot = 1;
+                        ?>
+                        </ul>
+                        <?php
+                    }
+                }
+                ?>
+            </li>
+        </ul>
+    </div>
 	<?php
 }
 ?>
+
 
 </body>
 </html>

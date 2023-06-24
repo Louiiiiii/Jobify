@@ -21,7 +21,18 @@
                 </span>
             </p>
         </div>
+
+        <div class="field">
+            <form action="./company_create_job.php">
+                <button style="margin-bottom: 25px" class="button is-info is-rounded">
+                    <span class="icon is-small">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                </button>
+            </form>
+        </div>
     </div>
+
     <div class="row">
         <div class="column">
             <div class="card">
@@ -80,6 +91,7 @@
             </div>
         </div>
     </div>
+    
     <div class="row">
         <div class="column">
             <div class="card">
@@ -137,13 +149,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="add-row">
-        <button style="margin-bottom: 25px" class="button is-info is-rounded">
-            <span class="icon is-small">
-                <i class="fas fa-plus"></i>
-            </span>
-        </button>
     </div>
 </body>
 </html>
