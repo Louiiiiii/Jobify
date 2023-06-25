@@ -105,3 +105,8 @@ body {
     border-bottom: 4px solid #fff;
     border-top: 4px solid #000000;
 }
+
+.industries-select {
+    height: 110px;
+    overflow-y: scroll;
+}
