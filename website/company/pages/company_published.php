@@ -78,6 +78,14 @@
         }
     //
 
+    //spawn new job
+        if (isset($_POST["spawn-new-job"])) {
+            $spawn_new_job = true;
+        } else {
+            $spawn_new_job = false; 
+        }
+    //
+
 ?>
 
 <!DOCTYPE html>
@@ -110,8 +118,8 @@
         </div>
 
         <div class="field">
-            <form action="./company_create_job.php">
-                <button style="margin-bottom: 25px" class="button is-info is-rounded">
+            <form action="./company_published.php" method="post">
+                <button style="margin-bottom: 25px" name="spawn-new-job" class="button is-info is-rounded">
                     <span class="icon is-small">
                         <i class="fas fa-plus"></i>
                     </span>
@@ -121,214 +129,325 @@
     </div>
 
         <?php
+        
+            $counter = 0;
 
-        $company = Company::getCompanyByUserId($current_user_id);
+            //spawn new job
+            if ($spawn_new_job) {
+                
+                if ($counter % 2 == 0) { 
+                    echo '<div class="row">';
+                }
 
-        $company_id = $company->company_id;
+                $counter++;
 
-        $all_jobs= Job::getAllJobsByCompany($company_id);
-
-        $counter = 0;
-
-        foreach ($all_jobs as $job) {
-
-            $job_industries = JOB::getJobIndustries($job["job_id"]);
-            
-            if ($counter % 2 == 0) { 
-                echo '<div class="row">';
-            }
-
-            if (isset($_POST["edit-job-btn"]) && $_POST["edit-job-btn"] == $job["job_id"]) {
-
-            ?>
-                <div class="column">
-                    <form action="./company_published.php" method="post">
-                        <div class="card">
-                            <header class="card-header">
-                                <div class="columns" style="width: 100%;">
-                                    <div class="column is-one-fifth">
-                                        <p class="card-header-title">
-                                            <labe for="title">Title: </label>
-                                        </p>
+                ?>
+                    <div class="column">
+                        <form action="./company_published.php" method="post" id="add-job-form">
+                            <div class="card">
+                                <header class="card-header">
+                                    <div class="columns" style="width: 100%;">
+                                        <div class="column is-one-fifth">
+                                            <p class="card-header-title">
+                                                <labe for="title">Title: </label>
+                                            </p>
+                                        </div>
+                                        <div class="column">
+                                            <p class="card-header-title">
+                                                <input class="input is-small" type="text" id="title" name="title" required>
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="column">
-                                        <p class="card-header-title">
-                                            <input class="input is-small" type="text" id="title" name="title" value="<?php echo $job["title"] ?>">
-                                        </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <div class="columns">
+                                            <div class="column is-two-third">
+                                                <p class="title is-5">Description:</p>
+                                                <p>
+                                                    <textarea class="input" type="description" id="description" name="description"></textarea>
+                                                </p>
+                                            </div>
+                                            <div class="column is-one-third">
+                                                <p class="title is-5">Type:</p>
+                                                <p>
+                                                    <label class="checkbox" name="isapprenticeship">
+                                                        <input type="checkbox" name="isapprenticeship">
+                                                        Apprenticeship
+                                                    </label>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="columns">
+                                            <div class="column is-two-third">
+                                                <p class="title is-5">Industries:</p>
+                                                <div class="industries-select">
+                                                    <?php
+                                                        $industries = Applicant::getIndustry_Data();
+                                                        
+                                                        foreach($industries as $industry) {   
+
+                                                            echo '<input class="checkbox-input" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '">';
+                                                            echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+
+                                                        }
+                                                        
+                                                    ?>    
+                                                </div>                                            
+                                            </div>
+                                        </div>
+                                        <div class="columns">
+                                            <div class="column title is-3">
+                                                <labe for="salary">Salary: </label>
+                                            </div>
+                                            <div class="column">
+                                                <input class="input" type="number" id="salary" name="salary" required>
+                                            </div>
+                                            <div class="column title is-3">
+                                                <p>€</p>
+                                            </div>
+
+                                            <div class="columns">
+                                                <div class="column">
+                                                    <button type="button" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn" value="<?php echo $job["job_id"] ?>">
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-check"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div class="column">
+                                                    <button type="submit" onclick="submitForm('add-job-form')" class="button is-danger is-outlined is-rounded" name="stop-edit-job-btn" value="<?php echo $job["job_id"] ?>">
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-times"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                        </form>
+                    </div>
+                <?php
+            }
+
+            //show jobs from d
+            $company = Company::getCompanyByUserId($current_user_id);
+
+            $company_id = $company->company_id;
+
+            $all_jobs= Job::getAllJobsByCompany($company_id);
+
+            foreach ($all_jobs as $job) {
+
+                $job_industries = JOB::getJobIndustries($job["job_id"]);
+                
+                if ($counter % 2 == 0) { 
+                    echo '<div class="row">';
+                }
+
+                if (isset($_POST["edit-job-btn"]) && $_POST["edit-job-btn"] == $job["job_id"]) {
+
+                ?>
+                    <div class="column">
+                        <form action="./company_published.php" method="post" id="edit-job-form">
+                            <div class="card">
+                                <header class="card-header">
+                                    <div class="columns" style="width: 100%;">
+                                        <div class="column is-one-fifth">
+                                            <p class="card-header-title">
+                                                <labe for="title">Title: </label>
+                                            </p>
+                                        </div>
+                                        <div class="column">
+                                            <p class="card-header-title">
+                                                <input class="input is-small" type="text" id="title" name="title" value="<?php echo $job["title"] ?>" required>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <div class="columns">
+                                            <div class="column is-two-third">
+                                                <p class="title is-5">Description:</p>
+                                                <p>
+                                                    <textarea class="input" type="description" id="description" name="description"><?php echo $job["description"] ?></textarea>
+                                                </p>
+                                            </div>
+                                            <div class="column is-one-third">
+                                                <p class="title is-5">Type:</p>
+                                                <p>
+                                                    <?php 
+                                                        if ($job["isapprenticeship"] == 1) {
+                                                            $isapprenticeship = "checked";
+                                                        } else {
+                                                            $isapprenticeship = "";
+                                                        }
+                                                    ?>
+                                                    <label class="checkbox" name="isapprenticeship">
+                                                        <input type="checkbox" name="isapprenticeship" <?php echo $isapprenticeship ?>>
+                                                        Apprenticeship
+                                                    </label>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="columns">
+                                            <div class="column is-two-third">
+                                                <p class="title is-5">Industries:</p>
+                                                <div class="industries-select">
+                                                    <?php
+                                                        $industries = Applicant::getIndustry_Data();
+                                                        
+                                                        foreach($industries as $industry) {   
+
+                                                            $checked = "";
+
+                                                            foreach($job_industries as $job_industry) {
+                                                                if ($job_industry["name"] == $industry["name"]) {
+                                                                    $checked = "checked";
+                                                                }
+                                                            }
+
+                                                            echo '<input class="checkbox-input" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" ' . $checked . '>';
+                                                            echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+
+                                                        }
+                                                        
+                                                    ?>    
+                                                </div>                                            
+                                            </div>
+                                        </div>
+                                        <div class="columns">
+                                            <div class="column title is-3">
+                                                <labe for="salary">Salary: </label>
+                                            </div>
+                                            <div class="column">
+                                                <input class="input" type="number" id="salary" name="salary" value="<?php echo $job["salary"] ?>" required>
+                                            </div>
+                                            <div class="column title is-3">
+                                                <p>€</p>
+                                            </div>
+
+                                            <div class="columns">
+                                                <div class="column">
+                                                    <button type="submit" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn" value="<?php echo $job["job_id"] ?>">
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-check"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div class="column">
+                                                    <button type="button" onclick="submitForm('edit-job-form')" class="button is-danger is-outlined is-rounded" name="stop-edit-job-btn" value="<?php echo $job["job_id"] ?>">
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-times"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                <?php
+
+                } else {
+
+                ?>
+                    <div class="column">
+                        <div class="card">
+                            <header class="card-header">
+                                <p class="card-header-title">
+                                    <?php echo $job["title"] ?>
+                                </p>
                             </header>
                             <div class="card-content">
                                 <div class="content">
                                     <div class="columns">
                                         <div class="column is-two-third">
                                             <p class="title is-5">Description:</p>
-                                            <p>
-                                                <textarea class="input" type="description" id="description" name="description"><?php echo $job["description"] ?></textarea>
-                                            </p>
+                                            <p><?php echo $job["description"] ?></p>
                                         </div>
                                         <div class="column is-one-third">
                                             <p class="title is-5">Type:</p>
                                             <p>
                                                 <?php 
-                                                    if ($job["isapprenticeship"] == 1) {
-                                                        $isapprenticeship = "checked";
+                                                    if ($job["isapprenticeship"] == 0) {
+                                                        echo "Job";
                                                     } else {
-                                                        $isapprenticeship = "";
+                                                        echo "Apprenticeship";
                                                     }
                                                 ?>
-                                                <label class="checkbox" name="isapprenticeship">
-                                                    <input type="checkbox" name="isapprenticeship" <?php echo $isapprenticeship ?>>
-                                                    Apprenticeship
-                                                </label>
                                             </p>
                                         </div>
                                     </div>
                                     <div class="columns">
                                         <div class="column is-two-third">
                                             <p class="title is-5">Industries:</p>
-                                            <div class="industries-select">
-                                                <?php
-                                                    $industries = Applicant::getIndustry_Data();
-                                                    
-                                                    foreach($industries as $industry) {   
-
-                                                        $checked = "";
-
-                                                        foreach($job_industries as $job_industry) {
-                                                            if ($job_industry["name"] == $industry["name"]) {
-                                                                $checked = "checked";
-                                                            }
-                                                        }
-
-                                                        echo '<input class="checkbox-input" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" ' . $checked . '>';
-                                                        echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
-
-                                                    }
-                                                    
-                                                ?>    
-                                            </div>                                            
+                                            <?php 
+                                                foreach($job_industries as $job_industry) {
+                                                    echo "<p>" . $job_industry["name"] . "</p>";
+                                                } 
+                                            ?>
                                         </div>
                                     </div>
                                     <div class="columns">
-                                        <div class="column title is-3">
-                                            <labe for="salary">Salary: </label>
-                                        </div>
                                         <div class="column">
-                                            <input class="input" type="number" id="salary" name="salary" value="<?php echo $job["salary"] ?>">
-                                        </div>
-                                        <div class="column title is-3">
-                                            <p>€</p>
+                                            <p class="title is-3"><?php echo $job["salary"] ?>€</p>
                                         </div>
 
-                                        <div class="columns">
-                                            <div class="column">
-                                                <button tpye="submit" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn" value="<?php echo $job["job_id"] ?>">
-                                                    <span class="icon is-small">
-                                                        <i class="fas fa-check"></i>
-                                                    </span>
-                                                </button>
+                                        <form action="./company_published.php" method="post">
+
+                                            <div class="columns">
+                                                <div class="column">
+                                                    <button tpye="submit" class="button is-info is-rounded" name="edit-job-btn" value="<?php echo $job["job_id"] ?>">
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-edit"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div class="column">
+                                                    <button tpye="submit" class="button is-danger is-outlined is-rounded" name="del-job-btn" value="<?php echo $job["job_id"] ?>">
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-trash"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div class="column">
-                                                <button tpye="submit" class="button is-danger is-outlined is-rounded" name="stop-edit-job-btn" value="<?php echo $job["job_id"] ?>">
-                                                    <span class="icon is-small">
-                                                        <i class="fas fa-times"></i>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                        </div>
 
+                                        </form>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            <?php
-
-            } else {
-
-            ?>
-                <div class="column">
-                    <div class="card">
-                        <header class="card-header">
-                            <p class="card-header-title">
-                                <?php echo $job["title"] ?>
-                            </p>
-                        </header>
-                        <div class="card-content">
-                            <div class="content">
-                                <div class="columns">
-                                    <div class="column is-two-third">
-                                        <p class="title is-5">Description:</p>
-                                        <p><?php echo $job["description"] ?></p>
-                                    </div>
-                                    <div class="column is-one-third">
-                                        <p class="title is-5">Type:</p>
-                                        <p>
-                                            <?php 
-                                                if ($job["isapprenticeship"] == 0) {
-                                                    echo "Job";
-                                                } else {
-                                                    echo "Apprenticeship";
-                                                }
-                                            ?>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="columns">
-                                    <div class="column is-two-third">
-                                        <p class="title is-5">Industries:</p>
-                                        <?php 
-                                            foreach($job_industries as $job_industry) {
-                                                echo "<p>" . $job_industry["name"] . "</p>";
-                                            } 
-                                        ?>
-                                    </div>
-                                </div>
-                                <div class="columns">
-                                    <div class="column">
-                                        <p class="title is-3"><?php echo $job["salary"] ?>€</p>
-                                    </div>
-
-                                    <form action="./company_published.php" method="post">
-
-                                        <div class="columns">
-                                            <div class="column">
-                                                <button tpye="submit" class="button is-info is-rounded" name="edit-job-btn" value="<?php echo $job["job_id"] ?>">
-                                                    <span class="icon is-small">
-                                                        <i class="fas fa-edit"></i>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div class="column">
-                                                <button tpye="submit" class="button is-danger is-outlined is-rounded" name="del-job-btn" value="<?php echo $job["job_id"] ?>">
-                                                    <span class="icon is-small">
-                                                        <i class="fas fa-trash"></i>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            <?php
+                <?php
+
+                }
+
+                if ($counter % 2 != 0) { 
+                    echo '</div>';
+                }
+
+                $counter++;
 
             }
 
             if ($counter % 2 != 0) { 
-                echo '</div>';
+                echo '<div class="column"></div>';
             }
-
-            $counter++;
-
-        }
 
         ?>
         
 </body>
+<script>
+  function submitForm(id) {
+    document.getElementById(id).submit();
+  }
+</script>
 </html>
