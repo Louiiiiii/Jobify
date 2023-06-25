@@ -2,7 +2,7 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
 -- Schema Jobify
@@ -756,6 +756,16 @@ USE `Jobify`;
 INSERT INTO `Jobify`.`Application` (`application_id`, `text`, `applicationstatus_id`, `job_id`, `applicant_id`) VALUES (1, NULL, 1, 1, 1);
 INSERT INTO `Jobify`.`Application` (`application_id`, `text`, `applicationstatus_id`, `job_id`, `applicant_id`) VALUES (2, NULL, 1, 1, 2);
 INSERT INTO `Jobify`.`Application` (`application_id`, `text`, `applicationstatus_id`, `job_id`, `applicant_id`) VALUES (3, NULL, 1, 1, 4);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Jobify`.`Application_File`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Jobify`;
+INSERT INTO `Jobify`.`Application_File` (`Application_File_id`, `application_id`, `file_id`) VALUES (DEFAULT, 3, 12);
 
 COMMIT;
 
