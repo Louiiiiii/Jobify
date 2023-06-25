@@ -4,7 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/website/classes/DB.php";
 class Job extends DB
 {
 	/*user_id?*/
-	private $job_id;
+	public $job_id;
 	public $title;
 	public $description;
 	public $salary;
@@ -77,6 +77,57 @@ class Job extends DB
 		{
 			return null;
 		}
+	}
+
+	public function updateJob(){
+		$db = new DB();
+		$query = 'update Job ';
+		if ($this->title != null){
+			$query = $query . 'set title = :title';
+			if ($this->description != null or $this->salary != null or $this->isapprenticeship != null){
+				$query = $query . ', ';
+			}
+		}
+		if ($this->description != null){
+			if ($this->title == null){
+				$query = $query . 'set ';
+			}
+			$query = $query . 'description = :desctiption';
+			if ($this->salary != null or $this->isapprenticeship != null){
+				$query = $query . ', ';
+			}
+		}
+		if ($this->salary != null){
+			if ($this->title == null and $this->description == null){
+				$query = $query . 'set ';
+			}
+			$query = $query . 'salary = :salary';
+			if ($this->isapprenticeship != null){
+				$query = $query . ', ';
+			}
+		}
+		if ($this->isapprenticeship != null){
+			if ($this->title == null and $this->description == null and $this->salary == null){
+				$query = $query . 'set ';
+			}
+			$query = $query . 'isapprenticeship = :isapprenticeship ';
+		}
+		$query = $query . 'where job_id = :job_id';
+		$stmt = $db->pdo->prepare($query);
+		$stmt->bindParam('job_id',$this->job_id,PDO::PARAM_INT);
+		if ($this->title != null) {
+			$stmt->bindParam('title', $this->title);
+		}
+		if ($this->description != null) {
+			$stmt->bindParam('description', $this->description);
+		}
+		if ($this->salary != null) {
+			$stmt->bindParam('salary', $this->salary, PDO::PARAM_INT);
+		}
+		if ($this->isapprenticeship != null) {
+			$stmt->bindParam('isapprenticeship', $this->isapprenticeship, PDO::PARAM_INT);
+		}
+		$stmt->execute();
 	}
 
 	public static function deleteJobByJobID($job_id)
