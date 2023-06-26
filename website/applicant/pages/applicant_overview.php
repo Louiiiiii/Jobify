@@ -25,7 +25,7 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 
 if (!isset($_SESSION["current_user_id"]))
 {
-    $userid = 6;
+    $userid = 9;
 }
 else{
 	$userid = $_SESSION["current_user_id"];
