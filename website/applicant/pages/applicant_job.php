@@ -17,7 +17,6 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 $skipfilter = true;
 
 include '../parts/applicant_navbar.php';
-require_once '../parts/applicant_filters.php';
 
 if (isset($_SESSION['current_user_id'])){
     $user_id = $_SESSION['current_user_id'];
