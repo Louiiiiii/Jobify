@@ -83,17 +83,17 @@ class Job extends DB
 			$stmt->bindParam('isapprenticeship', $this->isapprenticeship, PDO::PARAM_INT);
 		}
 		$stmt->execute();
+		$stmt->debugDumpParams();
 	}
 
 	public function insertjob()
 	{
 		$db = new DB();
-		$stmt = $db->pdo->prepare("insert into Job (job_id, title, description, salary, isapprenticeship, company_id) values (?,?,?,?,?,?)");
-		$stmt->bindParam(1, $this->job_id, PDO::PARAM_STR);
-		$stmt->bindParam(2, $this->title, PDO::PARAM_INT);
-		$stmt->bindParam(3, $this->description, PDO::PARAM_INT);
-		$stmt->bindParam(4, $this->salary, PDO::PARAM_STR);
-		$stmt->bindParam(5, $this->isapprenticeship, PDO::PARAM_STR);
+		$stmt = $db->pdo->prepare("insert into Job (title, description, salary, isapprenticeship, company_id) values (?,?,?,?,?)");
+		$stmt->bindParam(2, $this->title);
+		$stmt->bindParam(3, $this->description);
+		$stmt->bindParam(4, $this->salary, PDO::PARAM_INT);
+		$stmt->bindParam(5, $this->isapprenticeship, PDO::PARAM_INT);
 		$stmt->bindParam(6, $this->company_id, PDO::PARAM_INT);
 
 		if($stmt->execute())
