@@ -20,6 +20,7 @@ if (isset($_POST['jobinfo'])){
 <body>
 <?php
 include '../parts/applicant_navbar.php';
+require_once '../parts/applicant_filters.php';
 include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 
 if (!isset($_SESSION["current_user_id"]))
