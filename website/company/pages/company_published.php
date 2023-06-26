@@ -67,6 +67,64 @@
             echo "<pre>";
             print_r($_POST);
             echo "</pre>";
+            //get data
+            $title = $_POST['title'];
+            $description = $_POST['description'];
+            if (isset($_POST["industry_ids"])) {
+                $industry_ids = $_POST['industry_ids'];
+            } else {
+                $industry_ids = null;
+            }
+
+            if (isset($_POST["isapprenticeship"])) {
+                $isapprenticeship = 1;
+            } else {
+                $isapprenticeship = 0;
+            }
+
+            $salary = $_POST['salary'];
+
+            if ($_POST['save-edited-job-btn']>0) {
+                $job_id = $_POST['save-edited-job-btn'];
+            } else {
+                $job_id = false;
+            }
+
+            $company = Company::getCompanyByUserId($current_user_id);
+            $company_id = $company->company_id;
+
+            // Print the variable values (optional)
+            echo "Title: " . $title . "<br>";
+            echo "Description: " . $description . "<br>";
+            echo "Industry IDs: "; print_r($industry_ids); echo "<br>";
+            echo "Is Apprenticeship: " . $isapprenticeship . "<br>";
+            echo "Salary: " . $salary . "<br>";
+            echo "Job_ID: " . $job_id . "<br>";
+
+            //insert Job
+                $job = new JOB ($title, $isapprenticeship, $company_id, $salary, $description);
+
+                if($job_id == false) {
+                    //insert
+                    echo "insert <br>";
+                    $job_id = $job -> insertjob();
+                } else {
+                    //update
+                    echo "update <br>";
+                    $job ->updateJob();
+                }
+            // 
+            
+            //add Industries
+                if ($industry_ids != null) {
+                    //del ol
+                    JOB::delAllIndustriesByJob($job_id);
+                    //add new
+                    foreach($industry_ids as $industry_id) {
+                        JOB::addIndustryToJob($job_id, $industry_id);
+                    }
+                }
+            //
 
             unset($_POST);
         }
@@ -209,14 +267,14 @@
 
                                             <div class="columns">
                                                 <div class="column">
-                                                    <button type="button" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn" value="<?php echo $job["job_id"] ?>">
+                                                    <button type="submit" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn">
                                                         <span class="icon is-small">
                                                             <i class="fas fa-check"></i>
                                                         </span>
                                                     </button>
                                                 </div>
                                                 <div class="column">
-                                                    <button type="submit" onclick="submitForm('add-job-form')" class="button is-danger is-outlined is-rounded" name="stop-edit-job-btn" value="<?php echo $job["job_id"] ?>">
+                                                    <button type="submit" onclick="submitForm('add-job-form')" class="button is-danger is-outlined is-rounded" name="stop-edit-job-btn">
                                                         <span class="icon is-small">
                                                             <i class="fas fa-times"></i>
                                                         </span>
@@ -287,8 +345,8 @@
                                                             $isapprenticeship = "";
                                                         }
                                                     ?>
-                                                    <label class="checkbox" name="isapprenticeship">
-                                                        <input type="checkbox" name="isapprenticeship" <?php echo $isapprenticeship ?>>
+                                                    <label class="checkbox" for="isapprenticeship">
+                                                        <input type="checkbox" id="isapprenticeship" name="isapprenticeship" <?php echo $isapprenticeship ?>>
                                                         Apprenticeship
                                                     </label>
                                                 </p>
@@ -390,6 +448,7 @@
                                         <div class="column is-two-third">
                                             <p class="title is-5">Industries:</p>
                                             <?php 
+                                                print_R($job_industries);
                                                 foreach($job_industries as $job_industry) {
                                                     echo "<p>" . $job_industry["name"] . "</p>";
                                                 } 

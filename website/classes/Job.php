@@ -12,7 +12,7 @@ class Job extends DB
 	public $company_id;
 
 
-	public function __construct($title, $isapprenticeship, $company_id,$description=null, $salary=null)
+	public function __construct($title, $isapprenticeship, $company_id, $salary, $description=null)
 	{
 		$this->title = $title;
 		$this->description = $description;
@@ -32,54 +32,7 @@ class Job extends DB
 		return $job;
 	}
 
-	public static function getAllJobsByCompany($company_id){
-		$db = new DB();
-		$stmt = $db->pdo->prepare('select * 
-  										   from Job 
-  									      where company_id = ?');
-		$stmt->bindParam(1,$company_id);
-		$stmt->execute();
-		return $stmt->fetchAll();
-	}
-
-	public static function getAllAplicantsforJobNotRejected($job_id){
-		$db = new DB();
-		$stmt = $db->pdo->prepare('select a.text applicationtext,
-												a.applicationstatus_id status,
-												a.application_id,
-       											ap.*
-  										   from Application a,
-  										        Applicant ap
-  									      where a.applicant_id = ap.applicant_id
-  									        and a.job_id = ?
-  									        and a.applicationstatus_id != 3');
-		$stmt->bindParam(1,$job_id);
-		$stmt->execute();
-		return $stmt->fetchAll();
-	}
-
-	public static function insertjob($job_id, $title, $isapprenticeship, $company_id, $description=null, $salary=null)
-	{
-		$job = new job($title, $description=null, $salary=null, $isapprenticeship, $company_id);
-		$stmt = $job->pdo->prepare("insert into Job (job_id, title, description, salary, isapprenticeship, company_id) values (?,?,?,?,?)");
-		$stmt->bindParam(1, $job_id, PDO::PARAM_STR);
-		$stmt->bindParam(2, $title, PDO::PARAM_INT);
-		$stmt->bindParam(3, $description, PDO::PARAM_INT);
-		$stmt->bindParam(4, $salary, PDO::PARAM_STR);
-		$stmt->bindParam(5, $isapprenticeship, PDO::PARAM_STR);
-		$stmt->bindParam(6, $company_id, PDO::PARAM_STR);
-
-		if($stmt->execute())
-		{
-			return $job;
-		}
-		else
-		{
-			return null;
-		}
-	}
-
-	public function updateJob(){
+	public function updateJob() {
 		$db = new DB();
 		$query = 'update Job ';
 		if ($this->title != null){
@@ -113,8 +66,10 @@ class Job extends DB
 			$query = $query . 'isapprenticeship = :isapprenticeship ';
 		}
 		$query = $query . 'where job_id = :job_id';
+
 		$stmt = $db->pdo->prepare($query);
 		$stmt->bindParam('job_id',$this->job_id,PDO::PARAM_INT);
+
 		if ($this->title != null) {
 			$stmt->bindParam('title', $this->title);
 		}
@@ -128,6 +83,53 @@ class Job extends DB
 			$stmt->bindParam('isapprenticeship', $this->isapprenticeship, PDO::PARAM_INT);
 		}
 		$stmt->execute();
+	}
+
+	public function insertjob()
+	{
+		$db = new DB();
+		$stmt = $db->pdo->prepare("insert into Job (job_id, title, description, salary, isapprenticeship, company_id) values (?,?,?,?,?,?)");
+		$stmt->bindParam(1, $this->job_id, PDO::PARAM_STR);
+		$stmt->bindParam(2, $this->title, PDO::PARAM_INT);
+		$stmt->bindParam(3, $this->description, PDO::PARAM_INT);
+		$stmt->bindParam(4, $this->salary, PDO::PARAM_STR);
+		$stmt->bindParam(5, $this->isapprenticeship, PDO::PARAM_STR);
+		$stmt->bindParam(6, $this->company_id, PDO::PARAM_INT);
+
+		if($stmt->execute())
+		{
+			return $db->pdo->lastInsertId();
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	public static function getAllJobsByCompany($company_id){
+		$db = new DB();
+		$stmt = $db->pdo->prepare('select * 
+  										   from Job 
+  									      where company_id = ?');
+		$stmt->bindParam(1,$company_id);
+		$stmt->execute();
+		return $stmt->fetchAll();
+	}
+
+	public static function getAllAplicantsforJobNotRejected($job_id){
+		$db = new DB();
+		$stmt = $db->pdo->prepare('select a.text applicationtext,
+												a.applicationstatus_id status,
+												a.application_id,
+       											ap.*
+  										   from Application a,
+  										        Applicant ap
+  									      where a.applicant_id = ap.applicant_id
+  									        and a.job_id = ?
+  									        and a.applicationstatus_id != 3');
+		$stmt->bindParam(1,$job_id);
+		$stmt->execute();
+		return $stmt->fetchAll();
 	}
 
 	public static function deleteJobByJobID($job_id)
@@ -250,6 +252,32 @@ class Job extends DB
 			return $result;
 		}
 		return null;
+	}
+
+	public static function addIndustryToJob($job_id, $industry_id) {
+		$db = new DB();
+		$stmt = $db->pdo->prepare('
+			INSERT INTO Job_Industry (job_id, industry_id)
+			VALUES(?,?)
+		;');
+		$stmt->bindParam(1, $job_id, PDO::PARAM_INT);
+		$stmt->bindParam(2, $industry_id, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetchAll();		
+
+		return $result;
+	}
+
+	public static function delAllIndustriesByJob($job_id) {
+		$db = new DB();
+		$stmt = $db->pdo->prepare('
+			DELETE FROM Job_Industry WHERE job_id = ?
+		;');
+		$stmt->bindParam(1, $job_id, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetchAll();		
+
+		return $result;
 	}
 }
 
