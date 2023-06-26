@@ -16,6 +16,13 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
+                    <a href="logout.php" class="button is-white">
+                        <strong>Log Out</strong>
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-item">
+                <div class="buttons">
                     <button class="button is-white" onclick="window.location.href = 'company_published.php';">Home</button>
                 </div>
             </div>

@@ -13,6 +13,13 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
+                    <a href="logout.php" class="button is-white">
+                        <strong>Log Out</strong>
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-item">
+                <div class="buttons">
                     <a href="applicant_overview.php" class="button is-white">
                         <!--Link Default Homepage here-->
                         <strong>Home</strong>
