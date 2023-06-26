@@ -90,18 +90,16 @@ class Job extends DB
 	{
 		$db = new DB();
 		$stmt = $db->pdo->prepare("insert into Job (title, description, salary, isapprenticeship, company_id) values (?,?,?,?,?)");
-		$stmt->bindParam(2, $this->title);
-		$stmt->bindParam(3, $this->description);
-		$stmt->bindParam(4, $this->salary, PDO::PARAM_INT);
-		$stmt->bindParam(5, $this->isapprenticeship, PDO::PARAM_INT);
-		$stmt->bindParam(6, $this->company_id, PDO::PARAM_INT);
+		$stmt->bindParam(1, $this->title);
+		$stmt->bindParam(2, $this->description);
+		$stmt->bindParam(3, $this->salary, PDO::PARAM_INT);
+		$stmt->bindParam(4, $this->isapprenticeship, PDO::PARAM_INT);
+		$stmt->bindParam(5, $this->company_id, PDO::PARAM_INT);
 
 		if($stmt->execute())
 		{
 			return $db->pdo->lastInsertId();
-		}
-		else
-		{
+		} else {
 			return null;
 		}
 	}

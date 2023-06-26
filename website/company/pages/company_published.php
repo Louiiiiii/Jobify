@@ -116,6 +116,8 @@
             // 
             
             //add Industries
+                print_r($industry_ids);
+                
                 if ($industry_ids != null) {
                     //del ol
                     JOB::delAllIndustriesByJob($job_id);
@@ -300,6 +302,10 @@
 
             foreach ($all_jobs as $job) {
 
+                //echo "<pre>";
+                //print_r($job);
+                //echo "</pre>";
+
                 $job_industries = JOB::getJobIndustries($job["job_id"]);
                 
                 if ($counter % 2 == 0) { 
@@ -448,7 +454,6 @@
                                         <div class="column is-two-third">
                                             <p class="title is-5">Industries:</p>
                                             <?php 
-                                                print_R($job_industries);
                                                 foreach($job_industries as $job_industry) {
                                                     echo "<p>" . $job_industry["name"] . "</p>";
                                                 } 
