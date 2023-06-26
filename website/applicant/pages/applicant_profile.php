@@ -455,7 +455,7 @@
         }
     ?>
 
-    <form class="form" action="./company_profile.php" method="post" enctype="multipart/form-data">
+    <form class="form" action="./applicant_profile.php" method="post" enctype="multipart/form-data">
         <div class="columns">
             <div class="column">
                 <label class="label">Choose upload files</label>
@@ -488,7 +488,7 @@
             </div>
         </div>
 
-        <button class="button" type="submit" name="file_submit">Upload File</button>
+        <button class="button is-link" type="submit" name="file_submit">Upload File</button>
     </form>
 
     <div id="modal-js-example" class="modal">

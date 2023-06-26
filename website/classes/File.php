@@ -225,11 +225,6 @@ class File extends User
         if($stmt->execute()) {
             $File = true;
         }
-        $stmt = $db->pdo->prepare('delete from Job_File where file_id = ?');
-        $stmt->bindParam(1,$file_id,PDO::PARAM_INT);
-        if($stmt->execute()) {
-            $Job_File = true;
-        }
         $stmt = $db->pdo->prepare('delete from Application_File where file_id = ?');
         $stmt->bindParam(1,$file_id,PDO::PARAM_INT);
         if($stmt->execute()) {
@@ -242,7 +237,7 @@ class File extends User
             $file_nema = false;
         }
 
-        if($File && $Job_File && $Application_File && $file_path) {
+        if($File && $Application_File && $file_path) {
             return true;
         }
 
