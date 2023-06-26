@@ -14,6 +14,7 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 
+session_start();
 $skipfilter = true;
 
 include '../parts/applicant_navbar.php';
@@ -23,7 +24,7 @@ if (isset($_SESSION['current_user_id'])){
     $user_id = $_SESSION['current_user_id'];
 }
 else{
-    $user_id = 6;
+    $user_id = 9;
 }
 
 if (isset($_SESSION['current_user_email'])){
@@ -208,7 +209,7 @@ $company = Company::getDatabyId($job->company_id);
                         <div class="select">
                             <select name="filetype_name" required>
                                 <?php
-                                $allFileTypes = File::getAllFileTypes();
+                                $allFileTypes = File::getAllFilesByUser($user_id);
 
                                 foreach ($allFileTypes as $row) {
                                     echo '<option value="' . $row["type"] . '">' . $row["type"] . '</option>';

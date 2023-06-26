@@ -1,5 +1,6 @@
 <?php
 if (isset($_POST['jobinfo'])){
+    session_start();
     $_SESSION['currjob_id'] = $_POST['jobinfo'];
     header("Location: applicant_job.php");
     die();
@@ -94,7 +95,8 @@ $filter = $db->pdo->prepare('select   j.title title,
                                        and f.job_id = j.job_id
                                        and f.applicant_id = :applicant
                                        and (lower(j.title) like lower(:jobtitle) or :jobtitle is null)
-                                       and (j.salary between :salaryfrom and :salaryto or :salaryfrom is null)
+                                       and (j.salary >= :salaryfrom or :salaryfrom is null or :salaryfrom = 0)
+                                       and (j.salary <= :salaryto or :salaryto is null or :salaryto = 0)
                                        and (lower(c.name) like lower(:companyname) or :companyname is null)
                                        and (lower(ci.city) like lower(:cityname) or :cityname is null)
                                        and (lower(i.name) like lower(:industry) or :industry is null)');

@@ -1,5 +1,6 @@
 <?php
 if (isset($_POST['jobinfo'])){
+    session_start();
     $_SESSION['currjob_id'] = $_POST['jobinfo'];
     header("Location: applicant_job.php");
     die();
@@ -69,30 +70,31 @@ if (isset($_POST['filter'])){
 }
 $applicant = Applicant::getApplicantByUserId($userid);
 $db = new DB();
-$filter = $db->pdo->prepare('select   j.title title,
+$filter = $db->pdo->prepare('select j.title title,
                                             j.description description,
                                             j.job_id job_id,
                                             case when 1 = (select 1 
                                                              from Favorite 
-                                                            where applicant_id = :applicant
+                                                            where applicant_id = 1
                                                               and job_id = j.job_id)
                                                  then 1
-                                                 else 0 end favorite
-                                      from Job j,
-                                           Company c,
-                                           Address ad,
-                                           City_Postalcode cp,
+                                                 else 0 end favorite 
+                                      from job j,
+                                           company c,
+                                           address ad,
+                                           City_postalcode cp,
                                            City ci,
-                                           Industry i,
-                                           Job_Industry ji
-                                     where j.job_id = c.company_id
+                                           Job_Industry ji,
+                                           Industry i
+                                     where j.company_id = c.company_id
                                        and c.address_id = ad.address_id
                                        and ad.city_postalcode_id = cp.city_postalcode_id
                                        and cp.city_id = ci.city_id
                                        and j.job_id = ji.job_id
-                                       and ji.industry_id = i.industry_id
+                                       and i.industry_id = ji.industry_id
                                        and (lower(j.title) like lower(:jobtitle) or :jobtitle is null)
-                                       and (j.salary between :salaryfrom and :salaryto or :salaryfrom is null)
+                                       and (j.salary >= :salaryfrom or :salaryfrom is null or :salaryfrom = 0)
+                                       and (j.salary <= :salaryto or :salaryto is null or :salaryto = 0)
                                        and (lower(c.name) like lower(:companyname) or :companyname is null)
                                        and (lower(ci.city) like lower(:cityname) or :cityname is null)
                                        and (lower(i.name) like lower(:industry) or :industry is null)');
@@ -104,6 +106,7 @@ $filter->bindParam('companyname', $companyname);
 $filter->bindParam('cityname', $cityname);
 $filter->bindParam('industry', $industry);
 $filter->execute();
+$filter->debugDumpParams();
 ?>
 <div class="row">
     <div class="column">
