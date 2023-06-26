@@ -13,7 +13,7 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href="../../mainpages/logout.php" class="button is-white">
+                    <a href="../mainpages/logout.php" class="button is-white">
                         <strong>Log Out</strong>
                     </a>
                 </div>
