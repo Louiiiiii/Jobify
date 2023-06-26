@@ -454,6 +454,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Job_Industry` (
   PRIMARY KEY (`Job_Industry_id`),
   INDEX `fk_Job_Industry_Industry1_idx` (`industry_id` ASC),
   INDEX `fk_Job_Industry_Job1_idx` (`job_id` ASC),
+  UNIQUE INDEX `job_id_UNIQUE` (`job_id` ASC, `industry_id` ASC),
   CONSTRAINT `fk_Job_Industry_Job1`
     FOREIGN KEY (`job_id`)
     REFERENCES `Jobify`.`Job` (`job_id`)
