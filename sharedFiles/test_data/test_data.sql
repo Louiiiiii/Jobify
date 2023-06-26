@@ -661,12 +661,12 @@ USE `Jobify`;
 INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (1, 'High School Diploma');
 INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (2, 'Vocational or Technical Certifications');
 INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (3, 'Associate\'s Degree');
-INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (4, 'Undergraduate (e.g., Bachelor\'s Degree)');
-INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (5, 'Graduate (e.g., Master\'s Degree)');
+INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (4, 'Undergraduate');
+INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (5, 'Graduate');
 INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (6, 'Postgraduate');
 INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (7, 'Postdoctoral');
-INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (8, 'Doctorate or Ph.D. (Doctor of Philosophy)');
-INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (9, 'Professional Degrees (e.g., M.D., J.D., D.D.S., D.V.M.)');
+INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (8, 'Doctorate or Ph.D. ');
+INSERT INTO `Jobify`.`Education` (`education_id`, `name`) VALUES (9, 'Professional Degrees ');
 
 COMMIT;
 
