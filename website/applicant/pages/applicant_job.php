@@ -40,6 +40,13 @@ else{
     $currjob_id = 1;
 }
 
+if (isset($_SESSION['alreadyapplied'])){
+	$alreadyapplied = $_SESSION['alreadyapplied'];
+}
+else{
+    $alreadyapplied = null;
+}
+
 if (isset($_POST["file_submit"])) {
 
     $filetype_name = $_POST["filetype_name"];
@@ -57,15 +64,17 @@ if (isset($_POST["file_submit"])) {
 if (isset($_POST['apply']))
 {
     $applicant = Applicant::getApplicantByUserId($user_id);
-    $applicant->applyForJob($currjob_id,$_POST['text'],$_POST['files']);
-    $fileids = str_repeat('?,', count($_POST['files']) - 1) . '?';
+    if(isset($_POST['files'])){
+		$applicant->applyForJob($currjob_id,$_POST['text'],$_POST['files']);
 
-    $db = new DB();
-	$stmt = $db->pdo->prepare('select name 
+		$fileids = str_repeat('?,', count($_POST['files']) - 1) . '?';
+
+		$db = new DB();
+		$stmt = $db->pdo->prepare('select name 
                                        from File
                                       where file_id in('.$fileids.')');
-    $stmt->execute($_POST['files']);
-    echo '        
+		$stmt->execute($_POST['files']);
+		echo '        
         <div class="modal is-active">
             <div class="modal-background is-active"></div>
             <div class="modal-content">
@@ -73,19 +82,36 @@ if (isset($_POST['apply']))
                     <div class="row">
                         <h2 class="title is-4">Succesfully sent Application with Files:</h2>
                     </div>';
-    while ($res =$stmt->fetch()){
-		echo '<div class="row">';
-		echo '<p class="content">'.$res[0].'</p>';
-		echo '</div>';
-    }
-    echo '
+		while ($res =$stmt->fetch()){
+			echo '<div class="row">';
+			echo '<p class="content">'.$res[0].'</p>';
+			echo '</div>';
+		}
+		echo '
                 </div>
             </div>
             <button class="modal-close is-large" aria-label="close"></button>
         </div>';
+    }
+    else{
+		$applicant->applyForJob($currjob_id,$_POST['text']);
+		echo '        
+        <div class="modal is-active">
+            <div class="modal-background is-active"></div>
+            <div class="modal-content">
+                <div class="box">
+                    <div class="row">
+                        <h2 class="title is-4">Succesfully sent Application wthout any additional Files</h2>
+                    </div>
+                </div>
+            </div>
+            <button class="modal-close is-large" aria-label="close"></button>
+        </div>';
+	}
 }
 
 $job = Job::getDatabyId($currjob_id);
+$additionaldata = Job::getAdditionalData($job->job_id);
 $company = Company::getDatabyId($job->company_id);
 ?>
     <div class="row">
@@ -99,12 +125,20 @@ $company = Company::getDatabyId($job->company_id);
                 <div class="card-content">
                     <div class="content">
                         <div>
-                            <?php echo $job->description; ?>
+							<?php echo '<p>'.$job->description.'</p>';?>
                         </div>
                         <?php
+                        if ($additionaldata['industry']){
+                        ?>
+                        <br>
+                        <div>
+							<?php echo '<p><b>Industry:</b> '.$additionaldata['industry'].'</p>'; ?>
+                        </div>
+                        <?php
+                        }
                         if($job->salary != null) {
                             echo "<div>";
-                            echo "<br><b>Gehalt:</b> ".$job->salary."€ brutto";
+                            echo "<br><b>Salary:</b> ".$job->salary."€";
                             echo "</div>";
                         }
                         ?>
@@ -119,8 +153,55 @@ $company = Company::getDatabyId($job->company_id);
                             <?php echo $company->description;?>
                         </div>
                     </div>
+					<?php
+					if ($additionaldata['address'] != null){
+						?>
+                        <br>
+                        <div>
+                            <address>
+								<?php
+								echo $additionaldata['address'].'<br>';
+								echo $additionaldata['city'].'<br>';
+								echo $additionaldata['state'].'<br>';
+								echo $additionaldata['country'];
+								?>
+                            </address>
+                        </div>
+						<?php
+					}
+					?>
+                    <br>
                     <div>
+                        <?php
+                        if ($alreadyapplied == null) {
+                        ?>
                         <button class="button is-black js-modal-trigger" data-target="modal-js-example">Bewerben</button>
+                        <?php
+						}
+                        else{
+                        ?>
+                            <span class="tag is-large
+                                    <?php
+							switch ($alreadyapplied){
+								case 'New';
+									echo 'is-info';
+									break;
+								case 'In Progress';
+									echo 'is-warning';
+									break;
+								case 'Rejected';
+									echo 'is-danger';
+									break;
+								case 'Accepted';
+									echo 'is-success';
+									break;
+							}
+							?>">
+                                <?php echo $alreadyapplied;?>
+                                </span>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

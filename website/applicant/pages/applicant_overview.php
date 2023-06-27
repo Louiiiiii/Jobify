@@ -2,6 +2,7 @@
 if (isset($_POST['jobinfo'])){
     session_start();
     $_SESSION['currjob_id'] = $_POST['jobinfo'];
+	unset($_SESSION['alreadyapplied']);
     header("Location: applicant_job.php");
     die();
 }
@@ -75,7 +76,7 @@ $filter = $db->pdo->prepare('select j.title title,
                                             j.job_id job_id,
                                             case when 1 = (select 1 
                                                              from Favorite 
-                                                            where applicant_id = 1
+                                                            where applicant_id = :applicant
                                                               and job_id = j.job_id)
                                                  then 1
                                                  else 0 end favorite 
@@ -106,7 +107,6 @@ $filter->bindParam('companyname', $companyname);
 $filter->bindParam('cityname', $cityname);
 $filter->bindParam('industry', $industry);
 $filter->execute();
-$filter->debugDumpParams();
 ?>
 <div class="row">
     <div class="column">

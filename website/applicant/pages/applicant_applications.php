@@ -2,6 +2,7 @@
 if (isset($_POST['jobinfo'])){
     session_start();
     $_SESSION['currjob_id'] = $_POST['jobinfo'];
+    $_SESSION['alreadyapplied'] = $_POST['applicationstatus'];
     header("Location: applicant_job.php");
     die();
 }
@@ -172,7 +173,7 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
                                 ?>
                             </p>
                             <div class="like field is-grouped">
-                                <button style="pointer-events: none" class="button
+                                <span class="tag is-large
                                     <?php
                                     switch ($res['status']){
                                         case 'New';
@@ -190,7 +191,7 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
                                     }
                                     ?>">
                                 <?php echo $res['status'];?>
-                                </button>
+                                </span>
                             </div>
                         </header>
                         <div class="card-content">
@@ -204,6 +205,7 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
                                     <div>
                                         <form method="post">
                                             <input type="text" hidden name="application_id" value=<?php echo $res['application_id']; ?>>
+                                            <input type="text" hidden name="applicationstatus" value=<?php echo $res['status']; ?>>
                                             <button class="button is-info " type="submit" value=<?php echo $res['job_id']?> name="jobinfo">
                                                 <span class="icon is-small">
                                                     <i class="fas fa-info"></i>

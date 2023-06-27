@@ -36,38 +36,6 @@ if (isset($_POST['favorite'])){
     $applicant->changeFavoriteStatus($_POST['favorite']);
 }
 
-
-$jobtitle = null;
-$salaryfrom = null;
-$salaryto = null;
-$companyname = null;
-$cityname = null;
-$industry = null;
-
-if (isset($_POST['filter'])){
-
-    if ($_POST['jobtitle'] != ""){
-        $jobtitle = '%'.$_POST['jobtitle'].'%';
-    }
-
-    if ($_POST['salaryfrom'] != null){
-        $salaryfrom = $_POST['salaryfrom'];
-    }
-
-    $salaryto = $_POST['salaryto'];
-
-    if ($_POST['companyname'] != "--Alle--"){
-        $companyname = '%'.$_POST['companyname'].'%';
-    }
-
-    if ($_POST['cityname'] != null){
-        $cityname = '%'.$_POST['cityname'].'%';
-    }
-
-    if ($_POST['industry'] != "--Alle--"){
-        $industry = '%'.$_POST['industry'].'%';
-    }
-}
 $applicant = Applicant::getApplicantByUserId($userid);
 $db = new DB();
 $filter = $db->pdo->prepare('select   j.title title,
@@ -78,36 +46,13 @@ $filter = $db->pdo->prepare('select   j.title title,
                                                             where applicant_id = :applicant
                                                               and job_id = j.job_id)
                                                  then 1
-                                                 else 0 end favorite
+                                                 else 0 end favorite,
+                                            h.text text
                                       from Job j,
-                                           Company c,
-                                           Address ad,
-                                           City_Postalcode cp,
-                                           City ci,
-                                           Industry i,
-                                           Job_Industry ji,
                                            Headhunt h
-                                     where j.job_id = c.company_id
-                                       and c.address_id = ad.address_id
-                                       and ad.city_postalcode_id = cp.city_postalcode_id
-                                       and cp.city_id = ci.city_id
-                                       and j.job_id = ji.job_id
-                                       and ji.industry_id = i.industry_id
-                                       and h.job_id = j.job_id
-                                       and h.applicant_id = :applicant
-                                       and (lower(j.title) like lower(:jobtitle) or :jobtitle is null)
-                                       and (j.salary >= :salaryfrom or :salaryfrom is null or :salaryfrom = 0)
-                                       and (j.salary <= :salaryto or :salaryto is null or :salaryto = 0)
-                                       and (lower(c.name) like lower(:companyname) or :companyname is null)
-                                       and (lower(ci.city) like lower(:cityname) or :cityname is null)
-                                       and (lower(i.name) like lower(:industry) or :industry is null)');
+                                     where j.job_id = h.job_id
+                                       and h.applicant_id = :applicant');
 $filter->bindParam('applicant', $applicant->applicant_id,PDO::PARAM_INT);
-$filter->bindParam('jobtitle', $jobtitle);
-$filter->bindParam('salaryfrom', $salaryfrom, PDO::PARAM_INT);
-$filter->bindParam('salaryto', $salaryto,PDO::PARAM_INT);
-$filter->bindParam('companyname', $companyname);
-$filter->bindParam('cityname', $cityname);
-$filter->bindParam('industry', $industry);
 $filter->execute();
 ?>
 <div class="row">
@@ -153,7 +98,7 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
                             <div class="content">
                                 <div>
 									<?php
-									echo $res['description']
+									echo $res['text']
 									?>
                                 </div>
                                 <div>

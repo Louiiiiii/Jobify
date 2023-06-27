@@ -230,7 +230,7 @@ class Applicant extends User
         return null;
     }
 
-    public function applyForJob($job_id, $text = '',$files = null,$applicationstatus_id = 1){
+    public function applyForJob($job_id, $text,$files = null,$applicationstatus_id = 1){
         $application_id = $this->getApplication_id($job_id);
         if ($application_id == null){
             $stmt = $this->pdo->prepare('insert into Application (text, applicationstatus_id, job_id, applicant_id) values(?,?,?,?)');
@@ -241,8 +241,10 @@ class Applicant extends User
             $stmt->execute();
             $application_id = $this->getApplication_id($job_id);
         }
-		foreach ($files as $file) {
-			self::addApplication_File($file,$application_id);
+		if ($files != null){
+			foreach ($files as $file) {
+				self::addApplication_File($file,$application_id);
+			}
 		}
         return $application_id;
     }

@@ -27,9 +27,33 @@ class Job extends DB
 		$stmt->bindParam(1,$job_id);
 		$stmt->execute();
 		$res = $stmt->fetch();
-		$job = new Job($res['title'],$res['isapprenticeship'],$res['company_id'],$res['description'],$res['salary']);
+		$job = new Job($res['title'],$res['isapprenticeship'],$res['company_id'],$res['salary'],$res['description']);
 		$job->job_id = $job_id;
 		return $job;
+	}
+
+	public static function getAdditionalData($job_id)
+	{
+		$db = new DB;
+		$stmt = $db->pdo->prepare("select i.name industry,
+												concat(a.street,' ',a.number) address,
+												concat(p.Postalcode,' ',ci.city) city,
+												s.state state,
+												co.country country
+										      from Job j
+									 	 left join Job_Industry ji on j.job_id = ji.job_id
+								 		 left join Industry i on ji.industry_id = i.industry_id
+							 			 left join Company c on j.company_id = c.company_id
+							 			 left join Address a on c.address_id = a.address_id
+										 left join City_Postalcode cp on a.city_postalcode_id = cp.city_postalcode_id
+										 left join City ci on cp.city_id = ci.city_id
+										 left join Postalcode p on cp.postalcode_id = p.postalcode_id
+										 left join State s on p.state_id = s.state_id
+										 left join Country co on s.country_id = co.country_id
+  											 where j.job_id = ?");
+		$stmt->bindParam(1,$job_id);
+		$stmt->execute();
+		return $stmt->fetch();
 	}
 
 	public function updateJob() {
