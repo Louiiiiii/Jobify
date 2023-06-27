@@ -70,9 +70,11 @@ class Job extends DB
 
 	public static function getAllJobsByCompany($company_id){
 		$db = new DB();
-		$stmt = $db->pdo->prepare('select * 
-  										   from Job 
-  									      where company_id = ?');
+		$stmt = $db->pdo->prepare('
+			select * 
+			from Job 
+			where company_id = ?
+		;');
 		$stmt->bindParam(1,$company_id);
 		$stmt->execute();
 		return $stmt->fetchAll();
@@ -146,6 +148,23 @@ class Job extends DB
 		}
 	}
 
+	public static function addHeadhuntRequest($text, $job_id, $applicant_id)
+	{
+		$Db = new DB();
+		$stmt = $Db->pdo->prepare("
+			INSERT INTO headhunt (text, job_id, applicant_id) 
+			VALUES (?,?,?)
+		;");
+		$stmt->bindParam(1, $text, PDO::PARAM_STR);
+		$stmt->bindParam(2, $job_id, PDO::PARAM_INT);
+		$stmt->bindParam(3, $applicant_id, PDO::PARAM_INT);
+
+		if($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public static function getHeadhunt_Job($job_id)
 	{

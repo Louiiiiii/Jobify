@@ -350,6 +350,25 @@ class Applicant extends User
         return null;
     }
 
+    public static function getUserIDByApplicantID ($applicant_id) {
+        $db = new DB();
+
+        $stmt_all_infos = $db->pdo->prepare('
+            SELECT u.user_id FROM applicant a 
+            LEFT JOIN user u ON a.user_id = u.user_id
+            WHERE applicant_id = ?
+        ;');        
+        $stmt_all_infos->bindParam(1,$applicant_id, PDO::PARAM_INT);
+        $stmt_all_infos->execute();
+        $result = $stmt_all_infos->fetchAll();
+
+        if ($result != null)
+        {
+            return $result[0];
+        }
+        return null;     
+    }
+
     public static function getProfileDataFromApplicant($user_id) {
         $db = new DB();
 
@@ -403,6 +422,21 @@ class Applicant extends User
             return $result;
         }
         return null;        
+    }
+
+    public static function getApplicantsToHeadhunt ()
+    {
+        $db = new DB();
+        $stmt = $db->pdo->prepare('
+            SELECT * FROM applicant a
+            LEFT JOIN education e ON a.education_id = e.education_id
+            WHERE a.allow_headhunting = 1
+        ;');
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        if($result != null){
+            return $result;
+        }
     }
 }
 
