@@ -355,7 +355,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Application` (
   CONSTRAINT `fk_application_Job1`
     FOREIGN KEY (`job_id`)
     REFERENCES `Jobify`.`Job` (`job_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_application_Applicant1`
     FOREIGN KEY (`applicant_id`)
@@ -381,7 +381,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Application_File` (
   CONSTRAINT `fk_application_has_File_application1`
     FOREIGN KEY (`application_id`)
     REFERENCES `Jobify`.`Application` (`application_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_application_has_File_File1`
     FOREIGN KEY (`file_id`)
@@ -407,7 +407,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Headhunt` (
   CONSTRAINT `fk_Headhunt_Job1`
     FOREIGN KEY (`job_id`)
     REFERENCES `Jobify`.`Job` (`job_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Headhunt_Applicant1`
     FOREIGN KEY (`applicant_id`)
@@ -432,7 +432,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Favorite` (
   CONSTRAINT `fk_Job_Applicant_Job1`
     FOREIGN KEY (`job_id`)
     REFERENCES `Jobify`.`Job` (`job_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Job_Applicant_Applicant1`
     FOREIGN KEY (`applicant_id`)
@@ -458,7 +458,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Job_Industry` (
   CONSTRAINT `fk_Job_Industry_Job1`
     FOREIGN KEY (`job_id`)
     REFERENCES `Jobify`.`Job` (`job_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Job_Industry_Industry1`
     FOREIGN KEY (`industry_id`)
@@ -767,6 +767,16 @@ COMMIT;
 START TRANSACTION;
 USE `Jobify`;
 INSERT INTO `Jobify`.`Application_File` (`Application_File_id`, `application_id`, `file_id`) VALUES (DEFAULT, 3, 12);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `Jobify`.`Headhunt`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `Jobify`;
+INSERT INTO `Jobify`.`Headhunt` (`headhunt_id`, `text`, `job_id`, `applicant_id`) VALUES (DEFAULT, 'jo bro come over', 1, 1);
 
 COMMIT;
 
