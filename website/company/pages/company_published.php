@@ -63,64 +63,57 @@
 
     //Save edited Job
         if (isset($_POST["save-edited-job-btn"])) {
-
-            echo "<pre>";
-            print_r($_POST);
-            echo "</pre>";
             //get data
-            $title = $_POST['title'];
-            $description = $_POST['description'];
-            if (isset($_POST["industry_ids"])) {
-                $industry_ids = $_POST['industry_ids'];
-            } else {
-                $industry_ids = null;
-            }
+                $title = $_POST['title'];
 
-            if (isset($_POST["isapprenticeship"])) {
-                $isapprenticeship = 1;
-            } else {
-                $isapprenticeship = 0;
-            }
+                if (isset($_POST["description"])) {
+                    $description = $_POST['description'];
+                } else {
+                    $description = null;
+                }
 
-            $salary = $_POST['salary'];
+                if (isset($_POST["industry_ids"])) {
+                    $industry_ids = $_POST['industry_ids'];
+                } else {
+                    $industry_ids = null;
+                }
 
-            if ($_POST['save-edited-job-btn']>0) {
-                $job_id = $_POST['save-edited-job-btn'];
-            } else {
-                $job_id = false;
-            }
+                if (isset($_POST["isapprenticeship"])) {
+                    $isapprenticeship = 1;
+                } else {
+                    $isapprenticeship = 0;
+                }
 
-            $company = Company::getCompanyByUserId($current_user_id);
-            $company_id = $company->company_id;
+                $salary = $_POST['salary'];
 
-            // Print the variable values (optional)
-            echo "Title: " . $title . "<br>";
-            echo "Description: " . $description . "<br>";
-            echo "Industry IDs: "; print_r($industry_ids); echo "<br>";
-            echo "Is Apprenticeship: " . $isapprenticeship . "<br>";
-            echo "Salary: " . $salary . "<br>";
-            echo "Job_ID: " . $job_id . "<br>";
+                if ($_POST['save-edited-job-btn']>0) {
+                    $job_id = $_POST['save-edited-job-btn'];
+                } else {
+                    $job_id = false;
+                }
+
+                $company = Company::getCompanyByUserId($current_user_id);
+                $company_id = $company->company_id;
+            //
 
             //insert Job
                 $job = new JOB ($title, $isapprenticeship, $company_id, $salary, $description);
-
+                
                 if($job_id == false) {
                     //insert
-                    echo "insert <br>";
                     $job_id = $job -> insertjob();
                 } else {
                     //update
-                    echo "update <br>";
+                    $job->job_id = $job_id;
                     $job ->updateJob();
                 }
             // 
             
             //add Industries
-                print_r($industry_ids);
+                //del all
+                JOB::delAllIndustriesByJob($job_id);
                 
                 if ($industry_ids != null) {
-                    //del ol
-                    JOB::delAllIndustriesByJob($job_id);
                     //add new
                     foreach($industry_ids as $industry_id) {
                         JOB::addIndustryToJob($job_id, $industry_id);
@@ -369,11 +362,13 @@
 
                                                             $checked = "";
 
-                                                            foreach($job_industries as $job_industry) {
-                                                                if ($job_industry["name"] == $industry["name"]) {
-                                                                    $checked = "checked";
-                                                                }
-                                                            }
+                                                            if(isset($job_industries)) {
+                                                                foreach($job_industries as $job_industry) {
+                                                                    if ($job_industry["name"] == $industry["name"]) {
+                                                                        $checked = "checked";
+                                                                    }
+                                                                } 
+                                                            } 
 
                                                             echo '<input class="checkbox-input" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" ' . $checked . '>';
                                                             echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
@@ -454,9 +449,13 @@
                                         <div class="column is-two-third">
                                             <p class="title is-5">Industries:</p>
                                             <?php 
-                                                foreach($job_industries as $job_industry) {
-                                                    echo "<p>" . $job_industry["name"] . "</p>";
-                                                } 
+                                                if(isset($job_industries)) {
+                                                    foreach($job_industries as $job_industry) {
+                                                        echo "<p>" . $job_industry["name"] . "</p>";
+                                                    } 
+                                                } else {
+                                                    echo "<p>Keine Industry ausgewählt</p>";
+                                                }
                                             ?>
                                         </div>
                                     </div>
