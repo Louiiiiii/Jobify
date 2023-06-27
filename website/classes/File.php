@@ -179,7 +179,7 @@ class File extends User
             $file = NEW FILE($filetype_name, $file["name"], $user_email);
 
             if($file->updateDB()) {
-                echo "<script>alert('File upload has worked fine, Bro!');</script>";
+                echo "<script>alert('File upload has worked fine!');</script>";
                 return true;
             } else {
                 echo "<script>alert('Sorry, something went wrong by writing in out DB!');</script>";

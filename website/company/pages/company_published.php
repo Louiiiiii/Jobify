@@ -47,12 +47,12 @@
         if (isset($_POST["now-delete-job-btn"])) {
             $del_job_modal = "";
 
-            $file_deleted = false; //JOB::deleteJobByJobID($_POST["del-job-id"]);
+            $file_deleted = JOB::deleteJobByJobID($_POST["del-job-id"]);
 
             if($file_deleted) {
                 echo "<script>alert('Your Job was deleted!');</script>";
             } else {
-                echo "<script>alert('Ahhhh shit something went wrong!');</script>";
+                echo "<script>alert('Something went wrong!');</script>";
             }
         }
 
@@ -98,7 +98,7 @@
 
             //insert Job
                 $job = new JOB ($title, $isapprenticeship, $company_id, $salary, $description);
-                
+
                 if($job_id == false) {
                     //insert
                     $job_id = $job -> insertjob();

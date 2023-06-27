@@ -100,12 +100,9 @@ class Job extends DB
 		$stmt = $db->pdo->prepare("DELETE FROM Job WHERE job_id = ?");
 		$stmt->bindParam(1, $job_id, PDO::PARAM_INT);
 
-		if($stmt->execute())
-		{
+		if($stmt->execute()) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
