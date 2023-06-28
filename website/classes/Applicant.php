@@ -420,15 +420,15 @@ class Applicant extends User
                 a.number,
                 e.name AS "education", 
                 ap.allow_headhunting
-            FROM jobify.User u
-            LEFT JOIN jobify.Applicant ap ON u.user_id = ap.user_id
-            LEFT JOIN jobify.Address a ON ap.address_id = a.address_id
-            LEFT JOIN jobify.City_Postalcode cp ON a.City_Postalcode_id = cp.City_Postalcode_id
-            LEFT JOIN jobify.Postalcode p ON cp.postalcode_id = p.postalcode_id
-            LEFT JOIN jobify.City ci ON cp.city_id = ci.city_id
-            LEFT JOIN jobify.State s ON p.state_id = s.state_id
-            LEFT JOIN jobify.Country cou ON s.country_id = cou.country_id
-            LEFT JOIN jobify.Education e ON ap.education_id = e.education_id
+            FROM User u
+            LEFT JOIN Applicant ap ON u.user_id = ap.user_id
+            LEFT JOIN Address a ON ap.address_id = a.address_id
+            LEFT JOIN City_Postalcode cp ON a.City_Postalcode_id = cp.City_Postalcode_id
+            LEFT JOIN Postalcode p ON cp.postalcode_id = p.postalcode_id
+            LEFT JOIN City ci ON cp.city_id = ci.city_id
+            LEFT JOIN State s ON p.state_id = s.state_id
+            LEFT JOIN Country cou ON s.country_id = cou.country_id
+            LEFT JOIN Education e ON ap.education_id = e.education_id
             WHERE u.user_id = ?
         ;');  
 
@@ -439,10 +439,10 @@ class Applicant extends User
         $stmt_all_industries = $db->pdo->prepare('
             SELECT 
                 i.name
-            FROM jobify.User u
-            LEFT JOIN jobify.Applicant ap ON u.user_id = ap.user_id
-            LEFT JOIN jobify.Applicant_Industry ai ON ap.applicant_id = ai.applicant_id
-            LEFT JOIN jobify.Industry i ON ai.industry_id = i.industry_id
+            FROM User u
+            LEFT JOIN Applicant ap ON u.user_id = ap.user_id
+            LEFT JOIN Applicant_Industry ai ON ap.applicant_id = ai.applicant_id
+            LEFT JOIN Industry i ON ai.industry_id = i.industry_id
             WHERE u.user_id = ?
         ;');   
 
