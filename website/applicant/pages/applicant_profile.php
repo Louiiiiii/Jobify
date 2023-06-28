@@ -264,7 +264,7 @@
             <div class="field">
                 <label class="label">Birthday</label>
                 <div class="control">
-                    <input name="birthday" class="input disabling" type="date" value="<?php echo $profile_data_all["birthdate"] ?>" required disabled>
+                    <input style="width: 204.4px" name="birthday" class="input disabling" type="date" value="<?php echo $profile_data_all["birthdate"] ?>" required disabled>
                 </div>
             </div>
             <div class="field"></div>
@@ -406,7 +406,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
                         <th>Extension</th>
                         <th>Type</th>
@@ -424,7 +423,6 @@
                                 $extension = '.' . pathinfo($filepath, PATHINFO_EXTENSION);
 
                                 echo "<tr>";
-                                echo "<th>" . $file["file_id"] . "</th>";
                                 echo "<td>" . $name . "</td>";
                                 echo "<td>" . $extension . "</td>";
                                 echo "<td>" . $file["type"] . "</td>";
@@ -450,7 +448,7 @@
         } else {
             echo "<br>";
             echo "<hr>";
-            echo "<h1>Sie haben keine Files hochgeladen</h1>";
+            echo "<h1 style='margin-left: 30px'>Sie haben keine Files hochgeladen</h1>";
             echo "<br>";
         }
     ?>
