@@ -180,6 +180,45 @@
         }
     //
 
+    //use filters
+        if (isset($_POST["filters"])) {
+
+            $filter_name = $_POST["employee"];
+            $filter_city = $_POST["place"]; 
+
+            if ($_POST["industry"] == "--Alle--") {
+                $filter_industry_id = null;
+            } else {
+                $filter_industry_id = $_POST["industry"];
+            }
+
+            if ($_POST["education"] == "--Alle--") {
+                $filter_education_id = null;
+            } else {
+                $filter_education_id = $_POST["education"];
+            }
+
+            $filers = array(
+                "filter_name" => $filter_name, 
+                "filter_city" => $filter_city, 
+                "filter_industry_id" => $filter_industry_id, 
+                "filter_education_id" => $filter_education_id
+            );
+            
+            $applicants_to_headhunt = Applicant::getApplicantsToHeadhunt($filers);
+            
+        } else {
+            $filers = array(
+                "filter_name" => null, 
+                "filter_city" => null, 
+                "filter_industry_id" => null, 
+                "filter_education_id" => null
+            );
+
+            $applicants_to_headhunt = Applicant::getApplicantsToHeadhunt($filers);
+        }
+    //
+
 ?>
 
 <!DOCTYPE html>
@@ -208,9 +247,12 @@
         <br>
 
         <?php 
-            $applicants_to_headhunt = Applicant::getApplicantsToHeadhunt();
 
-            $count_applicants_to_headhunt = count($applicants_to_headhunt);
+            if (is_null($applicants_to_headhunt)) {
+                $count_applicants_to_headhunt = 0;
+            } else {
+                $count_applicants_to_headhunt = count($applicants_to_headhunt);
+            }
 
             $counter = 0;
 
@@ -240,67 +282,76 @@
             <?php
 
             //echo the applicants
-            foreach ($applicants_to_headhunt as $applicant_to_headhunt) {
+            if (!is_null($applicants_to_headhunt)) {
+
+                foreach ($applicants_to_headhunt as $applicant_to_headhunt) {
                 
-                $applicant_to_headhunt_user_id = Applicant::getUserIDByApplicantID($applicant_to_headhunt["applicant_id"]);
-                $applicant_to_headhunt_user_id = $applicant_to_headhunt_user_id["user_id"];
-                
-                $profile_pic = File::getFile($applicant_to_headhunt_user_id, "Profile Picture");
-
-                if (is_null($profile_pic)) {
-                    $profile_pic_path = "/website/source/img/user-icon.png";
-                } else {                            
-                    $profile_pic_path = "/website/uplfiles/" . $applicant_to_headhunt_user_id . "/" . $profile_pic["name"];
-                }
-
-                if ($counter % 2 == 0) {
-                    echo '<div class="columns">';
-                }
-
-                ?>
-
-                <div class="column">
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-left">
-                                    <figure class="image is-48x48">
-                                        <img class="is-rounded" src="<?php echo $profile_pic_path ?>" alt="Placeholder image">
-                                    </figure>
+                    $applicant_to_headhunt_user_id = Applicant::getUserIDByApplicantID($applicant_to_headhunt["applicant_id"]);
+                    $applicant_to_headhunt_user_id = $applicant_to_headhunt_user_id["user_id"];
+                    
+                    $profile_pic = File::getFile($applicant_to_headhunt_user_id, "Profile Picture");
+    
+                    if (is_null($profile_pic)) {
+                        $profile_pic_path = "/website/source/img/user-icon.png";
+                    } else {                            
+                        $profile_pic_path = "/website/uplfiles/" . $applicant_to_headhunt_user_id . "/" . $profile_pic["name"];
+                    }
+    
+                    if ($counter % 2 == 0) {
+                        echo '<div class="columns">';
+                    }
+    
+                    ?>
+    
+                    <div class="column">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <figure class="image is-48x48">
+                                            <img class="is-rounded" src="<?php echo $profile_pic_path ?>" alt="Placeholder image">
+                                        </figure>
+                                    </div>
+                                    <div class="media-content">
+                                        <p class="title is-4"><?php echo $applicant_to_headhunt["name"] ?></p>
+                                        <p class="subtitle is-6">
+                                            <?php echo $applicant_to_headhunt["email"] ?> <br>
+                                            <?php echo $applicant_to_headhunt["education"] ?>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="media-content">
-                                    <p class="title is-4"><?php echo $applicant_to_headhunt["firstname"] . " " . $applicant_to_headhunt["lastname"] ?></p>
-                                    <p class="subtitle is-6">
-                                        <?php echo $applicant_to_headhunt["email"] ?> <br>
-                                        <?php echo $applicant_to_headhunt["name"] ?>
-                                    </p>
+                                <div class="content">
+                                    <button class="button is-dark" type="sumbit" name="show-chat-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-envelope-open-text"></i>
+                                        </span>
+                                    </button>
+                                    <button class="button is-outlined-light" type="sumbit" name="show-info-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-info"></i>
+                                        </span>
+                                    </button>
                                 </div>
-                            </div>
-                            <div class="content">
-                                <button class="button is-dark" type="sumbit" name="show-chat-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
-                                    <span class="icon is-small">
-                                        <i class="fas fa-envelope-open-text"></i>
-                                    </span>
-                                </button>
-                                <button class="button is-outlined-light" type="sumbit" name="show-info-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
-                                    <span class="icon is-small">
-                                        <i class="fas fa-info"></i>
-                                    </span>
-                                </button>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <?php
+    
+                    <?php
+    
+                    if ($counter % 2 != 0) {
+                        echo '</div>';                    
+                    }
+    
+                    $counter++;
+    
+                }            
 
                 if ($counter % 2 != 0) {
-                    echo '</div>';                    
+                    echo '<div class="column"> </div>';
                 }
 
-                $counter++;
-
             }
+
         ?>        
 
     </body>

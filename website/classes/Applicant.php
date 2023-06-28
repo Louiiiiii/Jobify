@@ -460,22 +460,144 @@ class Applicant extends User
         return null;        
     }
 
-    public static function getApplicantsToHeadhunt () {
+    public static function getApplicantsToHeadhunt ($filters) {
+
+        //get values from $filters
+            if (is_null($filters["filter_name"])) {
+                $filter_name = "";
+            } else {
+                $filter_name = "%" . $filters["filter_name"] . "%";   
+            }
+
+            if (is_null($filters["filter_city"])) {
+                $filter_city = "";
+            } else {
+                $filter_city = "%" . $filters["filter_city"] . "%";   
+            }
+            
+            if (is_null($filters["filter_education_id"])) {
+                $filter_education_id = "";
+            } else {
+                $filter_education_id = $filters["filter_education_id"];   
+            }
+
+            if (is_null($filters["filter_industry_id"])) {
+                $filter_industry_id = false;
+            } else {
+                $filter_industry_id = "%" . $filters["filter_industry_id"] . "%";   
+            }
+
+            $empty = "";
+        //
+
         $db = new DB();
 
         $stmt = $db->pdo->prepare('
-            SELECT * FROM Applicant a
-            LEFT JOIN Education e ON a.education_id = e.education_id
-            LEFT JOIN User u on a.user_id = u.user_id
-            WHERE a.allow_headhunting = 1        
+            SELECT 
+                a.applicant_id,
+                CONCAT(a.firstname, " ", a.lastname) as "name",
+                a.birthdate,
+                a.description,
+                e.education_id,
+                e.name as "education",
+                ga.address_id,
+                ga.street,
+                ga.number,
+                ga.city,
+                ga.postalcode,
+                ga.state,
+                ga.country,
+                u.user_id,
+                u.email
+            FROM jobify.Applicant a
+            LEFT JOIN jobify.Education e ON a.education_id = e.education_id
+            LEFT JOIN jobify.User u on a.user_id = u.user_id
+            LEFT JOIN jobify.Get_Addresse ga ON a.address_id = ga.address_id
+            WHERE a.allow_headhunting = 1
+            AND (CONCAT(a.firstname, " ", a.lastname) LIKE ? OR "" = ?)
+            AND (ga.city LIKE ? OR "" = ?)
+            AND (ga.postalcode LIKE ? OR "" = ?)
+            AND (e.education_id = ? OR "" = ?)        
         ;');
+
+        //name
+            $stmt->bindParam(1, $filter_name);
+            $stmt->bindParam(2, $filter_name);
+        //
+
+        //city
+            if (is_numeric(str_replace("%", "", $filter_city))) {
+                $stmt->bindParam(3, $empty);
+                $stmt->bindParam(4, $empty);
+                $stmt->bindParam(5, $filter_city);
+                $stmt->bindParam(6, $filter_city);
+            } else {
+                $stmt->bindParam(3, $filter_city);
+                $stmt->bindParam(4, $filter_city);
+                $stmt->bindParam(5, $empty);
+                $stmt->bindParam(6, $empty);
+            }
+        //
+
+        //education
+            $stmt->bindParam(7, $filter_education_id);
+            $stmt->bindParam(8, $filter_education_id);
+        //
 
         $stmt->execute();
         $result = $stmt->fetchAll();
 
+        //check all industries for filter
+            if ($filter_industry_id) {
+
+                foreach ($result as $key => $applicant) {
+
+                    $delete_from_result = true;
+                    
+                    $all_industries = Applicant::getAllIndustriesFromApplicant($applicant["applicant_id"]);
+
+                    foreach($all_industries as $industry) {
+
+                        if (str_replace("%", "", $filter_industry_id) == $industry["industry_id"]) {
+                            $delete_from_result = false;
+                        }
+
+                    }
+
+                    if ($delete_from_result) {
+                        unset($result[$key]);
+                    }
+
+                }
+
+            }
+        //
+
         if($result != null){
             return $result;
+        } 
+    }
+
+    public static function getAllIndustriesFromApplicant ($applicant_id) {
+        $db = new DB();
+
+        $stmt = $db->pdo->prepare('
+            SELECT
+                industry_id
+            FROM applicant_industry
+            WHERE applicant_id = ?
+        ;');
+
+        $stmt->bindParam(1, $applicant_id);
+
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if ($result != null) {
+            return $result;
         }
+
+        return null;
     }
 
     public static function getIndustry_Data() {
