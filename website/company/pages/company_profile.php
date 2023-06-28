@@ -306,7 +306,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
                         <th>Extension</th>
                         <th>Type</th>
@@ -324,7 +323,6 @@
                                 $extension = '.' . pathinfo($filepath, PATHINFO_EXTENSION);
 
                                 echo "<tr>";
-                                echo "<th>" . $file["file_id"] . "</th>";
                                 echo "<td>" . $name . "</td>";
                                 echo "<td>" . $extension . "</td>";
                                 echo "<td>" . $file["type"] . "</td>";
