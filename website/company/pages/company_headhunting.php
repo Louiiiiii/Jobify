@@ -139,6 +139,9 @@
                             <b><h6><b>Name: </b>' . $headhunted_applicant["infos"]["0"]["firstname"] . ' ' . $headhunted_applicant["infos"]["0"]["lastname"] . '</h6></b>
                             </div>
                             <div>
+                                <b>E-Mail: </b>' . $headhunted_applicant["infos"]["0"]["email"] . '
+                            </div>
+                            <div>
                                 <b>State: </b>' . $headhunted_applicant["infos"]["0"]["state"] . '
                             </div>
                             <div>
@@ -267,7 +270,10 @@
                                 </div>
                                 <div class="media-content">
                                     <p class="title is-4"><?php echo $applicant_to_headhunt["firstname"] . " " . $applicant_to_headhunt["lastname"] ?></p>
-                                    <p class="subtitle is-6"><?php echo $applicant_to_headhunt["name"] ?></p>
+                                    <p class="subtitle is-6">
+                                        <?php echo $applicant_to_headhunt["email"] ?> <br>
+                                        <?php echo $applicant_to_headhunt["name"] ?>
+                                    </p>
                                 </div>
                             </div>
                             <div class="content">

@@ -466,7 +466,8 @@ class Applicant extends User
         $stmt = $db->pdo->prepare('
             SELECT * FROM Applicant a
             LEFT JOIN Education e ON a.education_id = e.education_id
-            WHERE a.allow_headhunting = 1
+            LEFT JOIN User u on a.user_id = u.user_id
+            WHERE a.allow_headhunting = 1        
         ;');
 
         $stmt->execute();
