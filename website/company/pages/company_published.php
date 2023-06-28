@@ -295,10 +295,6 @@
 
             foreach ($all_jobs as $job) {
 
-                //echo "<pre>";
-                //print_r($job);
-                //echo "</pre>";
-
                 $job_industries = JOB::getJobIndustries($job["job_id"]);
                 
                 if ($counter % 2 == 0) { 
