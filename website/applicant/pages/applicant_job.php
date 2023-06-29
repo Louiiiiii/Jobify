@@ -102,7 +102,7 @@ if (isset($_POST['apply']))
             <div class="modal-content">
                 <div class="box">
                     <div class="row">
-                        <h2 class="title is-4">Succesfully sent Application wthout any additional Files</h2>
+                        <h2 class="title is-4">Succesfully sent Application without any additional Files</h2>
                     </div>
                 </div>
             </div>
