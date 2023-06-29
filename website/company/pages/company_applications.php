@@ -45,15 +45,17 @@ if (isset($_POST['applicationstatus'])){
                 <div class="modal-background is-active"></div>
                 <div class="modal-content">
                     <div class="box">
-                            <h1 class="title is-">Do you realy want to Reject the Applicant</h1>
-                            <h2 class="subtitle">The Applicant will Disappear from the View!</h2>
+                            <h1 class="title is-4">Do you realy want to Reject the Applicant</h1>
+                            <h2 class="subtitle is-6">The Applicant will Disappear from the View!</h2>
                         <form method="post">
-                            <button class="button is-danger" name="reject">Reject and Remove</button>
-                            <button class="button is-Info" name="cancel">Cancel</button>
-                            <input type="text" name="application_id" hidden value='.$_POST['application_id'].'>
-                            <input type="text" name="job_id" hidden value='.$_POST['job_id'].'>
-                            <input type="text" name="curr_status" hidden value='.$_POST['curr_status'].'>
-                            <input type="text" name="new_status" hidden value='.$_POST['applicationstatus'].'>
+                            <div class="overlay__button">
+                                <button class="button is-danger" name="reject">Reject and Remove</button>
+                                <button class="button is-Info" name="cancel">Cancel</button>
+                                <input type="text" name="application_id" hidden value='.$_POST['application_id'].'>
+                                <input type="text" name="job_id" hidden value='.$_POST['job_id'].'>
+                                <input type="text" name="curr_status" hidden value='.$_POST['curr_status'].'>
+                                <input type="text" name="new_status" hidden value='.$_POST['applicationstatus'].'>
+                            </div>
                         </form>
                     </div>
                 </div>

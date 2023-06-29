@@ -118,3 +118,8 @@ body {
     height: 110px;
     overflow-y: scroll;
 }
+
+.overlay__button {
+    display: flex;
+    justify-content: flex-end;
+}
