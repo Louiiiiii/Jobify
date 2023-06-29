@@ -5,13 +5,13 @@
         $prefill_employee = $_POST["employee"];
         $prefill_place = $_POST["place"];
 
-        if($_POST["industry"] == "--Alle--") {
+        if($_POST["industry"] == "--All--") {
             $prefill_industry_id = null;
         } else {
             $prefill_industry_id = $_POST["industry"];
         }
 
-        if($_POST["education"] == "--Alle--") {
+        if($_POST["education"] == "--All--") {
             $prefill_education_id = null;
         } else {
             $prefill_education_id = $_POST["education"];
@@ -46,20 +46,20 @@
                             <input class="input" type="text" placeholder="Name" name="employee" <?php if(!is_null($prefill_employee)) { echo 'value="' . $prefill_employee . '"'; } ?>>
                         </div>
                         <div class="column is-2">
-                            <input class="input" type="text" placeholder="Ort" name="place" <?php if(!is_null($prefill_place)) { echo 'value="' . $prefill_place . '"'; } ?>>
+                            <input class="input" type="text" placeholder="Place" name="place" <?php if(!is_null($prefill_place)) { echo 'value="' . $prefill_place . '"'; } ?>>
                         </div>
                     </div>
                     <div class="columns">
                         <div class="column is-2">
                             <div class="field">
-                                <label class="label">Fachbereich</label>
+                                <label class="label">Field</label>
                                 <div class="control">
                                     <div class="select"><!-- Dropdown select for industries-->
                                         <select name="industry">
                                             <?php
                                                 $data = Applicant::getIndustry_Data();
 
-                                                echo '<option>--Alle--</option>';
+                                                echo '<option>--All--</option>';
 
                                                 foreach($data as $item) {
 
@@ -80,7 +80,7 @@
                         </div>
                         <div class="column is-3">
                             <div class="field">
-                                <label for="education" class="label">Abschluss/Ausbildung</label>
+                                <label for="education" class="label">Highest Degree</label>
                                 <div class="control">
                                     <div class="select"><!-- Dropdown select for industries-->
                                         <select name="education">
@@ -110,8 +110,8 @@
                     <div class="columns">
                         <div class="column is-4">
                             <div class="buttons">
-                                <button class="button is-dark is-rounded" name="filters">Speichern</button>
-                                <button class="button is-outlined-light">Filter zurücksetzen</button>
+                                <button class="button is-dark is-rounded" name="filters">Save</button>
+                                <button class="button is-outlined-light">Reset filters</button>
                             </div>
                         </div>
                     </div>

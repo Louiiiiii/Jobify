@@ -186,13 +186,13 @@
             $filter_name = $_POST["employee"];
             $filter_city = $_POST["place"]; 
 
-            if ($_POST["industry"] == "--Alle--") {
+            if ($_POST["industry"] == "--All--") {
                 $filter_industry_id = null;
             } else {
                 $filter_industry_id = $_POST["industry"];
             }
 
-            if ($_POST["education"] == "--Alle--") {
+            if ($_POST["education"] == "--All--") {
                 $filter_education_id = null;
             } else {
                 $filter_education_id = $_POST["education"];
