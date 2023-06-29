@@ -126,7 +126,7 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
 									echo $res['description']
 									?>
                                 </div>
-                                <div>
+                                <div class="content__button">
                                     <form method="post">
                                         <button class="button is-info is-rounded" type="submit" value=<?php echo $res['job_id']?> name="jobinfo">
                                     <span class="icon is-small">
