@@ -24,6 +24,20 @@ if (isset($_POST['jobinfo'])){
 include '../parts/applicant_navbar.php';
 include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 
+if (isset($_POST["jobdelete"])) {
+    $job_id = $_POST["jobdelete"];
+    $applcant = Applicant::getApplicantByUserId($_SESSION["current_user_id"]);
+    $applicant_id = $applcant->applicant_id;
+    
+    //delete Headhunt
+    if (Job::deleteHeadhunt($job_id, $applicant_id)) {
+        doAlert("The job offer was deleted!");
+    } else {
+        doAlert("The job offer wasn't deleted!");
+    }
+
+}
+
 if (!isset($_SESSION["current_user_id"]))
 {
 	$userid = 6;
@@ -110,9 +124,14 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
                                 <div>
                                     <form method="post">
                                         <button class="button is-info is-rounded" type="submit" value=<?php echo $res['job_id']?> name="jobinfo">
-                                    <span class="icon is-small">
-                                        <i class="fas fa-info"></i>
-                                    </span>
+                                            <span class="icon is-small">
+                                                <i class="fas fa-info"></i>
+                                            </span>
+                                        </button>
+                                        <button class="button is-danger is-outlined is-rounded" type="submit" name="jobdelete" value=<?php echo $res['job_id']?> type="button">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
                                         </button>
                                     </form>
                                 </div>
@@ -123,10 +142,14 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
 				<?php
 			}
 		}
+
 		?>
     </div>
+
 	<?php
+
 }
+
 ?>
 </body>
 </html>
