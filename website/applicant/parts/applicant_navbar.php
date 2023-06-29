@@ -57,25 +57,8 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-end">
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a href="../../mainpages/logout.php" class="button is-white">
-                        <strong>Log Out</strong>
-                    </a>
-                </div>
-            </div>
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a href="applicant_profile.php" class="button is-white">
-                        <!--Link profile page here-->
-                        <strong>Profile</strong>
-                    </a>
+                    <button class="button is-outlined" onclick="window.location.href = '../pages/applicant_profile.php'">Profile</button>
+                    <button class="button is-dark" href="../../mainpages/logout.php">Logout</button>
                 </div>
             </div>
         </div>

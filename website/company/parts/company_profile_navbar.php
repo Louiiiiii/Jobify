@@ -1,5 +1,4 @@
-<!--Navbar Company Profile -->
-<nav class="navbar is-black has-shadow" id="comNavProfile" role="navigation" aria-label="main navigation">
+<nav class="navbar is-black has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="company_published.php">
             <img src="../../source/img/jobify_slogan_white.png">
@@ -11,19 +10,12 @@
         </a>
     </div>
     <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-        </div>
+        <div class="navbar-start"></div>
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href="../../mainpages/logout.php" class="button is-white">
-                        <strong>Log Out</strong>
-                    </a>
-                </div>
-            </div>
-            <div class="navbar-item">
-                <div class="buttons">
-                    <button class="button is-white" onclick="window.location.href = 'company_published.php';">Home</button>
+                    <button class="button is-outlined" onclick="window.location.href = '../pages/company_published.php';">Home</button>
+                    <button class="button is-dark" href="../../mainpages/logout.php">Logout</button>
                 </div>
             </div>
         </div>

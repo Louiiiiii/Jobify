@@ -10,20 +10,12 @@
         </a>
     </div>
     <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start"></div>
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href="../../mainpages/logout.php" class="button is-white">
-                        <strong>Log Out</strong>
-                    </a>
-                </div>
-            </div>
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a href="applicant_overview.php" class="button is-white">
-                        <!--Link Default Homepage here-->
-                        <strong>Home</strong>
-                    </a>
+                    <button class="button is-outlined" onclick="window.location.href = '../pages/applicant_overview.php'">Home</button>
+                    <button class="button is-dark" href="../../mainpages/logout.php">Logout</button>
                 </div>
             </div>
         </div>

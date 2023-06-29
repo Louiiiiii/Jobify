@@ -1,27 +1,26 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
+    include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 
-$current_page = basename($_SERVER['PHP_SELF']);
+    $current_page = basename($_SERVER['PHP_SELF']);
 
-$published = "";
-$applicants = "";
-$headhunting = "";
+    $published = "";
+    $applicants = "";
+    $headhunting = "";
 
-switch ($current_page) {
-    case "company_published.php":
-        $published = "navbar-current-page";
-        break;
-    case "company_applications.php":
-        $applicants = "navbar-current-page";
-        break;
-    case "company_headhunting.php":
-        $headhunting = "navbar-current-page";
-        break;
-    default:
-        echo "Invalid header option";
-}
+    switch ($current_page) {
+        case "company_published.php":
+            $published = "navbar-current-page";
+            break;
+        case "company_applications.php":
+            $applicants = "navbar-current-page";
+            break;
+        case "company_headhunting.php":
+            $headhunting = "navbar-current-page";
+            break;
+        default:
+            echo "Invalid header option";
+    }
 ?>
-<!--Navbar Company Home -->
 <nav class="navbar is-black has-shadow" id="comNavHome" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="company_published.php">
@@ -48,14 +47,8 @@ switch ($current_page) {
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href="../../mainpages/logout.php" class="button is-white">
-                        <strong>Log Out</strong>
-                    </a>
-                </div>
-            </div>
-            <div class="navbar-item">
-                <div class="buttons">
-                    <button class="button is-white" onclick="window.location.href = 'company_profile.php';">Profil</button>
+                    <button class="button is-outlined" onclick="window.location.href = '../pages/company_profile.php';">Profile</button>
+                    <button class="button is-dark" href="../../mainpages/logout.php">Logout</button>
                 </div>
             </div>
         </div>
