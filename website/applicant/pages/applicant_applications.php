@@ -29,12 +29,14 @@ if (isset($_POST['delete-application-btn'])){
                 <div class="modal-background is-active"></div>
                 <div class="modal-content">
                     <div class="box">
-                            <h1 class="title is-">Do you really want to delete this Application?</h1>
-                            <h2 class="subtitle">This will also delete it for the Company!</h2>
+                            <h1 class="title is-4">Do you really want to delete this Application?</h1>
+                            <h2 class="subtitle is-6">This will also delete it for the Company!</h2>
                         <form method="post">
-                            <button class="button is-danger" name="reject">Remove</button>
-                            <button class="button is-Info" name="cancel">Cancel</button>
-                            <input type="text" hidden name="application_id" value="'.$_POST['application_id'].'">
+                            <div class="overlay__button">
+                                <button class="button is-danger" name="reject">Remove</button>
+                                <button class="button is-Info" name="cancel">Cancel</button>
+                                <input type="text" hidden name="application_id" value="'.$_POST['application_id'].'">
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -136,7 +138,6 @@ $filter->execute();
     <title>Applications</title>
     <link rel="stylesheet" href="../../source/css/bulma.css">
     <link rel="stylesheet" href="../../source/css/applicant.css">
-    <link rel="stylesheet" href="/website/source/css/alert.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
     <script src="../../source/js/favourites.js"></script>
 </head>
@@ -174,7 +175,7 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
                                 ?>
                             </p>
                             <div class="like field is-grouped">
-                                <span class="tag is-large
+                                <span class="tag is-medium is-light
                                     <?php
                                     switch ($res['status']){
                                         case 'New';
@@ -207,12 +208,12 @@ for ($i = 1; $i <= ceil($filter->rowCount()/2); $i++){
                                         <form method="post">
                                             <input type="text" hidden name="application_id" value=<?php echo $res['application_id']; ?>>
                                             <input type="text" hidden name="applicationstatus" value=<?php echo $res['status']; ?>>
-                                            <button class="button is-info " type="submit" value=<?php echo $res['job_id']?> name="jobinfo">
+                                            <button class="button is-info is-rounded" type="submit" value=<?php echo $res['job_id']?> name="jobinfo">
                                                 <span class="icon is-small">
                                                     <i class="fas fa-info"></i>
                                                 </span>
                                             </button>
-                                            <button class="button is-danger is-outlined" type="submit" name="delete-application-btn" value=<?php echo $res['application_id']; ?>>
+                                            <button class="button is-danger is-outlined is-rounded" type="submit" name="delete-application-btn" value=<?php echo $res['application_id']; ?>>
                                             <span class="icon is-small">
                                                 <i class="fas fa-trash"></i>
                                             </span>
