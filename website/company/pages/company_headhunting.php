@@ -323,16 +323,18 @@
                                 </div>
                                 <div class="content">
                                     <div class="content__button">
-                                        <button class="button is-info is-rounded" type="sumbit" name="show-chat-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
-                                            <span class="icon is-small">
-                                                <i class="fas fa-envelope-open-text"></i>
-                                            </span>
-                                        </button>
-                                        <button class="button is-info is-outlined is-rounded" type="sumbit" name="show-info-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
-                                            <span class="icon is-small">
-                                                <i class="fas fa-info"></i>
-                                            </span>
-                                        </button>
+                                        <form method="POST">
+                                            <button class="button is-info is-rounded" name="show-chat-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-envelope-open-text"></i>
+                                                </span>
+                                            </button>
+                                            <button class="button is-info is-outlined is-rounded" name="show-info-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-info"></i>
+                                                </span>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
