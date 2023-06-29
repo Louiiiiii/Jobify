@@ -26,6 +26,12 @@ body {
                 }
 
                 .card-content {
+                    .media {
+                        .media-content {
+                            min-height: 52px;
+                        }
+                    }
+
                     .content {
                         display: flex;
                         justify-content: flex-end;
