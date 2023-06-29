@@ -176,7 +176,7 @@ class Job extends DB
 	{
 		$Db = new DB();
 		$stmt = $Db->pdo->prepare("
-			INSERT INTO headhunt (text, job_id, applicant_id) 
+			INSERT INTO Headhunt (text, job_id, applicant_id) 
 			VALUES (?,?,?)
 		;");
 		$stmt->bindParam(1, $text, PDO::PARAM_STR);
