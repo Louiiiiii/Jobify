@@ -1,6 +1,6 @@
 <?php
+session_start();
 if (isset($_POST['jobinfo'])){
-    session_start();
     $_SESSION['currjob_id'] = $_POST['jobinfo'];
 	unset($_SESSION['alreadyapplied']);
     header("Location: applicant_job.php");
