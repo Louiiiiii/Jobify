@@ -72,7 +72,8 @@ if (isset($_POST['filter'])){
 }
 $applicant = Applicant::getApplicantByUserId($userid);
 $db = new DB();
-$filter = $db->pdo->prepare('select j.title title,
+$filter = $db->pdo->prepare('select  distinct(j.job_id),
+                                            j.title title,
                                             j.description description,
                                             j.job_id job_id,
                                             case when 1 = (select 1 
