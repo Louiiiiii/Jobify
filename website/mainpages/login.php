@@ -1,15 +1,12 @@
 <?php 
     session_start();
     require_once $_SERVER['DOCUMENT_ROOT'] . '/website/classes/getClasses.php';
-
     if (isset($_POST["email"])) {
         $email = $_POST["email"];
         $pw = $_POST["password"];
 
         if (User::doesemailexist($email) == false) {
-            echo "<script>alert('E-Mail does not exist, please sign up first.');</script>";
-            echo '<script>window.location.replace(location.protocol + "//" + location.host + "/source/view/login/signup.php");</script>';
-            exit;
+            doAlert("E-Mail does not exist, please sign up first!");
         } else {
             if(User::validateCredentials($email, $pw) == true) {
                 $user = new User($email, $pw);
@@ -31,7 +28,7 @@
                 }
 
             } else {
-                echo "<script>alert('E-Mail or Password wrong!');</script>";
+                doAlert("E-Mail or Password wrong!");
             }
         }
     }
@@ -46,6 +43,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="../source/css/bulma.css">
     <link rel="stylesheet" href="../source/css/login_signup.css">
+    <link rel="stylesheet" href="/website/source/css/alert.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>

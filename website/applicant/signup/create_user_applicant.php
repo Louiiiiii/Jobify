@@ -83,6 +83,7 @@
     <link rel="stylesheet" href="/website/source/css/bulma.css">
     <link rel="stylesheet" href="/website/source/css/create_user.css">
     <link rel="stylesheet" href="/website/source/css/switch.css">
+    <link rel="stylesheet" href="/website/source/css/alert.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>

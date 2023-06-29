@@ -173,9 +173,9 @@
             $headhunt_text = $_POST["headhunttext"];
 
             if(Job::addHeadhuntRequest($headhunt_text, $headhunt_job_id, $headhunt_applicant_id)) {
-                echo "<script>alert('Your Headhunt Request was sent!.');</script>";
+                doAlert("Your Headhunt Request was sent!");
             } else {
-                echo "<script>alert('Something went wrong.');</script>";
+                doAlert("Something went wrong!");
             }
         }
     //
@@ -231,6 +231,7 @@
         <link rel="stylesheet" href="../../source/css/bulma.css">
         <link rel="stylesheet" href="../../source/css/applicant.css">
         <link rel="stylesheet" href="../../source/css/send_request.css">
+    <link rel="stylesheet" href="/website/source/css/alert.css">
         <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
         <script src="../../source/js/favourites.js"></script>
     </head>

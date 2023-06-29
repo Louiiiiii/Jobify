@@ -1,0 +1,28 @@
+.visible {
+    animation: movein 0.5s ease forwards, moveout 0.5s 6s ease forwards;
+}
+
+#alert {
+    width: 200px;
+    height: 100px;
+    background: #70c48f;
+    color: white;
+    border-radius: 3px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 10px;
+    right: -200px;
+}
+
+@keyframes movein {
+    from { right: -200px; }
+    to   { right: 10px; }
+}
+
+@keyframes moveout {
+    from { right: 10px; }
+    to   { right: -200px; }
+}

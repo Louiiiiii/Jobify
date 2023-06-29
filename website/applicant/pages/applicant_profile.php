@@ -31,14 +31,14 @@
 
                     $_SESSION["current_user_pwhash"] = hash('sha512', $new_pw);
                     
-                    echo "<script>alert('Your new Password is set.');</script>";
+                    doAlert("Your new Password is set!");
 
                 } else {
-                    echo "<script>alert('Your new Password is unequal.');</script>";
+                    doAlert("Your new Password is unequal!");
                 }
 
             } else {
-                echo "<script>alert('Current Password is wrong.');</script>";
+                doAlert("Current Password is wrong!");
             }
 
 
@@ -179,9 +179,9 @@
             $file_deleted = FILE::delFile($_POST["del-file-id"], $current_user_id);
 
             if($file_deleted) {
-                echo "<script>alert('Your File was deleted!');</script>";
+                doAlert("Your File was deleted!");
             } else {
-                echo "<script>alert('Ahhhh shit something went wrong!');</script>";
+                doAlert("Ahhhh shit something went wrong!");
             }
         }
 
@@ -201,6 +201,7 @@
     <title>Profile</title>
     <link rel="stylesheet" href="../../source/css/bulma.css">
     <link rel="stylesheet" href="../../source/css/profile.css">
+    <link rel="stylesheet" href="/website/source/css/alert.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>

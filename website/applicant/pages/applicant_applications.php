@@ -136,6 +136,7 @@ $filter->execute();
     <title>Applications</title>
     <link rel="stylesheet" href="../../source/css/bulma.css">
     <link rel="stylesheet" href="../../source/css/applicant.css">
+    <link rel="stylesheet" href="/website/source/css/alert.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
     <script src="../../source/js/favourites.js"></script>
 </head>

@@ -149,13 +149,13 @@ class File extends User
 
         //if file format is not under $allowedFileFormats var $file_type_ok will still be 0 and therefore this if will faile
         if ($file_format_ok == 0) {
-            echo "<script>alert('Sorry, wrong file format! (allowed formats: jpg, png, jpeg, pdf, docx, xlsx, txt)');</script>";
+            doAlert("Sorry, wrong file format! (allowed formats: jpg, png, jpeg, pdf, docx, xlsx, txt)");
             return false;
         }
 
         //check size
         if ($file["size"] > 3000000) {
-            echo "<script>alert('Sorry, your file is to big! (max 3 MB)');</script>";
+            doAlert("Sorry, your file is to big! (max 3 MB)");
             return false;
         }
 
@@ -166,8 +166,7 @@ class File extends User
 
         // Check if file already exists
         if (file_exists($targetFilePath)) {
-            echo "<script>alert('".$targetFilePath."');</script>";
-            echo "<script>alert('Sorry, a file with this name is already exsisting!');</script>";
+            doAlert("Sorry, a file with this name is already exsisting!");
             return false;
         }
 
@@ -179,15 +178,15 @@ class File extends User
             $file = NEW FILE($filetype_name, $file["name"], $user_email);
 
             if($file->updateDB()) {
-                echo "<script>alert('File upload has worked fine!');</script>";
+                doAlert("File upload has worked fine!");
                 return true;
             } else {
-                echo "<script>alert('Sorry, something went wrong by writing in out DB!');</script>";
+                doAlert("Sorry, something went wrong by writing in out DB!");
                 return false;
             }
 
         } else {
-            echo "<script>alert('Sorry, your file wasn't uploaded!');</script>";
+            doAlert("Sorry, your file wasn't uploaded!");
             return false;
         }
     }

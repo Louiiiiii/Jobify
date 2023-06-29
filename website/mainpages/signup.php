@@ -8,7 +8,7 @@
         $role = $_POST["role"];
 
         if (User::doesemailexist($email) == true) {
-            echo "<script>alert('E-Mail already exists, please try to login.');</script>";
+            doAlert("E-Mail already exists, please try to login!");
         } else {
             User::insertuser($email, $pw);
 
@@ -44,6 +44,7 @@
         <title>Registration</title>
         <link rel="stylesheet" href="../source/css/bulma.css">
         <link rel="stylesheet" href="../source/css/login_signup.css">
+    <link rel="stylesheet" href="/website/source/css/alert.css">
         <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
     </head>
     <body>

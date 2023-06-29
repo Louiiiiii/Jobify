@@ -90,6 +90,7 @@ if (isset($_POST['reject'])){
     <link rel="stylesheet" href="../../source/css/applicant.css">
     <link rel="stylesheet" href="../../source/css/treeView.css">
     <link rel="stylesheet" href="../../source/css/person_card.css">
+    <link rel="stylesheet" href="/website/source/css/alert.css">
     <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
