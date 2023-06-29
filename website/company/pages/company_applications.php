@@ -195,9 +195,12 @@ foreach ($jobs as $job) {
                             </div>
                             <div class="column">
                                 <ul>
-									<?php foreach ($files as $file) {
-										echo '<li><a href='.$profile_pic_path.' download>'.$file['name'].'</a></li>';
-									}
+									<?php 
+                                        foreach ($files as $file) {
+                                            $file_path = '/website/uplfiles/' . $applicant['user_id'] . "/" . $file['name'];
+                                            
+                                            echo '<li><a href='.$file_path.' download>'.$file['name'].'</a></li>';
+                                        }
 									?>
                                 </ul>
                             </div>

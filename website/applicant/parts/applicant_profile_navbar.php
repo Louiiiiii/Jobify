@@ -15,7 +15,7 @@
             <div class="navbar-item">
                 <div class="buttons">
                     <button class="button is-outlined" onclick="window.location.href = '../pages/applicant_overview.php'">Home</button>
-                    <button class="button is-dark" href="../../mainpages/logout.php">Logout</button>
+                    <button class="button is-dark" onclick="window.location.href = '../../mainpages/logout.php';">Logout</button>
                 </div>
             </div>
         </div>
