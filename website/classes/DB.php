@@ -2,7 +2,7 @@
 class DB
 {
     private $host = 'localhost';
-    private $dbname = "jobify";
+    private $dbname = "Jobify";
     private $user = "root";
     private $pwd = "raspberry";
     //private $dbname = "id20978851_jobify_db";
