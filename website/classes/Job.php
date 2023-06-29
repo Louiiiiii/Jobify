@@ -241,8 +241,8 @@ class Job extends DB
 			SELECT 
 				i.industry_id,
 				i.name
-			FROM job_industry ji
-			LEFT JOIN industry i ON ji.industry_id = i.industry_id
+			FROM Job_Industry ji
+			LEFT JOIN Industry i ON ji.industry_id = i.industry_id
 			WHERE ji.job_id = ?
 		;');
 		$stmt->bindParam(1, $job_id, PDO::PARAM_INT);
