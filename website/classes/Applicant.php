@@ -509,10 +509,10 @@ class Applicant extends User
                 ga.country,
                 u.user_id,
                 u.email
-            FROM jobify.Applicant a
-            LEFT JOIN jobify.Education e ON a.education_id = e.education_id
-            LEFT JOIN jobify.User u on a.user_id = u.user_id
-            LEFT JOIN jobify.Get_Addresse ga ON a.address_id = ga.address_id
+            FROM Applicant a
+            LEFT JOIN Education e ON a.education_id = e.education_id
+            LEFT JOIN User u on a.user_id = u.user_id
+            LEFT JOIN Get_Addresse ga ON a.address_id = ga.address_id
             WHERE a.allow_headhunting = 1
             AND (CONCAT(a.firstname, " ", a.lastname) LIKE ? OR "" = ?)
             AND (ga.city LIKE ? OR "" = ?)
