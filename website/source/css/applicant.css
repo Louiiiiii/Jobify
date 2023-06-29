@@ -65,6 +65,14 @@ body {
                     }
                 }
             }
+
+            .column-button {
+                padding: 0;
+                
+                &:last-child {
+                    padding-right: 12px;
+                }
+            }
         }
     }
 

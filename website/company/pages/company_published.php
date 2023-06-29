@@ -252,14 +252,14 @@
                                             </div>
 
                                             <div class="columns">
-                                                <div class="column">
+                                                <div class="column column-button">
                                                     <button type="submit" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn">
                                                         <span class="icon is-small">
                                                             <i class="fas fa-check"></i>
                                                         </span>
                                                     </button>
                                                 </div>
-                                                <div class="column">
+                                                <div class="column column-button">
                                                     <button type="submit" onclick="submitForm('add-job-form')" class="button is-danger is-outlined is-rounded" name="stop-edit-job-btn">
                                                         <span class="icon is-small">
                                                             <i class="fas fa-times"></i>
