@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="column">
-                                            <textarea name="headhunttext" class="textarea" placeholder="Here could be your goofy Text even if nobody except for you will ever read it!"></textarea>
+                                            <textarea name="headhunttext" class="textarea has-fixed-size" placeholder="Here could be your goofy Text even if nobody except for you will ever read it!"></textarea>
                                         </div>
                                     </div>
                                     <div class="row">

@@ -43,7 +43,7 @@
         <div class=row>
             <div class="column">
                 <label class="label">Description: </label>
-                <textarea class="textarea" placeholder="Description of the job"></textarea>
+                <textarea class="textarea has-fixed-size" placeholder="Description of the job"></textarea>
             </div>
         </div>    
         <div class=row>

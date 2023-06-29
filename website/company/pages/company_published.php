@@ -209,7 +209,7 @@
                                             <div class="column is-two-third">
                                                 <p class="title is-5">Description:</p>
                                                 <p>
-                                                    <textarea class="input" type="description" id="description" name="description"></textarea>
+                                                    <textarea class="textarea has-fixed-size input" type="description" id="description" name="description"></textarea>
                                                 </p>
                                             </div>
                                             <div class="column is-one-third">
@@ -318,7 +318,7 @@
                                             <div class="column is-two-third">
                                                 <p class="title is-5">Description:</p>
                                                 <p>
-                                                    <textarea class="input" type="description" id="description" name="description"><?php echo $job["description"] ?></textarea>
+                                                    <textarea class="textarea has-fixed-size input" type="description" id="description" name="description"><?php echo $job["description"] ?></textarea>
                                                 </p>
                                             </div>
                                             <div class="column is-one-third">

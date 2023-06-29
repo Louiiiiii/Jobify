@@ -260,7 +260,7 @@ $company = Company::getDatabyId($job->company_id);
                         <label class="label" for="textid">Send optional text to Company</label>
                     </div>
                     <div class="row">
-                        <textarea name="text" id="textid" rows="7" style="min-width: 100%"></textarea>
+                        <textarea class="textarea has-fixed-size" name="text" id="textid" rows="7" style="min-width: 100%"></textarea>
                     </div>
                     <br>
                     <div class="buttons is-right row">

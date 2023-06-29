@@ -223,7 +223,7 @@
                 <div class="field">
                     <label class="label">Description</label>
                     <div class="control">
-                        <textarea  name="description" class="textarea input disabling" placeholder="Description of the Company" disabled><?php echo $profile_data["description"] ?></textarea>
+                        <textarea  name="description" class="textarea has-fixed-size input disabling" placeholder="Description of the Company" disabled><?php echo $profile_data["description"] ?></textarea>
                     </div>
                 </div>
             </div>

@@ -124,7 +124,7 @@
                     <div class="row">
                         <div class="field">
                             <label class="label">Description</label>
-                            <textarea name="description" class="textarea" placeholder="Description of the Company"></textarea>
+                            <textarea name="description" class="textarea has-fixed-size" placeholder="Description of the Company"></textarea>
                         </div>
                     </div>
                     <diV class="row company-submit">
