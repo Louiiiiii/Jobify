@@ -57,7 +57,7 @@ if (isset($_POST['filter'])){
 
     $salaryto = $_POST['salaryto'];
 
-    if ($_POST['companyname'] != "--Alle--"){
+    if ($_POST['companyname'] != "--All--"){
         $companyname = '%'.$_POST['companyname'].'%';
     }
 
@@ -65,7 +65,7 @@ if (isset($_POST['filter'])){
         $cityname = '%'.$_POST['cityname'].'%';
     }
 
-    if ($_POST['industry'] != "--Alle--"){
+    if ($_POST['industry'] != "--All--"){
         $industry = '%'.$_POST['industry'].'%';
     }
 }
@@ -80,10 +80,10 @@ $filter = $db->pdo->prepare('select j.title title,
                                                               and job_id = j.job_id)
                                                  then 1
                                                  else 0 end favorite 
-                                      from job j,
-                                           company c,
-                                           address ad,
-                                           City_postalcode cp,
+                                      from Job j,
+                                           Company c,
+                                           Address ad,
+                                           City_Postalcode cp,
                                            City ci,
                                            Job_Industry ji,
                                            Industry i
