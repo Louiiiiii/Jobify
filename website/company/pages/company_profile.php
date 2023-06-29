@@ -329,7 +329,7 @@
                                 echo "<td>" . $file["type"] . "</td>";
                                 echo '
                                     <td>
-                                        <button class="button is-danger is-outlined is-rounded" type="submit" name="delete-file-btn" value="' . $file["file_id"] . '" type="button">
+                                        <button class="button is-danger is-outlined is-rounded trash" type="submit" name="delete-file-btn" value="' . $file["file_id"] . '" type="button">
                                             <span class="icon is-small">
                                                 <i class="fas fa-trash"></i>
                                             </span>
