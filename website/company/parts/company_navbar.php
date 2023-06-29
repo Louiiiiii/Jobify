@@ -3,6 +3,10 @@ include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 
 $current_page = basename($_SERVER['PHP_SELF']);
 
+$published = "";
+$applicants = "";
+$headhunting = "";
+
 switch ($current_page) {
     case "company_published.php":
         $published = "navbar-current-page";
