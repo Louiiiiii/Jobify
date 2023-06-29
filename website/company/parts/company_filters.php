@@ -87,7 +87,7 @@
                                             <?php
                                                 $data = Applicant::getEducation_Data();
 
-                                                echo '<option>--Alle--</option>';
+                                                echo '<option>--All--</option>';
 
                                                 foreach($data as $item) {
 
