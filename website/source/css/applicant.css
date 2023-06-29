@@ -1,4 +1,6 @@
 body {
+    height: 100vh;
+
     .row {
         display: flex;
         flex-direction: row;
@@ -77,6 +79,17 @@ body {
 
         .field {
             margin-left: 20px;
+        }
+    }
+
+    .add-form {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 10;
+
+        .add-button {
+            width: 0;
         }
     }
 }

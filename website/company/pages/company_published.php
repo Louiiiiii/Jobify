@@ -170,16 +170,6 @@
                 </span>
             </p>
         </div>
-
-        <div class="field">
-            <form action="./company_published.php" method="post">
-                <button style="margin-bottom: 25px" name="spawn-new-job" class="button is-info is-rounded">
-                    <span class="icon is-small">
-                        <i class="fas fa-plus"></i>
-                    </span>
-                </button>
-            </form>
-        </div>
     </div>
 
         <?php
@@ -503,6 +493,14 @@
             }
 
         ?>
+    
+        <form class="add-form" action="./company_published.php" method="post">
+            <button name="spawn-new-job" class="button is-info is-rounded add-button">
+                <span class="icon is-small">
+                    <i class="fas fa-plus"></i>
+                </span>
+            </button>
+        </form>
         
 </body>
 <script>
