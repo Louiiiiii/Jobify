@@ -5,7 +5,7 @@
 #alert {
     width: 200px;
     height: 100px;
-    background: #70c48f;
+    background: hsl(229deg, 53%, 53%);
     color: white;
     border-radius: 3px;
     font-size: 18px;
@@ -15,6 +15,7 @@
     position: fixed;
     top: 10px;
     right: -200px;
+    z-index: 100;
 }
 
 @keyframes movein {
