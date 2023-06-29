@@ -203,7 +203,7 @@
                         </div>
                     </div>
                     <diV class="row">
-                        <button type="submit" name="signup_applicant" class="button is-link">Submit</button>
+                        <button type="submit" name="signup_applicant" class="button is-info">Submit</button>
                     </diV>
                 </form>
             </div>

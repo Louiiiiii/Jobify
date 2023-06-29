@@ -128,7 +128,7 @@
                         </div>
                     </div>
                     <diV class="row company-submit">
-                        <button type="submit" class="button is-link">Submit</button>
+                        <button type="submit" class="button is-info">Submit</button>
                     </diV>
                 </form>
             </div>

@@ -285,11 +285,11 @@
         </div>        
         
         <div class="row edit">
-            <button type="button" class="button is-link" onclick="edit()">Edit Profile</button>
+            <button type="button" class="button is-info" onclick="edit()">Edit Profile</button>
         </div>
         <div class="row cancel hide">
             <button type="reset" class="button" onclick="cancel()">Cancel</button>
-            <button type="submit" name="change_profile_infos" class="button is-link">Change</button>
+            <button type="submit" name="change_profile_infos" class="button is-info">Change</button>
         </div>
     
         <hr class="solid">
@@ -348,8 +348,8 @@
     <?php 
         } else {
             echo "<br>";
-            echo "<hr>";
-            echo "<h1>Sie haben keine Files hochgeladen</h1>";
+            echo "<hr style='margin: 30px'>";
+            echo "<h1 class='no-files'>Sie haben keine Files hochgeladen</h1>";
             echo "<br>";
         }
     ?>
@@ -426,7 +426,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <button type="submit" name="changepw" class="button is-link">Change</button>
+                        <button type="submit" name="changepw" class="button is-info">Change</button>
                     </div>
                 </form>
             </div>

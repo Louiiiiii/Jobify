@@ -36,6 +36,11 @@ body {
                 .checkbox-input {
                     margin-right: 5px;
                     padding: 0;
+                    cursor: pointer;
+                }
+
+                .checkbox-label {
+                    cursor: pointer;
                 }
             }
 
@@ -106,4 +111,20 @@ body {
 
 .profile-input-area {
     margin: 30px;
+}
+
+.no-files {
+    margin-left: 30px;
+}
+
+hr {
+    height: 1px;
+}
+
+select {
+    width: 204.4px;
+}
+
+.trash {
+    width: 0;
 }

@@ -354,7 +354,7 @@
                                     }
 
                                     echo '<input class="checkbox-input disabling" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" ' . $checked . ' disabled>';
-                                    echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+                                    echo '<label class="checkbox-label" for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
 
                                 }
                                 
@@ -384,11 +384,11 @@
         </div>
     
         <div class="row edit">
-            <button type="button" class="button is-link" onclick="edit()">Edit Profile</button>
+            <button type="button" class="button is-info" onclick="edit()">Edit Profile</button>
         </div>
         <div class="row cancel hide">
             <button type="reset" class="button" onclick="cancel()">Cancel</button>
-            <button type="submit" name="change_profile_infos" class="button is-link">Change</button>
+            <button type="submit" name="change_profile_infos" class="button is-info">Change</button>
         </div>
 
         <hr class="solid">
@@ -429,7 +429,7 @@
                                 echo "<td>" . $file["type"] . "</td>";
                                 echo '
                                     <td>
-                                        <button class="button is-danger is-outlined is-rounded" type="submit" name="delete-file-btn" value="' . $file["file_id"] . '" type="button">
+                                        <button class="button is-danger is-outlined is-rounded trash" type="submit" name="delete-file-btn" value="' . $file["file_id"] . '" type="button">
                                             <span class="icon is-small">
                                                 <i class="fas fa-trash"></i>
                                             </span>
@@ -448,8 +448,8 @@
     <?php 
         } else {
             echo "<br>";
-            echo "<hr>";
-            echo "<h1 style='margin-left: 30px'>Sie haben keine Files hochgeladen</h1>";
+            echo "<hr style='margin: 30px'>";
+            echo "<h1 class='no-files'>Sie haben keine Files hochgeladen</h1>";
             echo "<br>";
         }
     ?>
@@ -487,7 +487,7 @@
             </div>
         </div>
 
-        <button class="button is-link" type="submit" name="file_submit">Upload File</button>
+        <button class="button" type="submit" name="file_submit">Upload File</button>
     </form>
 
     <div id="modal-js-example" class="modal">
@@ -526,7 +526,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <button type="submit" name="changepw" class="button is-link">Change</button>
+                        <button type="submit" name="changepw" class="button is-info">Change</button>
                     </div>
                 </form>
             </div>
