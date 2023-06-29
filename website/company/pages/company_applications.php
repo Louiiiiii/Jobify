@@ -127,7 +127,7 @@ foreach ($jobs as $job) {
                 <div class="card">
                     <header class="card-header">
                             <p class="card-header-title">
-                                <span class="triangle triangle-down"></span><?php echo $job[1] ?>
+                                <span class="triangle"></span><?php echo $job[1] ?>
                             </p>
                             <div class="like">
                                 <?php echo  count($applicants).' Applicants'?>
