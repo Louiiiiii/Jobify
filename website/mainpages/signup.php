@@ -5,6 +5,7 @@
     if (isset($_POST["email"])) {
         $email = $_POST["email"];
         $pw = $_POST["password"];
+        //$pw = $_POST["password"] . "haha kein login weil anderes pw";
         $role = $_POST["role"];
 
         if (User::doesemailexist($email) == true) {
@@ -22,9 +23,11 @@
 
             if ($role == "Company") {
                 echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/company/signup/create_user_company.php");</script>';
+                //echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/mainpages/login.php");</script>';
                 exit;
             } else if ($role == "Applicant") {
                 echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/applicant/signup/create_user_applicant.php");</script>';
+                //echo '<script>window.location.replace(location.protocol + "//" + location.host + "/website/mainpages/login.php");</script>';
                 exit;
             }
         }

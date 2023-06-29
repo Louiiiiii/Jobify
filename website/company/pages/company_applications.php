@@ -1,4 +1,8 @@
-<?php require_once '../parts/company_navbar.php';
+<?php 
+
+session_start();
+
+require_once '../parts/company_navbar.php';
 include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 
 $name = null;
