@@ -206,6 +206,23 @@ class Job extends DB
 		}
 	}
 
+	public static function deleteHeadhunt($job_id, $applicant_id)
+	{
+		$myDb = new DB();
+		$stmt = $myDb->pdo->prepare("
+			DELETE FROM Headhunt WHERE job_id = ? AND applicant_id = ?
+		;");
+		
+		$stmt->bindParam(1, $job_id, PDO::PARAM_INT);
+		$stmt->bindParam(2, $applicant_id, PDO::PARAM_INT);
+
+		if($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public static function getHeadhunt_Company($company_id)
 	{
 		$myDb = new DB();
