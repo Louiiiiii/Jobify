@@ -128,14 +128,14 @@ class Company extends User
                 ci.city,
                 a.street,
                 a.number
-            FROM user u
-            LEFT JOIN company c ON u.user_id = c.user_id 
-            LEFT JOIN address a ON c.address_id = a.address_id
-            LEFT JOIN city_postalcode cp ON a.City_Postalcode_id = cp.City_Postalcode_id
-            LEFT JOIN postalcode p ON cp.postalcode_id = p.postalcode_id
-            LEFT JOIN city ci ON cp.city_id = ci.city_id
-            LEFT JOIN state s ON p.state_id = s.state_id
-            LEFT JOIN country cou ON s.country_id = cou.country_id
+            FROM User u
+            LEFT JOIN Company c ON u.user_id = c.user_id 
+            LEFT JOIN Address a ON c.address_id = a.address_id
+            LEFT JOIN City_Postalcode cp ON a.City_Postalcode_id = cp.City_Postalcode_id
+            LEFT JOIN Postalcode p ON cp.postalcode_id = p.postalcode_id
+            LEFT JOIN City ci ON cp.city_id = ci.city_id
+            LEFT JOIN State s ON p.state_id = s.state_id
+            LEFT JOIN Country cou ON s.country_id = cou.country_id
             WHERE u.user_id = ?
         ;');        
         $stmt->bindParam(1,$user_id, PDO::PARAM_INT);

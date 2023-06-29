@@ -584,7 +584,7 @@ class Applicant extends User
         $stmt = $db->pdo->prepare('
             SELECT
                 industry_id
-            FROM applicant_industry
+            FROM Applicant_Industry
             WHERE applicant_id = ?
         ;');
 
