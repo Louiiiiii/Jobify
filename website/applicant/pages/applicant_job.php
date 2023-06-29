@@ -296,7 +296,7 @@ $company = Company::getDatabyId($job->company_id);
                         <div class="select">
                             <select name="filetype_name" required>
                                 <?php
-                                $allFileTypes = File::getAllFilesByUser($user_id);
+                                $allFileTypes = File::getAllFileTypes();
 
                                 foreach ($allFileTypes as $row) {
                                     echo '<option value="' . $row["type"] . '">' . $row["type"] . '</option>';
