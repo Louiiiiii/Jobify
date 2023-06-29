@@ -88,7 +88,8 @@ if (isset($_POST['filter'])){
 }
 $applicant = Applicant::getApplicantByUserId($userid);
 $db = new DB();
-$filter = $db->pdo->prepare('select j.title,
+$filter = $db->pdo->prepare('select  distinct(j.job_id),
+                                           j.title,
                                            j.description,
                                            j.job_id,
                                            ap.text,
