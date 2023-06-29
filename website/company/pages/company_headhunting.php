@@ -260,7 +260,7 @@
             //echo applicants counter
             ?>
 
-            <div class="columns">
+            <div class="row">
                 <div class="column is-full">
                     <div class="card">
                         <header class="card-header">
@@ -299,7 +299,7 @@
                     }
     
                     if ($counter % 2 == 0) {
-                        echo '<div class="columns">';
+                        echo '<div class="row">';
                     }
     
                     ?>
@@ -322,12 +322,12 @@
                                     </div>
                                 </div>
                                 <div class="content">
-                                    <button class="button is-dark" type="sumbit" name="show-chat-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
+                                    <button class="button is-info is-dark is-rounded" type="sumbit" name="show-chat-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
                                         <span class="icon is-small">
                                             <i class="fas fa-envelope-open-text"></i>
                                         </span>
                                     </button>
-                                    <button class="button is-outlined-light" type="sumbit" name="show-info-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
+                                    <button class="button is-info is-outlined is-rounded" type="sumbit" name="show-info-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
                                         <span class="icon is-small">
                                             <i class="fas fa-info"></i>
                                         </span>

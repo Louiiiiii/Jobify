@@ -158,7 +158,7 @@
                     </div>
                     <div class="row">
                         <div class="field">
-                            <label class="label">Degree</label>
+                            <label class="label">Highest Degree</label>
                             <div class="select">
                                 <select name="education_id" required>
                                     <?php
@@ -184,7 +184,7 @@
                                         
                                         foreach($industries as $industry) {             
                                             echo '<input class="checkbox" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '">';
-                                            echo '<label for="' . $industry["industry_id"] . '">' . $industry["name"] . '</label><br>';
+                                            echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
                                         }
                                         
                                     ?>
@@ -196,9 +196,9 @@
                     <div class="row">
                         <div class="field">
                             <label class="label">Allow Headhunting</label>
-                            <label class="switch">
-                                <input type="checkbox">
-                                <span class="slider round"></span>
+                            <label class="checkbox">
+                                <input name="headhunting" type="checkbox">
+                                Yes
                             </label>
                         </div>
                     </div>

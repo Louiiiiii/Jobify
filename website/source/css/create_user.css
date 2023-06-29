@@ -8,6 +8,7 @@ body {
         align-items: center;
         flex-direction: column;
         width: 700px;
+        height: 100vh;
 
         .title {
             display: flex;
@@ -81,9 +82,12 @@ body {
                 .row:last-child {
                     justify-content: flex-end;
                     align-items: flex-end;
-                    margin-top: 30px;
+                    margin: 0;
+                    margin-top: -4px;
 
                     &.company-submit {
+                        margin-top: 30px;
+                        margin-bottom: 12px;
                         height: calc(100% - calc(40px * 6) - 24px - 88px);
                     }
 
@@ -110,6 +114,8 @@ input[type="text"]::-webkit-calendar-picker-indicator {
         height: 100%;
 
         .card {
+            height: unset;
+
             .card-content {
                 .card-content__body {
 
@@ -120,6 +126,18 @@ input[type="text"]::-webkit-calendar-picker-indicator {
                         .field {
                             justify-content: unset;
                             margin-bottom: 0.75rem;
+
+                            .label {
+                                width: 100px;
+                            }
+
+                            .industries-select {
+                                margin-left: 1.4rem;
+                            }
+
+                            .textarea {
+                                width: 204.4px;
+                            }
 
                             .is-one-thirds {
                                 &:nth-child(2) {
@@ -151,6 +169,8 @@ input[type="text"]::-webkit-calendar-picker-indicator {
 }
 
 .industries-select {
-    height: 110px;
+    height: calc(150px - 1.5rem);
     overflow-y: scroll;
+    padding: 0;
+    margin: 0.75rem;
 }

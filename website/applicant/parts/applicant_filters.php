@@ -14,23 +14,23 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-3">
-                            <input class="input is-dark" type="text" name="jobtitle" placeholder="Beruf">
+                            <input class="input is-dark" type="text" name="jobtitle" placeholder="Job">
                         </div>
                         <div class="column is-2">
-                            <input class="input is-dark" type="place" name="cityname" placeholder="Ort">
+                            <input class="input is-dark" type="place" name="cityname" placeholder="Place">
                         </div>
                         <div class="column is-5"></div>
                     </div>
                     <div class="columns">
                         <div class="column is-2">
                             <div class="field">
-                                <label class="label">Branche</label>
+                                <label class="label">Industry</label>
                                 <div class="control">
                                     <div class="select is-dark"><!-- Dropdown select for industries-->
                                         <select name="industry">
                                             <?php
                                             $data = Applicant::getIndustry_Data();
-                                            echo '<option>--Alle--</option>';
+                                            echo '<option>--All--</option>';
                                             foreach($data as $item)
                                             {
                                                 echo '<option value="'.$item[1].'">'.$item[1].'</option>';
@@ -43,13 +43,13 @@
                         </div>
                         <div class="column is-2">
                             <div class="field">
-                                <label class="label">Firma</label>
+                                <label class="label">Company</label>
                                 <div class="control">
                                     <div class="select is-dark">
                                         <select name="companyname">
                                             <?php
                                             $data = Company::getCompany_Data();
-                                            echo '<option>--Alle--</option>';
+                                            echo '<option>--All--</option>';
                                             foreach ($data as $item)
                                             {
                                                 echo '<option value="'.$item[1].'">'.$item[1].'</option>';
@@ -61,19 +61,19 @@
                             </div>
                         </div>
                         <div class="column is-1">
-                            <label class="label" for="salaryfrom">Gehalt von</label>
+                            <label class="label" for="salaryfrom">Salary from</label>
                             <input class="input is-dark" name="salaryfrom" type="number" min="500" placeholder="€">
                         </div>
                         <div class="column is-1">
-                            <label class="label" for="salaryto" hidden>bis</label>
+                            <label class="label" for="salaryto" hidden>to</label>
                             <input class="input is-dark" name="salaryto" type="number" placeholder="€ ">
                         </div>
                     </div>
                     <div class="columns">
                         <div class="column is-4">
                             <div class="buttons">
-                                <button class="button is-dark is-rounded" name="filter">Speichern</button>
-                                <button class="button is-light">Filter zurücksetzen</button>
+                                <button class="button is-dark is-rounded" name="filter">Save</button>
+                                <button class="button is-light">Reset filters</button>
                             </div>
                         </div>
                     </div>

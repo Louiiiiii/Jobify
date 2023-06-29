@@ -3,6 +3,11 @@
     include $_SERVER['DOCUMENT_ROOT'] .'/website/classes/getClasses.php';
 
     $current_page = basename($_SERVER['PHP_SELF']);
+
+    $overview = "";
+    $applications = "";
+    $favourite = "";
+    $requested = "";
     
     switch ($current_page) {
         case "applicant_overview.php":
