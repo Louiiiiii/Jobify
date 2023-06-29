@@ -480,7 +480,7 @@ CREATE TABLE IF NOT EXISTS `Jobify`.`Get_Addresse` (`address_id` INT, `street` I
 DROP TABLE IF EXISTS `Jobify`.`Get_Addresse`;
 DROP VIEW IF EXISTS `Jobify`.`Get_Addresse` ;
 USE `Jobify`;
-CREATE  OR REPLACE VIEW Jobify.Get_Addresse AS
+CREATE  OR REPLACE VIEW `Jobify`.`Get_Addresse` AS
 SELECT 
 	a.address_id,
     a.street,
@@ -489,12 +489,12 @@ SELECT
     p.postalcode,
     s.state,
     co.country
-FROM Jobify.Address a
-LEFT JOIN Jobify.City_Postalcode cp ON a.City_Postalcode_id = cp.City_Postalcode_id
-LEFT JOIN Jobify.City c ON c.city_id = cp.city_id
-LEFT JOIN Jobify.Postalcode p ON p.postalcode_id = cp.postalcode_id
-LEFT JOIN Jobify.State s ON p.state_id = s.state_id
-LEFT JOIN Jobify.Country co ON s.country_id = co.country_id;
+FROM `Jobify`.`Address` a
+LEFT JOIN `Jobify`.`City_Postalcode` cp ON a.City_Postalcode_id = cp.City_Postalcode_id
+LEFT JOIN `Jobify`.`City` c ON c.city_id = cp.city_id
+LEFT JOIN `Jobify`.`Postalcode` p ON p.postalcode_id = cp.postalcode_id
+LEFT JOIN `Jobify`.`State` s ON p.state_id = s.state_id
+LEFT JOIN `Jobify`.`Country` co ON s.country_id = co.country_id;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

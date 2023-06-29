@@ -2,9 +2,12 @@
 class DB
 {
     private $host = 'localhost';
-    private $dbname = "Jobify";
+    private $dbname = "jobify";
     private $user = "root";
     private $pwd = "raspberry";
+    //private $dbname = "id20978851_jobify_db";
+    //private $user = "id20978851_root";
+    //private $pwd = "Raspberry23.";
     public $pdo;
     public function __construct()
     {
