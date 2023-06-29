@@ -95,6 +95,10 @@ $filter = $db->pdo->prepare('select  distinct(j.job_id),
                                        and cp.city_id = ci.city_id
                                        and j.job_id = ji.job_id
                                        and i.industry_id = ji.industry_id
+                                       and not exists(select * 
+                                                        from Application a 
+                                                       where j.job_id = a.job_id 
+                                                         and a.applicant_id = :applicant)
                                        and (lower(j.title) like lower(:jobtitle) or :jobtitle is null)
                                        and (j.salary >= :salaryfrom or :salaryfrom is null or :salaryfrom = 0)
                                        and (j.salary <= :salaryto or :salaryto is null or :salaryto = 0)

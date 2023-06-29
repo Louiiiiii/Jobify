@@ -77,6 +77,10 @@ $filter = $db->pdo->prepare('select  distinct (j.job_id),
 										 from Job j,
                                               Favorite f
 										where j.job_id = f.job_id
+                                          and not exists(select * 
+                                                           from Application a 
+                                                          where j.job_id = a.job_id 
+                                                            and a.applicant_id = :applicant)
                                           and f.applicant_id = :applicant');
 $filter->bindParam('applicant', $applicant->applicant_id,PDO::PARAM_INT);
 $filter->execute();
