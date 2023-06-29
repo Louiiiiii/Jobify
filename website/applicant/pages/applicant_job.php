@@ -122,66 +122,11 @@ $company = Company::getDatabyId($job->company_id);
                     <p class="card-header-title" style="font-size: xx-large">
                         <?php echo $job->title;?>
                     </p>
-                </header>
-                <div class="card-content">
-                    <div class="content">
-                        <div>
-							<?php echo '<p>'.$job->description.'</p>';?>
-                        </div>
+                    <div class="header__tag">
                         <?php
-                        if ($additionaldata['industry']){
+                        if ($alreadyapplied == null) { null; } else {
                         ?>
-                        <br>
-                        <div>
-							<?php echo '<p><b>Industry:</b> '.$additionaldata['industry'].'</p>'; ?>
-                        </div>
-                        <?php
-                        }
-                        if($job->salary != null) {
-                            echo "<div>";
-                            echo "<br><b>Salary:</b> ".$job->salary."€";
-                            echo "</div>";
-                        }
-                        ?>
-
-                    </div>
-                    <hr>
-                    <div class="content">
-                        <div class="header">
-                            <b><h2><?php echo $company->name;?></h2></b>
-                        </div>
-                        <div class="body">
-                            <?php echo $company->description;?>
-                        </div>
-                    </div>
-					<?php
-					if ($additionaldata['address'] != null){
-						?>
-                        <br>
-                        <div>
-                            <address>
-								<?php
-								echo $additionaldata['address'].'<br>';
-								echo $additionaldata['city'].'<br>';
-								echo $additionaldata['state'].'<br>';
-								echo $additionaldata['country'];
-								?>
-                            </address>
-                        </div>
-						<?php
-					}
-					?>
-                    <br>
-                    <div>
-                        <?php
-                        if ($alreadyapplied == null) {
-                        ?>
-                        <button class="button is-black js-modal-trigger" data-target="modal-js-example">Bewerben</button>
-                        <?php
-						}
-                        else{
-                        ?>
-                            <span class="tag is-large
+                            <span class="tag is-medium is-light
                                     <?php
 							switch ($alreadyapplied){
 								case 'New';
@@ -203,6 +148,67 @@ $company = Company::getDatabyId($job->company_id);
                         <?php
                         }
                         ?>
+                    </div>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="header">
+                            <b><h2><?php echo $company->name;?></h2></b>
+                        </div>
+                        <div class="body">
+                            <?php echo $company->description;?>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div>
+							<?php echo '<p>'.$job->description.'</p>';?>
+                        </div>
+                        <?php
+                        if ($additionaldata['industry']){
+                        ?>
+                        <br>
+                        <div>
+							<?php echo '<p><b>Industry:</b> '.$additionaldata['industry'].'</p>'; ?>
+                        </div>
+                        <?php
+                        }
+                        if($job->salary != null) {
+                            echo "<div>";
+                            echo "<br><b>Salary:</b> ".$job->salary."€";
+                            echo "</div>";
+                        }
+                        ?>
+
+                    </div>
+					<?php
+					if ($additionaldata['address'] != null){
+						?>
+                        <br>
+                        <div>
+                            <address>
+								<?php
+								echo $additionaldata['address'].'<br>';
+								echo $additionaldata['city'].'<br>';
+								echo $additionaldata['state'].'<br>';
+								echo $additionaldata['country'];
+								?>
+                            </address>
+                        </div>
+						<?php
+					}
+					?>
+                    <br>
+                    <div class="content">
+                        <div class="content__button">
+                        <?php
+                            if ($alreadyapplied == null) {
+                            ?>
+                                <button class="button is-info js-modal-trigger" data-target="modal-js-example">Bewerben</button>
+                                <span><?php $alreadyapplied ?></span>
+                            <?php
+                            }
+                        ?>
+                        </div>
                     </div>
                 </div>
             </div>

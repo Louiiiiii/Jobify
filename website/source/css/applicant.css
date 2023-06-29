@@ -7,6 +7,12 @@ body {
         .column {
             .card {
                 .card-header {
+                    .header__tag {
+                        display: flex;
+                        align-items: center;
+                        margin-right: 15px;
+                    }
+
                     .like {
                         display: flex;
                         align-items: center;
@@ -41,7 +47,6 @@ body {
                         .button {
                             margin-top: 10px;
                             margin-left: 5px;
-                            width: 0;
 
                             &.in-row {
                                 margin: 0;
@@ -50,6 +55,10 @@ body {
                             &.is-rounded {
                                 width: 0;
                             }
+                        }
+
+                        &.js-modal-trigger {
+                            width: fit-content;
                         }
                     }
                 }
@@ -126,4 +135,8 @@ body {
     .button {
         margin-left: 5px;
     }
+}
+
+.buttons.is-right:not(.has-addons) .button:not(.is-fullwidth) {
+    margin-right: 0;
 }
