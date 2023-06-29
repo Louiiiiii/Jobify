@@ -30,7 +30,7 @@ if (isset($_POST['delete-application-btn'])){
                 <div class="modal-content">
                     <div class="box">
                             <h1 class="title is-4">Do you really want to delete this Application?</h1>
-                            <h2 class="subtitle is-6">This will also delete it for the Company! '.$_POST['application_id'].'</h2>
+                            <h2 class="subtitle is-6">This will also delete it for the Company! </h2>
                         <form method="post">
                             <div class="overlay__button">
                                 <button class="button is-danger" name="reject">Remove</button>
