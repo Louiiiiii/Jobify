@@ -48,6 +48,8 @@ else{
     $alreadyapplied = null;
 }
 
+unset($_SESSION['alreadyapplied']);
+
 if (isset($_POST["file_submit"])) {
 
     $filetype_name = $_POST["filetype_name"];
