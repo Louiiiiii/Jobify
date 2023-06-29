@@ -3,27 +3,27 @@
 }
 
 #alert {
-    width: 200px;
-    height: 100px;
     background: hsl(229deg, 53%, 53%);
+    max-width: 25%;
     color: white;
     border-radius: 3px;
     font-size: 18px;
     display: flex;
+    padding: 15px;
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 10px;
-    right: -200px;
+    top: 10%;
+    right: -30%;
     z-index: 100;
 }
 
 @keyframes movein {
-    from { right: -200px; }
+    from { right: -30%; }
     to   { right: 10px; }
 }
 
 @keyframes moveout {
     from { right: 10px; }
-    to   { right: -200px; }
+    to   { right: -30%; }
 }
