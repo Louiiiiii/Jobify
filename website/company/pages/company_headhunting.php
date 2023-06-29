@@ -322,16 +322,18 @@
                                     </div>
                                 </div>
                                 <div class="content">
-                                    <button class="button is-info is-dark is-rounded" type="sumbit" name="show-chat-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
-                                        <span class="icon is-small">
-                                            <i class="fas fa-envelope-open-text"></i>
-                                        </span>
-                                    </button>
-                                    <button class="button is-info is-outlined is-rounded" type="sumbit" name="show-info-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
-                                        <span class="icon is-small">
-                                            <i class="fas fa-info"></i>
-                                        </span>
-                                    </button>
+                                    <div class="content__button">
+                                        <button class="button is-info is-rounded" type="sumbit" name="show-chat-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-envelope-open-text"></i>
+                                            </span>
+                                        </button>
+                                        <button class="button is-info is-outlined is-rounded" type="sumbit" name="show-info-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-info"></i>
+                                            </span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

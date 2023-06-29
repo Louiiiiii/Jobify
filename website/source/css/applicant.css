@@ -33,9 +33,6 @@ body {
                     }
 
                     .content {
-                        display: flex;
-                        justify-content: flex-end;
-
                         .content__button {
                             display: flex;
                             justify-content: flex-end;
