@@ -240,7 +240,7 @@
                                                 </div>                                            
                                             </div>
                                         </div>
-                                        <div class="columns">
+                                        <div class="columns salary-columns">
                                             <div class="column title is-5">
                                                 <labe for="salary">Salary: </label>
                                             </div>
@@ -366,7 +366,7 @@
                                                 </div>                                            
                                             </div>
                                         </div>
-                                        <div class="columns">
+                                        <div class="columns salary-columns">
                                             <div class="column title is-5">
                                                 <labe for="salary">Salary: </label>
                                             </div>
@@ -446,7 +446,7 @@
                                             ?>
                                         </div>
                                     </div>
-                                    <div class="columns">
+                                    <div class="columns salary-columns">
                                         <div class="column">
                                             <p class="title is-5"><?php echo $job["salary"] ?>€</p>
                                         </div>

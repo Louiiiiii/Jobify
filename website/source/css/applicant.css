@@ -167,16 +167,14 @@ body {
     justify-content: flex-end;
 }
 
-.columns {
+.salary-columns {
+    display: flex;
+    justify-content: center;
+
     .column.title {
         margin: 0;
         display: flex;
         justify-content: center;
         width: fit-content;
-    }
-
-    &:last-child {
-        display: flex;
-        justify-content: center;
     }
 }
