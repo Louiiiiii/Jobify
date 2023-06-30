@@ -178,3 +178,7 @@ body {
         width: fit-content;
     }
 }
+
+.checkbox-label, .checkbox-input  {
+    cursor: pointer;
+}

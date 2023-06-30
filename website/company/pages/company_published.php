@@ -232,7 +232,7 @@
                                                         foreach($industries as $industry) {   
 
                                                             echo '<input class="checkbox-input" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '">';
-                                                            echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+                                                            echo '<label class="checkbox-label" for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
 
                                                         }
                                                         
@@ -358,7 +358,7 @@
                                                             } 
 
                                                             echo '<input class="checkbox-input" type="checkbox" id="' . $industry["industry_id"] . '" name="industry_ids[]" value="' . $industry["industry_id"] . '" ' . $checked . '>';
-                                                            echo '<label for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
+                                                            echo '<label class="checkbox-label" for="' . $industry["industry_id"] . '"> ' . $industry["name"] . '</label><br>';
 
                                                         }
                                                         
