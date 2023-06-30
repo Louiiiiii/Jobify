@@ -552,4 +552,5 @@
 <script src="/website/source/js/hideButton.js"></script>
 <script src="/website/source/js/modal.js"></script>
 <script src="/website/source/js/checkpassword.js"></script>
+<script src="../../source/js/navbar.js"></script>
 
