@@ -329,7 +329,7 @@
                                                     <i class="fas fa-envelope-open-text"></i>
                                                 </span>
                                             </button>
-                                            <button class="button is-info is-outlined is-rounded" name="show-info-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
+                                            <button class="button is-outlined is-rounded" name="show-info-applicant-modal-btn" value="<?php echo $applicant_to_headhunt["applicant_id"] ?>">
                                                 <span class="icon is-small">
                                                     <i class="fas fa-info"></i>
                                                 </span>

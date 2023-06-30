@@ -253,7 +253,7 @@
 
                                             <div class="columns">
                                                 <div class="column column-button">
-                                                    <button type="submit" class="button is-info is-outlined is-rounded" name="save-edited-job-btn">
+                                                    <button type="submit" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn">
                                                         <span class="icon is-small">
                                                             <i class="fas fa-check"></i>
                                                         </span>
@@ -367,25 +367,25 @@
                                             </div>
                                         </div>
                                         <div class="columns">
-                                            <div class="column title is-3">
+                                            <div class="column title is-5">
                                                 <labe for="salary">Salary: </label>
                                             </div>
                                             <div class="column">
                                                 <input class="input" type="number" id="salary" name="salary" value="<?php echo $job["salary"] ?>" required>
                                             </div>
-                                            <div class="column title is-3">
+                                            <div class="column title is-5">
                                                 <p>€</p>
                                             </div>
 
                                             <div class="columns">
-                                                <div class="column">
-                                                    <button type="submit" class="button is-info is-outlined is-rounded" name="save-edited-job-btn" value="<?php echo $job["job_id"] ?>">
+                                                <div class="column column-button">
+                                                    <button type="submit" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn" value="<?php echo $job["job_id"] ?>">
                                                         <span class="icon is-small">
                                                             <i class="fas fa-check"></i>
                                                         </span>
                                                     </button>
                                                 </div>
-                                                <div class="column">
+                                                <div class="column column-button">
                                                     <button type="button" onclick="submitForm('edit-job-form')" class="button is-danger is-outlined is-rounded" name="stop-edit-job-btn" value="<?php echo $job["job_id"] ?>">
                                                         <span class="icon is-small">
                                                             <i class="fas fa-times"></i>
@@ -454,14 +454,14 @@
                                         <form action="./company_published.php" method="post">
 
                                             <div class="columns">
-                                                <div class="column">
+                                                <div class="column column-button">
                                                     <button tpye="submit" class="button is-info is-rounded" name="edit-job-btn" value="<?php echo $job["job_id"] ?>">
                                                         <span class="icon is-small">
                                                             <i class="fas fa-edit"></i>
                                                         </span>
                                                     </button>
                                                 </div>
-                                                <div class="column">
+                                                <div class="column column-button">
                                                     <button tpye="submit" class="button is-danger is-outlined is-rounded" name="del-job-btn" value="<?php echo $job["job_id"] ?>">
                                                         <span class="icon is-small">
                                                             <i class="fas fa-trash"></i>

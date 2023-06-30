@@ -3,14 +3,12 @@
         .box {
             .row:first-child {
                 .column {
-                    padding-bottom: 0;
                 }
             }
 
             .row:nth-child(-n + 2) {
                 .column {
                     display: flex;
-                    justify-content: center;
                 }   
             }
 
