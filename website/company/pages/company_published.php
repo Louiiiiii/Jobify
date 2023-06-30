@@ -251,7 +251,7 @@
                                                 <p>€</p>
                                             </div>
 
-                                            <div class="columns">
+                                            <div class="columns columns-button">
                                                 <div class="column column-button">
                                                     <button type="submit" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn">
                                                         <span class="icon is-small">
@@ -377,7 +377,7 @@
                                                 <p>€</p>
                                             </div>
 
-                                            <div class="columns">
+                                            <div class="columns columns-button">
                                                 <div class="column column-button">
                                                     <button type="submit" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn" value="<?php echo $job["job_id"] ?>">
                                                         <span class="icon is-small">
@@ -453,7 +453,7 @@
 
                                         <form action="./company_published.php" method="post">
 
-                                            <div class="columns">
+                                            <div class="columns columns-button">
                                                 <div class="column column-button">
                                                     <button tpye="submit" class="button is-info is-rounded" name="edit-job-btn" value="<?php echo $job["job_id"] ?>">
                                                         <span class="icon is-small">
