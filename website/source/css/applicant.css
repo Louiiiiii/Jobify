@@ -166,3 +166,17 @@ body {
     display: flex;
     justify-content: flex-end;
 }
+
+.columns {
+    .column.title {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        width: fit-content;
+    }
+
+    &:last-child {
+        display: flex;
+        justify-content: center;
+    }
+}

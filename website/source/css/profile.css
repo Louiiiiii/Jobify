@@ -128,3 +128,16 @@ select {
 .trash {
     width: 0;
 }
+
+.textarea {
+    width: 204.4px;
+}
+
+.checkbox-input {
+    padding: 0;
+    cursor: pointer;
+}
+
+.checkbox-label {
+    cursor: pointer;
+}
