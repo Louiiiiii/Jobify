@@ -161,3 +161,8 @@ body {
 .buttons.is-right:not(.has-addons) .button:not(.is-fullwidth) {
     margin-right: 0;
 }
+
+.info-row {
+    display: flex;
+    justify-content: flex-end;
+}
