@@ -253,7 +253,7 @@
 
                                             <div class="columns">
                                                 <div class="column column-button">
-                                                    <button type="submit" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn">
+                                                    <button type="submit" class="button is-info is-outlined is-rounded" name="save-edited-job-btn">
                                                         <span class="icon is-small">
                                                             <i class="fas fa-check"></i>
                                                         </span>
@@ -379,7 +379,7 @@
 
                                             <div class="columns">
                                                 <div class="column">
-                                                    <button type="submit" class="button is-primary is-outlined is-rounded" name="save-edited-job-btn" value="<?php echo $job["job_id"] ?>">
+                                                    <button type="submit" class="button is-info is-outlined is-rounded" name="save-edited-job-btn" value="<?php echo $job["job_id"] ?>">
                                                         <span class="icon is-small">
                                                             <i class="fas fa-check"></i>
                                                         </span>

@@ -75,7 +75,7 @@
                         <a>Forgot password?</a>
                     </div>
                     <div class="field">
-                        <button type="submit" class="button is-primary">Login</button>
+                        <button type="submit" class="button is-info">Login</button>
                     </div>
                 </form>
             </div>

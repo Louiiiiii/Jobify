@@ -94,7 +94,7 @@
                             </div>
                         </div>
                         <div class="field">
-                            <button type="submit" class="button is-primary">Register</button>
+                            <button type="submit" class="button is-info">Register</button>
                         </div>
                     </div>
                     <div class="card-content__signup">
