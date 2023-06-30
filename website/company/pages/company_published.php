@@ -241,13 +241,13 @@
                                             </div>
                                         </div>
                                         <div class="columns">
-                                            <div class="column title is-3">
+                                            <div class="column title is-5">
                                                 <labe for="salary">Salary: </label>
                                             </div>
                                             <div class="column">
                                                 <input class="input" type="number" id="salary" name="salary" required>
                                             </div>
-                                            <div class="column title is-3">
+                                            <div class="column title is-5">
                                                 <p>€</p>
                                             </div>
 
@@ -448,7 +448,7 @@
                                     </div>
                                     <div class="columns">
                                         <div class="column">
-                                            <p class="title is-3"><?php echo $job["salary"] ?>€</p>
+                                            <p class="title is-5"><?php echo $job["salary"] ?>€</p>
                                         </div>
 
                                         <form action="./company_published.php" method="post">
